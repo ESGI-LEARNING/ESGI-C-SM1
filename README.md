@@ -10,10 +10,10 @@
 
 Décrire la procédure d'installation du projets.
 
-## Lien utils
+## Lien utiles
 - Github: https://github.com/TheoMeunier/ESGI-C-SM1
 - YouTrack: https://youtrack.theomeunier.fr
-- Email: https://mail.theomeunier.fr
+- Email - serveur smtp: https://mail.theomeunier.fr
 - Notion: https://www.notion.so/Projet-Challenge-Semestriel-SM1-3IW1-e1c9b30b217a4c03baefb8970b26e6e8?pvs=4
 
 ## Fonctionnalités principales
@@ -44,3 +44,10 @@ Décrire la procédure d'installation du projets.
 - Multi-templating
 - Design pattern Menento
 - Intégration d'un CLI
+
+## Groupe
+
+- Théo MEUNIER - [Github](https://github.com/TheoMeunier)
+- Philippe DELENTE - [Github](https://github.com/PhilDaiguille)
+- Quentin ANDRIEU - [Github](https://github.com/Tinou95)
+- Issam DJAIL - [Github](https://github.com/djouleissoum)
