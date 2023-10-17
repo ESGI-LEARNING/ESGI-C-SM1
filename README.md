@@ -1,5 +1,9 @@
 # Projet semestriel 1 ESGI: Photographie
 
+# Maquette
+
+Lien vers la maquette: https://www.figma.com/file/fxuwFIXRyGMrFNJ42JuJuI/Challenge-Semestriel?type=design&node-id=0%3A1&mode=design&t=PXd58yYDrnCPGCni-1
+
 ## Outils utilisés:
 
 - PHP 8.3
