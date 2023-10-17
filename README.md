@@ -19,6 +19,7 @@ Décrire la procédure d'installation du projets.
 - YouTrack: https://youtrack.theomeunier.fr
 - Email - serveur smtp: https://mail.theomeunier.fr
 - Notion: https://www.notion.so/Projet-Challenge-Semestriel-SM1-3IW1-e1c9b30b217a4c03baefb8970b26e6e8?pvs=4
+- MCD: https://excalidraw.com/#json=FXlmxoF_6CspwXzozmYbO,KoXlJp6CelQQGFRPxBftuw
 
 ## Fonctionnalités principales
 
