@@ -8,5 +8,4 @@
 		<input type="password" name="password" id="password">
 		<input type="submit" value="Se connecter">
 	</form>
-
 </section>
