@@ -18,11 +18,11 @@ class View
      */
     public function setTemplateName(string $templateName): void
     {
-        if(!file_exists("Views/Templates/".$templateName.".tpl.php"))
+        if(!file_exists("../Views/templates/".$templateName.".tpl.php"))
         {
-            die("Le template Views/Templates/".$templateName.".tpl.php n'existe pas");
+            die("Le template Views/templates/".$templateName.".tpl.php n'existe pas");
         }
-        $this->templateName = "Views/Templates/".$templateName.".tpl.php";
+        $this->templateName = "../Views/templates/".$templateName.".tpl.php";
     }
 
     /**
@@ -30,11 +30,11 @@ class View
      */
     public function setViewName(string $viewName): void
     {
-        if(!file_exists("Views/".$viewName.".view.php"))
+        if(!file_exists("../Views/".$viewName.".view.php"))
         {
             die("La vue Views/".$viewName.".view.php n'existe pas");
         }
-        $this->viewName = "Views/".$viewName.".view.php";
+        $this->viewName = "../Views/".$viewName.".view.php";
     }
 
     public function __destruct()

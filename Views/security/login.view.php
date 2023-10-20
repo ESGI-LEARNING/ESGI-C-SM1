@@ -1,5 +1,4 @@
-<?php include 'components/header.view.php'; ?>
-	<h2>Welcome</h2>
+<?php include __DIR__ . '/../components/header.view.php'; ?>
 	<h1>Page de connexion</h1>
 	<p>Lorem ipsum dolor sit amet consectetu</p>
 	<form>
@@ -9,4 +8,4 @@
 		<input type="password" name="password" id="password">
 		<input type="submit" value="Se connecter">
 	</form>
-<?php include 'components/footer.view.php'; ?>
+<?php include __DIR__ . '/../components/footer.view.php'; ?>

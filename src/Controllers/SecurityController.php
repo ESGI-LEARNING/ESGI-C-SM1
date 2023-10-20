@@ -2,20 +2,22 @@
 
 namespace App\Controllers;
 
+use App\Core\Views\View;
+
 class SecurityController
 {
     public function login(): void
     {
-        echo "Ma page login";
+        $myView = new View("security/login", "front");
     }
 
     public function register(): void
     {
-        echo "Ma page register";
+        $myView = new View("security/register", "front");
     }
 
     public function logout(): void
     {
-        echo "Ma page logout";
+        $myView = new View("security/logout", "front");
     }
 }

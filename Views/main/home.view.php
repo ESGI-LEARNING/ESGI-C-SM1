@@ -1,3 +1,3 @@
-<?php include 'components/header.view.php'; ?>
+<?php include __DIR__ . '/../components/header.view.php'; ?>
 <h2>Welcome</h2>
-<?php include 'components/footer.view.php'; ?>
+<?php include __DIR__ . '/../components/footer.view.php'; ?>
