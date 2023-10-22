@@ -14,8 +14,6 @@ class Autoloader
             include $class.".php";
         } else {
             include 'src/Controllers/Error.php';
-            $errorController = new Error();
-            $errorController->page404();
         }
     }
 
