@@ -1,3 +1,9 @@
-<?php include __DIR__ . '/../components/header.view.php'; ?>
 <h2>Welcome</h2>
-<?php include __DIR__ . '/../components/footer.view.php'; ?>
+<section>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, adipisci alias aliquid amet</p>
+
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, adipisci alias aliquid amet</p>
+
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, adipisci alias aliquid amet</p>
+
+</section>
