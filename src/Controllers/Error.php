@@ -10,4 +10,5 @@ class Error
     {
         $myView = new View("error/404", "front");
     }
+
 }

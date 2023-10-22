@@ -34,21 +34,30 @@ class Router
 
     public function run(): void
     {
-        $uri = $_SERVER['REQUEST_URI'];
         $method = $_SERVER['REQUEST_METHOD'];
-
+        $uri = strtolower($_SERVER['REQUEST_URI']);
+        $uri = strtok($uri, '?');
+        $uri = strlen($uri) > 1 ? rtrim($uri, '/') : $uri;
         foreach ($this->routes as $route) {
-            if ($route['method'] === $method && $route['uri'] === $uri) {
-                $callable =  $route['callable'];
-
+            if ($route['uri'] === $uri) {
+                $callable = $route['callable'];
                 if (is_array($callable) && count($callable) === 2) {
                     include '../src/' . str_replace(array("App\\", "\\"), array("", "/"), $callable[0]) . '.php';
-
                     $controllerName = $callable[0];
                     $methodName = $callable[1];
+                    if (class_exists($controllerName)) {
+                        $controller = new $controllerName();
 
-                    $controller = new $controllerName();
-                    $controller->$methodName();
+                        if (method_exists($controller, $methodName)) {
+                            $controller->$methodName();
+                        } else {
+                            http_response_code(500);
+                            echo 'L\'action n\'existe pas dans le controller';
+                        }
+                    } else {
+                        http_response_code(500);
+                        echo 'L\'action n\'existe pas dans le controller';
+                    }
                 } else {
                     http_response_code(500);
                     echo 'Error Internal server';
@@ -57,9 +66,8 @@ class Router
                 return;
             }
         }
-
-        // If error return error 404
         $errorController = new Error();
         $errorController->page404();
     }
+
 }
