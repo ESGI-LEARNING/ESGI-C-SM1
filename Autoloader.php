@@ -1,6 +1,8 @@
 <?php
 namespace App;
 
+use App\Controllers\Error;
+
 class Autoloader
 {
     public static function autoload($class): void
@@ -11,7 +13,9 @@ class Autoloader
         if(file_exists('../' . $class.".php")){
             include $class.".php";
         } else {
-            die("ERROR: 404");
+            include 'src/Controllers/Error.php';
+            $errorController = new Error();
+            $errorController->page404();
         }
     }
 
