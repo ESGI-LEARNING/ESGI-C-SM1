@@ -8,6 +8,8 @@ services:
       dockerfile: docker/php/Dockerfile
     container_name: ${APP_SLUG}_php
     restart: unless-stopped
+    ports:
+      - "5173:5173"
     environment:
       SERVICE_NAME: ${APP_SLUG}_php
     working_dir: /var/www
