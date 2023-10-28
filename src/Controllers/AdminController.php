@@ -4,12 +4,6 @@ namespace App\Controllers;
 
 use App\Core\Views\View;
 
-Dashboard avec de la datavisualisation Chartjs
-Configuration du templating Blade
-CRUD des commentaires
-CRUD utilisation et gestion des rôles des utilisateurs
-CRUD des pages
-
 class AdminController
 {
     public function dashboard()
@@ -28,7 +22,6 @@ class AdminController
     {
         $myView = new View("admin/pages", "back");
     }
-
 
 }
 
