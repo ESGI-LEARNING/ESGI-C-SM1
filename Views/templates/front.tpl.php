@@ -6,7 +6,8 @@
 	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Template Front</title>
-	<link rel="stylesheet" href="/assets/css/main.css">
+    <script type="module" src="http://localhost:5173/@vite/client"></script>
+    <script type="module" src="http://localhost:5173/assets/main.js"></script>
 </head>
 <body>
 <header>
@@ -27,7 +28,5 @@
 <footer>
 	<p>Tous droits réservés</p>
 </footer>
-
-
 </body>
 </html>
