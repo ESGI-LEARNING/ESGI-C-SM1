@@ -1,25 +1,32 @@
-# Projet semestriel 1 ESGI: Photographie
+# 📓 Projet semestriel 1 ESGI: Photographie
 
-# Maquette Figma
+## Commande pour démarrer le projet
+
+````bash
+docker-compose up --build -d
+docker-compose exec php yarn build
+````
+
+# 📕 Maquette Figma
 
 Lien vers la maquette: https://www.figma.com/file/fxuwFIXRyGMrFNJ42JuJuI/Challenge-Semestriel?type=design&node-id=0%3A1&mode=design&t=PXd58yYDrnCPGCni-1
 
-## Outils utilisés:
+## 💻 Outils utilisés:
 
 - PHP 8.3
 - Nginx
 - Mariadb DB 
 - PhpMyAdmin
 
-## Installation 
+## 💾 Installation 
 
 Décrire la procédure d'installation du projets.
 
-## Modèle conceptuel de données
+## 📃 Modèle conceptuel de données
 
 ![MCD](https://raw.githubusercontent.com/TheoMeunier/ESGI-C-SM1/main/documentation/mcd.png)
 
-## Lien utiles
+## 📌 Lien utiles
 
 - Github: https://github.com/TheoMeunier/ESGI-C-SM1
 - YouTrack: https://youtrack.theomeunier.fr
@@ -27,7 +34,7 @@ Décrire la procédure d'installation du projets.
 - Notion: https://www.notion.so/Projet-Challenge-Semestriel-SM1-3IW1-e1c9b30b217a4c03baefb8970b26e6e8?pvs=4
 - MCD: https://excalidraw.com/#json=FXlmxoF_6CspwXzozmYbO,KoXlJp6CelQQGFRPxBftuw
 
-## Fonctionnalités principales
+## 📋 Fonctionnalités principales
 
 - installation de l'environnement via une interface WEB
 - Authentification
@@ -49,14 +56,14 @@ Décrire la procédure d'installation du projets.
 - SiteMap XML
 - ORM Lite
 
-## Fonctionnalités bonus:
+## 🍀 Fonctionnalités bonus:
 
 - Routing par annotation 
 - Multi-templating
 - Design pattern Menento
 - Intégration d'un CLI
 
-## Groupe
+## 👤 Groupe
 
 - Théo MEUNIER - [Github](https://github.com/TheoMeunier)
 - Philippe DELENTE - [Github](https://github.com/PhilDaiguille)

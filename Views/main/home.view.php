@@ -1,9 +1,4 @@
 <section>
-	<h2>Welcome</h2>
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, adipisci alias aliquid amet</p>
-
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, adipisci alias aliquid amet</p>
-
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, adipisci alias aliquid amet</p>
+	<img src="https://www.centredufilmsurlart.com/wp-content/uploads/2021/04/bresson.jpg" alt="photo">
 
 </section>
