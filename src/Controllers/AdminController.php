@@ -22,6 +22,20 @@ class AdminController
     {
         $myView = new View("admin/pages", "back");
     }
+    //connexion
+    public function login()
+    {
+        $myView = new View("admin/login", "back");
+    }
+    //inscription
+    public function register()
+    {
+        $myView = new View("admin/register", "back");
+    }
+    //deconnexion
+    public function logout()
+    {
+        $myView = new View("admin/logout", "back");
+    }
 
 }
-
