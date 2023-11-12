@@ -4,7 +4,7 @@ namespace App;
 use App\Controllers\MainController;
 use App\Controllers\SecurityController;
 use App\Controllers\AdminController;
-use App\Core\Router;
+use App\core\Router;
 
 require '../Autoloader.php';
 
