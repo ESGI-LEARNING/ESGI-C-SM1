@@ -24,6 +24,16 @@ delete:	## delete container
 phpstan:  ## phpstan
 	./vendor/bin/phpstan analyse --memory-limit=2G
 
+.PHONY: phpcs
+phpcs: ## Php cs fixer
+	tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src
+
+.PHONY: phpcs-fix
+phpcs-fix: ## Automatically correct coding standard violations
+	vendor/bin/phpcbf
+	vendor/bin/php-cs-fixer fix
+
+
 ## —— Others 🛠️️ ———————————————————————————————————————————————————————————————
 help: ## listing command
 	@grep -E '(^[a-zA-Z0-9_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
