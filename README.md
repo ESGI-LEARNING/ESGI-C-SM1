@@ -9,6 +9,7 @@ Lien vers la maquette: https://www.figma.com/file/fxuwFIXRyGMrFNJ42JuJuI/Challen
 - PHP 8.3
 - Nginx
 - Mariadb DB 
+- PhpMyAdmin
 
 ## Installation 
 
