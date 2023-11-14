@@ -13,6 +13,11 @@
             "App\\": "src/"
         }
     },
+    "authors": [
+        {
+            "name": "tmeunier"
+        }
+    ],
     "require-dev": {
         "phpstan/phpstan": "^1.10"
     }
