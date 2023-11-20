@@ -19,36 +19,44 @@
 	<h1>Template Front</h1>
     <?php include $this->viewName; ?>
 </main>
-<footer id="footer">
-	<div class="caté">
-		<section>
-			<h2>Catégorie</h2>
-			<ul>
-				<li><a href="#">Portrait</a></li>
-				<li><a href="#">Paysage</a></li>
-				<li><a href="#">Nature</a></li>
-				<li><a href="#">Ville</a></li>
-			</ul>
-		</section>
-		<section>
-			<h2>Matériel</h2>
-			<ul>
-				<li><a href="#">Appareil photo</a></li>
-				<li><a href="#">Objectif</a></li>
-				<li><a href="#">Trépied</a></li>
-			</ul>
-		</section>
-		<section>
-			<h2>Contact</h2>
-			<ul>
-				<li><a href="#">Mail</a></li>
-				<li><a href="#">Facebook</a></li>
-				<li><a href="#">Twitter</a></li>
-				<li><a href="#">Assistance</a></li>
-			</ul>
-		</section>
+<footer>
+	<div class="content">
+		<img src="https://png.pngtree.com/png-vector/20220907/ourmid/pngtree-camera-icon-design-png-image_6141281.png"
+		     alt="" style="filter: invert(1)">
+		<div class="category">
+			<section>
+				<h2>Catégorie</h2>
+				<ul>
+					<li><a href="#">Portrait</a></li>
+					<li><a href="#">Paysage</a></li>
+					<li><a href="#">Nature</a></li>
+					<li><a href="#">Ville</a></li>
+				</ul>
+			</section>
+			<section>
+				<h2>Matériel</h2>
+				<ul>
+					<li><a href="#">Appareil photo</a></li>
+					<li><a href="#">Objectif</a></li>
+					<li><a href="#">Trépied</a></li>
+				</ul>
+			</section>
+			<section>
+				<h2>Nous contacter</h2>
+			</section>
+			<section>
+				<h2>A propos</h2>
+			</section>
+		</div>
 	</div>
-	<p>&copy; - Tous droits réservés - 2023</p>
+	<div class="mention-legale">
+		<p>&copy; - Tous droits réservés - 2023</p>
+		<ul>
+			<li><a href="#">Mentions légales</a></li>
+			<li><a href="#">CGU</a></li>
+			<li><a href="#">Confidentialité</a></li>
+		</ul>
+	</div>
 </footer>
-</body>g
+</body>
 </html>
