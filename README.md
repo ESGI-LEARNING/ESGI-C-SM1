@@ -4,7 +4,9 @@
 
 ````bash
 docker-compose up --build -d
+docker-compose exec php yarn install
 docker-compose exec php yarn build
+docker-compose exec php composer install
 ````
 
 # 📕 Maquette Figma
