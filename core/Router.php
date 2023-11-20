@@ -67,6 +67,7 @@ class Router
             }
         }
         $errorController = new Error();
+        die($errorController);
         $errorController->page404();
     }
 

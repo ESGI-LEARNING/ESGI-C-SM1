@@ -12,8 +12,6 @@ class Autoloader
 
         if(file_exists('../' . $class.".php")){
             include $class.".php";
-        } else {
-            include 'src/Controllers/Error.php';
         }
     }
 

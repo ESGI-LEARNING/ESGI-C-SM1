@@ -29,6 +29,4 @@ $router->get('/admin/login', [AdminController::class, 'login']);
 $router->get('/admin/register', [AdminController::class, 'register']);
 $router->get('/admin/logout', [AdminController::class, 'logout']);
 
-
-
 $router->run();
