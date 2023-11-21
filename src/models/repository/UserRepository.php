@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\repository;
+namespace App\models\repository;
 
 use App\core\DB\DB;
 
