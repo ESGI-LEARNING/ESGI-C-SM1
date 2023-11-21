@@ -4,7 +4,7 @@ namespace App;
 use App\Controllers\MainController;
 use App\Controllers\SecurityController;
 use App\Controllers\AdminController;
-use App\Core\Router;
+use App\core\Router;
 
 require '../Autoloader.php';
 
@@ -28,7 +28,5 @@ $router->get('/admin/pages', [AdminController::class, 'pages']);
 $router->get('/admin/login', [AdminController::class, 'login']);
 $router->get('/admin/register', [AdminController::class, 'register']);
 $router->get('/admin/logout', [AdminController::class, 'logout']);
-
-
 
 $router->run();

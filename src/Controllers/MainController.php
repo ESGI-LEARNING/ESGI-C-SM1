@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Core\Views\View;
+use App\core\Views\View;
 
 class MainController
 {

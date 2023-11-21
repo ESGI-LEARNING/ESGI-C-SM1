@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Core;
+namespace App\core;
 
-use App\Controllers\Error;
+use App\Controllers\ErrorController;
 
 class Router
 {
@@ -66,7 +66,8 @@ class Router
                 return;
             }
         }
-        $errorController = new Error();
+        include '../src/Controllers/ErrorController.php';
+        $errorController = new ErrorController();
         $errorController->page404();
     }
 
