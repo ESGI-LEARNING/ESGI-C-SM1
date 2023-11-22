@@ -3,6 +3,9 @@ FROM php:8.2-fpm
 # Set working directory
 WORKDIR /var/www
 
+# Get nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -17,15 +20,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
-    nodejs \
-    npm
-
-# PDO
-RUN apt-get install -y libpq-dev \
-    && docker-php-ext-install pdo pdo_mysql
-
-# Get nodejs
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+    nodejs
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*

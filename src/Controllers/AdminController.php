@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Controllers;
-use App\core\Views\View;
+
+use App\Core\Views\View;
+
 class AdminController
 {
     public function dashboard()

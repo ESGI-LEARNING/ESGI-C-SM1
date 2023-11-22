@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use App\core\Views\View;
+use App\Core\Views\View;
 
-class ErrorController
+class Error
 {
     public function page404(): void
     {

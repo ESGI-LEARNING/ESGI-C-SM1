@@ -1,6 +1,6 @@
 <?php
 
-namespace App\core\Views;
+namespace App\Core\Views;
 
 class View
 {
@@ -18,11 +18,11 @@ class View
      */
     public function setTemplateName(string $templateName): void
     {
-        if(!file_exists("../views/templates/".$templateName.".tpl.php"))
+        if(!file_exists("../Views/templates/".$templateName.".tpl.php"))
         {
-            die("Le template views/templates/".$templateName.".tpl.php n'existe pas");
+            die("Le template Views/templates/".$templateName.".tpl.php n'existe pas");
         }
-        $this->templateName = "../views/templates/".$templateName.".tpl.php";
+        $this->templateName = "../Views/templates/".$templateName.".tpl.php";
     }
 
     /**
@@ -30,11 +30,11 @@ class View
      */
     public function setViewName(string $viewName): void
     {
-        if(!file_exists("../views/".$viewName.".view.php"))
+        if(!file_exists("../Views/".$viewName.".view.php"))
         {
-            die("La vue views/".$viewName.".view.php n'existe pas");
+            die("La vue Views/".$viewName.".view.php n'existe pas");
         }
-        $this->viewName = "../views/".$viewName.".view.php";
+        $this->viewName = "../Views/".$viewName.".view.php";
     }
 
     public function __destruct()

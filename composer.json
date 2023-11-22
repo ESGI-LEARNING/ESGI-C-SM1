@@ -1,5 +1,5 @@
 {
-    "name": "esgicsm1/projet",
+    "name": "esgi-td1",
     "description": "projet de fin de semestre",
     "type": "project",
     "license": "proprietary",
@@ -14,7 +14,6 @@
         }
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest",
         "phpstan/phpstan": "^1.10"
     }
 }

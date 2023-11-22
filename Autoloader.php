@@ -1,9 +1,7 @@
 <?php
-
 namespace App;
 
 use App\Controllers\Error;
-use App\Controllers\ErrorController;
 
 class Autoloader
 {
@@ -14,11 +12,8 @@ class Autoloader
 
         if(file_exists('../' . $class.".php")){
             include $class.".php";
-        }
-        else {
-            $errorController = new ErrorController();
-            $errorController->page404();
-            echo 'La classe ' . $class . ' n\'existe pas';
+        } else {
+            include 'src/Controllers/Error.php';
         }
     }
 
