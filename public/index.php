@@ -23,6 +23,7 @@ $router->get('/', [MainController::class, 'home']);
 $router->get('/contact', [ContactController::class, 'contact']);
 $router->get('/about', [AboutUsController::class, 'aboutUs']);
 $router->get('/gallery', [GalleryController::class, 'gallery']);
+$router->get('/artist', [MainController::class, 'artist']);
 
 $router->get('/login', [SecurityController::class, 'login']);
 $router->post('/login', [SecurityController::class, 'login']);
