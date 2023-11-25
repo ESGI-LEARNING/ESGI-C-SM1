@@ -94,6 +94,14 @@
         button:hover {
             background-color: #45a049;
         }
+        #user-name {
+    cursor: pointer;
+    color: #007BFF; /* Couleur du lien *//
+        }
+
+#user-name:hover {
+    color: #0056b3; /* Changement de couleur au survol */
+}
     </style>
 </head>
 <body>
