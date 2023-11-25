@@ -10,4 +10,8 @@ class MainController
     {
         $myView = new View('main/home', 'front');
     }
+    public function artist()
+    {
+        $myView = new View("main/artist", "front");
+    }
 }

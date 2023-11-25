@@ -105,7 +105,7 @@
         <span class="close" onclick="closeModal()">&times;</span>
         <img id="modal-image" alt="Enlarged Image">
         <div id="modal-info">
-            <p id="user-name"></p>
+        <p id="user-name" onclick="redirectToArtistPage()"><?php echo $photo->user->username; ?></p>
             <p id="photo-title"></p>
             <textarea id="comment" placeholder="Add a comment"></textarea>
             <button onclick="addComment()">Add Comment</button>
@@ -115,7 +115,7 @@
 
 <script src="scripts.js"></script>
 <script>
-    const accessKey = 'DSKCITSO2pfygjgKwqp8SZiiwYepEtgHvCbOExTiRnw';
+   const accessKey = 'DSKCITSO2pfygjgKwqp8SZiiwYepEtgHvCbOExTiRnw';
     const gallery = document.querySelector('.gallery');
     const modal = document.getElementById('modal');
     const modalImage = document.getElementById('modal-image');
@@ -136,12 +136,17 @@
             });
         });
 
-    const openModal = (photo) => {
-        modalImage.src = photo.urls.regular;
-        userName.textContent = `By: ${photo.user.username}`;
-        photoTitle.textContent = `Title: ${photo.alt_description}`;
-        modal.style.display = 'block';
-    };
+        const openModal = (photo) => {
+    modalImage.src = photo.urls.regular;
+    userName.textContent = `By: ${photo.user.username}`;
+    const encodedArtistName = encodeURIComponent(photo.user.username);
+    userName.setAttribute('data-artist-name', encodedArtistName);
+    // Ajoutez l'ID de l'utilisateur comme attribut data
+    userName.setAttribute('data-artist-id', photo.user.id);
+    photoTitle.textContent = `Title: ${photo.alt_description}`;
+    modal.style.display = 'block';
+};
+
 
     const closeModal = () => {
         modal.style.display = 'none';
@@ -151,6 +156,11 @@
         const comment = commentInput.value;
         // Add your logic to handle the comment (e.g., send it to a server)
         console.log(`Added comment: ${comment}`);
+    };
+
+    const redirectToArtistPage = () => {
+        const artistName = userName.getAttribute('data-artist-name');
+        window.location.href = `/artist?name=${artistName}`;
     };
 </script>
 
