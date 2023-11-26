@@ -45,6 +45,14 @@
         .gallery img:hover {
             transform: scale(1.05);
         }
+        .back-to-gallery{
+            display: block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: #333;
+        }
+
+
     </style>
 
 <body>
@@ -52,7 +60,7 @@
 <div class="artist-info" id="artist-info">
     <h1 id="artist-name"></h1>
     <div id="artist-works" class="gallery"></div>
-    
+    <a href="/gallery" class="back-to-gallery">Back to Gallery</a>
 </div>
 
 
@@ -73,17 +81,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Utiliser l'API Unsplash pour récupérer les œuvres de l'artiste
     const accessKey = 'DSKCITSO2pfygjgKwqp8SZiiwYepEtgHvCbOExTiRnw';
-    fetch(`https://api.unsplash.com/users/${artistName}/photos/?client_id=${accessKey}`)
-        .then(response => response.json())
-        .then(data => {
-            data.forEach(photo => {
-                const img = document.createElement('img');
-                img.src = photo.urls.small;
-                img.alt = photo.alt_description;
-                img.addEventListener('click', () => openModal(photo));
-                artistWorksElement.appendChild(img);
-            });
+    fetch(`https://api.unsplash.com/users/${artistName}/photos/?client_id=${accessKey}&per_page=20`)
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(photo => {
+            const img = document.createElement('img');
+            img.src = photo.urls.small;
+            img.alt = photo.alt_description;
+            img.addEventListener('click', () => openModal(photo));
+            artistWorksElement.appendChild(img);
         });
+    });
 
     // Fonction pour ouvrir le modal (similaire à votre code existant)
     const openModal = (photo) => {
