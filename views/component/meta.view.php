@@ -1,7 +1,7 @@
 <?php
 $manifest = json_decode(file_get_contents('./../public/build/manifest.json'), true);
-$css = $manifest['assets/js/app.css']['file'];
-$js = $manifest['assets/js/app.js']['file'];
+$css      = $manifest['assets/js/app.css']['file'];
+$js       = $manifest['assets/js/app.js']['file'];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -13,6 +13,6 @@ $js = $manifest['assets/js/app.js']['file'];
 	<title>Template Front/Back</title>
 	<!--<script type="module" src="http://localhost:5173/assets/main.js"></script>
 	<script type="module" src="http://localhost:5173/@vite/client"></script>-->
-	<link rel="stylesheet" href="./../build/<?php echo $css ?>">
-	<script src="./../build/<?php echo $js ?>"></script>
+	<link rel="stylesheet" href="./../build/<?php echo $css; ?>">
+	<script src="./../build/<?php echo $js; ?>"></script>
 </head>

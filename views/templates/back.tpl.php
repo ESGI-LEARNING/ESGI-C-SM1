@@ -1,4 +1,4 @@
-<?php include "../views/component/meta.view.php"; ?>
+<?php include '../views/component/meta.view.php'; ?>
 <body>
 <header>
 	<nav>

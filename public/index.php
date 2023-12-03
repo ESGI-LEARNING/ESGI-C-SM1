@@ -3,9 +3,14 @@
 use App\Controllers\Admin\AdminController;
 use App\Controllers\Auth\SecurityController;
 use App\Controllers\MainController;
+use Core\ConfigLoader;
 use Core\Router;
 
 require __DIR__.'/../vendor/autoload.php';
+
+// Start read config file
+$config = new ConfigLoader();
+$config->load();
 
 $router = new Router();
 
