@@ -4,7 +4,7 @@ namespace Core;
 
 class ConfigLoader
 {
-    private static ConfigLoader $instance;
+    private static ?ConfigLoader $instance = null;
     private array $config = [];
 
     public static function getInstance(): ConfigLoader
@@ -19,24 +19,13 @@ class ConfigLoader
 
     public function load(): void
     {
-        $this->loadEnv('../.env');
+        $this->loadEnv();
         $files = glob('../config/*.php');
 
         foreach ($files as $file) {
             $config                  = include $file;
             $filename                = pathinfo($file, PATHINFO_FILENAME);
             $this->config[$filename] = $config;
-        }
-    }
-
-    public function loadEnv(string $filepath): void
-    {
-        if (file_exists($filepath)) {
-            $envConfig = parse_ini_file($filepath, false, INI_SCANNER_TYPED);
-
-            foreach ($envConfig as $key => $value) {
-                putenv("$key=$value");
-            }
         }
     }
 
@@ -49,5 +38,18 @@ class ConfigLoader
         }
 
         return $this->config[$file][$configKey] ?? null;
+    }
+
+    private function loadEnv(): void
+    {
+        $filepath = '../.env';
+
+        if (file_exists($filepath)) {
+            $envConfig = parse_ini_file($filepath, false, INI_SCANNER_TYPED);
+
+            foreach ($envConfig as $key => $value) {
+                putenv("$key=$value");
+            }
+        }
     }
 }
