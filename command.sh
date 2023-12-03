@@ -16,7 +16,7 @@ if [ "$command" = "make:controller" ]; then
 elif [ "$command" = "make:model" ]; then
     templateModel "$className"
 elif [ "$command" = "make:repository" ]; then
-    templateModel "$className"
+    templateRepository "$className"
 elif [ "$command" = "make:form" ]; then
     templateForm "$className"
 else

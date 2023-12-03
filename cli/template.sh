@@ -5,6 +5,7 @@ source cli/modules/models.sh
 #Template for controller
 templateController() {
   local controllerNane=$1
+  checkIfFileExists "src/Controllers/$controllerNane.php" "$controllerNane"
 
   echo "<?php
 
@@ -24,6 +25,7 @@ templateModel()
 {
   local modelName=$1
   checkIfFolderExists "src/Models"
+  checkIfFileExists "src/Models/$modelName.php" $modelName
 
   echo "<?php
 
@@ -57,6 +59,7 @@ templateRepository()
 {
   local modelName=$1
   checkIfFolderExists "src/Repository"
+  checkIfFileExists "src/Repository/$modelName.php" "$modelName"
 
   echo "<?php
 
@@ -73,6 +76,7 @@ templateForm()
 {
   local formType=$1
   checkIfFolderExists "src/Form"
+  checkIfFileExists "src/Form/$modelName.php" "$formType"
 
   echo "<?php
 
