@@ -9,17 +9,17 @@ class DB
 
     public function __construct()
     {
-        //connexion à la bdd via pdo
+        // connexion à la bdd via pdo
         try {
-            $this->pdo = new \PDO(dsn:"mysql:host=mariadb;dbname=esgi;charset=utf8", username: "esgi", password:"");
+            $this->pdo = new \PDO(dsn: 'mysql:host=mariadb;dbname=esgi;charset=utf8', username: 'esgi', password: '');
         } catch (\PDOException $e) {
-            echo "Erreur SQL : ".$e->getMessage();
+            echo 'Erreur SQL : '.$e->getMessage();
         }
 
-        $table = get_called_class();
-        $table = explode("\\", $table);
-        $table = array_pop($table);
-        $this->table = "esgi_".strtolower($table);
+        $table       = get_called_class();
+        $table       = explode('\\', $table);
+        $table       = array_pop($table);
+        $this->table = 'esgi_'.strtolower($table);
     }
 
     public function getDataObject(): array
@@ -31,47 +31,44 @@ class DB
     {
         $data = $this->getDataObject();
 
-        if(empty($this->getId())) {
-            $sql = "INSERT INTO " . $this->table . "(" . implode(",", array_keys($data)) . ") 
-            VALUES (:" . implode(",:", array_keys($data)) . ")";
+        if (empty($this->getId())) {
+            $sql = 'INSERT INTO '.$this->table.'('.implode(',', array_keys($data)).') 
+            VALUES (:'.implode(',:', array_keys($data)).')';
         } else {
-            $sql = "UPDATE " . $this->table . " SET ";
+            $sql = 'UPDATE '.$this->table.' SET ';
             foreach ($data as $column => $value) {
-                $sql .= $column. "=:".$column. ",";
+                $sql .= $column.'=:'.$column.',';
             }
             $sql = substr($sql, 0, -1);
-            $sql .= " WHERE id = ".$this->getId();
+            $sql .= ' WHERE id = '.$this->getId();
         }
-
 
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($data);
     }
-
 
     public static function populate(int $id): object
     {
-        $class = get_called_class();
+        $class  = get_called_class();
         $object = new $class();
-        return $object->getOneBy(["id" => $id], "object");
+
+        return $object->getOneBy(['id' => $id], 'object');
     }
 
-    //$data = ["id"=>1] ou ["email"=>"y.skrzypczyk@gmail.com"]
-    public function getOneBy(array $data, string $return = "array")
+    // $data = ["id"=>1] ou ["email"=>"y.skrzypczyk@gmail.com"]
+    public function getOneBy(array $data, string $return = 'array')
     {
-        $sql = "SELECT * FROM ".$this->table. " WHERE ";
+        $sql = 'SELECT * FROM '.$this->table.' WHERE ';
         foreach ($data as $column => $value) {
-            $sql .= " ".$column."=:".$column. " AND";
+            $sql .= ' '.$column.'=:'.$column.' AND';
         }
-        $sql = substr($sql, 0, -3);
+        $sql           = substr($sql, 0, -3);
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($data);
-        if($return == "object") {
+        if ('object' == $return) {
             $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
         }
 
         return $queryPrepared->fetch();
-
     }
-
 }

@@ -8,21 +8,21 @@ class AdminController
 {
     public function dashboard(): void
     {
-        $myView = new View("admin/dashboard", "back");
+        $myView = new View('admin/dashboard', 'back');
     }
 
     public function comments(): void
     {
-        $myView = new View("admin/comments", "back");
+        $myView = new View('admin/comments', 'back');
     }
 
     public function roles(): void
     {
-        $myView = new View("admin/roles", "back");
+        $myView = new View('admin/roles', 'back');
     }
 
     public function pages(): void
     {
-        $myView = new View("admin/pages", "back");
+        $myView = new View('admin/pages', 'back');
     }
 }
