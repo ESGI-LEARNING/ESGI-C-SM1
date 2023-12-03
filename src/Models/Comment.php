@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Core\DB\DB;
-use DateTime;
 
 class Comment extends DB
 {
@@ -17,9 +16,9 @@ class Comment extends DB
 
     private Comment $comment;
 
-    private DateTime $created_at;
+    private \DateTime $created_at;
 
-    private DateTime $updated_at;
+    private \DateTime $updated_at;
 
     public function getId(): ?int
     {
@@ -71,22 +70,22 @@ class Comment extends DB
         $this->comment = $comment;
     }
 
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): \DateTime
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(DateTime $created_at): void
+    public function setCreatedAt(\DateTime $created_at): void
     {
         $this->created_at = $created_at;
     }
 
-    public function getUpdatedAt(): DateTime
+    public function getUpdatedAt(): \DateTime
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(DateTime $updated_at): void
+    public function setUpdatedAt(\DateTime $updated_at): void
     {
         $this->updated_at = $updated_at;
     }

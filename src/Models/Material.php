@@ -6,7 +6,7 @@ use App\core\DB\DB;
 
 class Material extends DB
 {
-   private ?int $id = null;
+    private ?int $id = null;
 
     public function getId(): ?int
     {
@@ -17,5 +17,4 @@ class Material extends DB
     {
         $this->id = $id;
     }
-
 }

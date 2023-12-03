@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\core\DB\DB;
-use DateTime;
 
 class ResetPassword extends DB
 {
@@ -13,7 +12,7 @@ class ResetPassword extends DB
 
     private User $user;
 
-    private DateTime $created_at;
+    private \DateTime $created_at;
 
     public function getId(): ?int
     {
@@ -45,12 +44,12 @@ class ResetPassword extends DB
         $this->user = $user;
     }
 
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): \DateTime
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(DateTime $created_at): void
+    public function setCreatedAt(\DateTime $created_at): void
     {
         $this->created_at = $created_at;
     }

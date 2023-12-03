@@ -6,7 +6,7 @@ use App\core\DB\DB;
 
 class Picture extends DB
 {
-   private ?int $id = null;
+    private ?int $id = null;
 
     public function getId(): ?int
     {
@@ -17,5 +17,4 @@ class Picture extends DB
     {
         $this->id = $id;
     }
-
 }

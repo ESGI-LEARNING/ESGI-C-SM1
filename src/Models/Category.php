@@ -6,7 +6,7 @@ use App\core\DB\DB;
 
 class Category extends DB
 {
-   private ?int $id = null;
+    private ?int $id = null;
 
     public function getId(): ?int
     {
@@ -17,5 +17,4 @@ class Category extends DB
     {
         $this->id = $id;
     }
-
 }

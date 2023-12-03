@@ -6,7 +6,7 @@ use Core\DB\DB;
 
 class Roles extends DB
 {
-   private ?int $id = null;
+    private ?int $id = null;
 
     private string $name;
 

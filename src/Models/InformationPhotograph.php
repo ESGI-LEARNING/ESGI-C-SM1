@@ -3,15 +3,14 @@
 namespace App\Models;
 
 use Core\DB\DB;
-use DateTime;
 
 class InformationPhotograph extends DB
 {
-   private ?int $id = null;
+    private ?int $id = null;
 
-   private string $firstName;
+    private string $firstName;
 
-   private string $lastName;
+    private string $lastName;
 
     private string $description;
 
@@ -21,9 +20,9 @@ class InformationPhotograph extends DB
 
     private string $isDeleted;
 
-    private DateTime $created_at;
+    private \DateTime $created_at;
 
-    private DateTime $updated_at;
+    private \DateTime $updated_at;
 
     public function getId(): ?int
     {
@@ -95,22 +94,22 @@ class InformationPhotograph extends DB
         $this->isDeleted = $isDeleted;
     }
 
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): \DateTime
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(DateTime $created_at): void
+    public function setCreatedAt(\DateTime $created_at): void
     {
         $this->created_at = $created_at;
     }
 
-    public function getUpdatedAt(): DateTime
+    public function getUpdatedAt(): \DateTime
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(DateTime $updated_at): void
+    public function setUpdatedAt(\DateTime $updated_at): void
     {
         $this->updated_at = $updated_at;
     }

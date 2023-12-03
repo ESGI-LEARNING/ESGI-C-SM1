@@ -1,8 +1,7 @@
 <?php
 
-  namespace App\Repository;
+namespace App\Repository;
 
-  class SettingRepository
-  {
-
-  }
+class SettingRepository
+{
+}
