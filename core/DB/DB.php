@@ -1,6 +1,7 @@
 <?php
 
-namespace App\core\DB;
+namespace Core\DB;
+
 class DB
 {
     private ?object $pdo = null;
@@ -9,9 +10,9 @@ class DB
     public function __construct()
     {
         //connexion à la bdd via pdo
-        try{
+        try {
             $this->pdo = new \PDO(dsn:"mysql:host=mariadb;dbname=esgi;charset=utf8", username: "esgi", password:"");
-        }catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             echo "Erreur SQL : ".$e->getMessage();
         }
 
@@ -30,16 +31,16 @@ class DB
     {
         $data = $this->getDataObject();
 
-        if( empty($this->getId())){
+        if(empty($this->getId())) {
             $sql = "INSERT INTO " . $this->table . "(" . implode(",", array_keys($data)) . ") 
             VALUES (:" . implode(",:", array_keys($data)) . ")";
-        }else{
+        } else {
             $sql = "UPDATE " . $this->table . " SET ";
-            foreach ($data as $column => $value){
-                $sql.= $column. "=:".$column. ",";
+            foreach ($data as $column => $value) {
+                $sql .= $column. "=:".$column. ",";
             }
             $sql = substr($sql, 0, -1);
-            $sql.= " WHERE id = ".$this->getId();
+            $sql .= " WHERE id = ".$this->getId();
         }
 
 
@@ -52,20 +53,20 @@ class DB
     {
         $class = get_called_class();
         $object = new $class();
-        return $object->getOneBy(["id"=>$id], "object");
+        return $object->getOneBy(["id" => $id], "object");
     }
 
     //$data = ["id"=>1] ou ["email"=>"y.skrzypczyk@gmail.com"]
     public function getOneBy(array $data, string $return = "array")
     {
         $sql = "SELECT * FROM ".$this->table. " WHERE ";
-        foreach ($data as $column=>$value){
+        foreach ($data as $column => $value) {
             $sql .= " ".$column."=:".$column. " AND";
         }
         $sql = substr($sql, 0, -3);
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($data);
-        if($return == "object"){
+        if($return == "object") {
             $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
         }
 

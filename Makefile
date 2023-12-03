@@ -26,7 +26,8 @@ phpstan:  ## phpstan
 
 .PHONY: phpcs
 phpcs: ## Php cs fixer
-	tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src
+	vendor/bin/phpcs
+	vendor/bin/php-cs-fixer fix --dry-run --diff
 
 .PHONY: phpcs-fix
 phpcs-fix: ## Automatically correct coding standard violations

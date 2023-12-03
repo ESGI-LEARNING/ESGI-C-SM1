@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Auth;
 
-use App\core\Views\View;
+use Core\Views\View;
 
 class SecurityController
 {

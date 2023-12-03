@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\core\Views\View;
+use Core\Views\View;
 
 class ErrorController
 {

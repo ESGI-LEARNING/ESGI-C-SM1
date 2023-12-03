@@ -5,16 +5,17 @@
     "license": "proprietary",
     "minimum-stability": "stable",
     "require": {
-        "php": "^8.2",
-        "friendsofphp/php-cs-fixer": "^3.38"
+        "php": "^8.2"
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "Core\\": "core/"
         }
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "phpstan/phpstan": "^1.10"
+        "phpstan/phpstan": "^1.10",
+        "friendsofphp/php-cs-fixer": "^3.40"
     }
 }

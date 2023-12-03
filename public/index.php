@@ -1,14 +1,11 @@
 <?php
-namespace App;
 
+use App\Controllers\Admin\AdminController;
+use App\Controllers\Auth\SecurityController;
 use App\Controllers\MainController;
-use App\Controllers\SecurityController;
-use App\Controllers\AdminController;
-use App\core\Router;
+use Core\Router;
 
-require '../Autoloader.php';
-
-Autoloader::register();
+require __DIR__.'/../vendor/autoload.php';
 
 $router = new Router();
 
