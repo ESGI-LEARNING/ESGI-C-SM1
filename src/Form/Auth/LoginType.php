@@ -14,7 +14,7 @@ class LoginType
                 'class'  => 'form',
             ],
             'inputs' => [
-                'firstname' => [
+                'Prénom' => [
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'prénom',
@@ -22,7 +22,7 @@ class LoginType
                     'required'    => true,
                     'error'       => 'Le prénom doit faire plus de 2 caractères'],
 
-                'lastname' => [
+                'Nom' => [
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'nom',
@@ -30,21 +30,21 @@ class LoginType
                     'required'    => true,
                     'error'       => 'Le nom doit faire plus de 2 caractères'],
 
-                'email' => [
+                'Email' => [
                     'type'        => 'email',
                     'class'       => 'input-form',
                     'placeholder' => 'email',
                     'required'    => true,
                     'error'       => "Le format de l'email est incorrect"],
 
-                'pwd' => [
+                'Mot de passe' => [
                     'type'        => 'password',
                     'class'       => 'input-form',
                     'placeholder' => 'mot de passe',
                     'required'    => true,
                     'error'       => 'Votre mot de passe doit faire plus de 8 caractères avec minuscule et chiffre'],
 
-                'pwdConfirm' => [
+                'Confirmation du mot de passe' => [
                     'type'        => 'password',
                     'class'       => 'input-form',
                     'confirm'     => 'pwd',

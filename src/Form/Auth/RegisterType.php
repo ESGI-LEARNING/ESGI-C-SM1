@@ -14,7 +14,7 @@ class RegisterType
                 'class'  => 'form',
             ],
             'inputs' => [
-                'firstname' => [
+                'Prénom' => [
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'prénom',
@@ -22,7 +22,7 @@ class RegisterType
                     'required'    => true,
                     'error'       => 'Le prénom doit faire plus de 2 caractères'],
 
-                'lastname' => [
+                'Nom' => [
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'nom',
@@ -30,21 +30,21 @@ class RegisterType
                     'required'    => true,
                     'error'       => 'Le nom doit faire plus de 2 caractères'],
 
-                'email' => [
+                'Email' => [
                     'type'        => 'email',
                     'class'       => 'input-form',
                     'placeholder' => 'email',
                     'required'    => true,
                     'error'       => "Le format de l'email est incorrect"],
 
-                'password' => [
+                'Mot de passe' => [
                     'type'        => 'password',
                     'class'       => 'input-form',
                     'placeholder' => 'mot de passe',
                     'required'    => true,
                     'error'       => 'Votre mot de passe doit faire plus de 8 caractères avec minuscule et chiffre'],
 
-                'password_confirmation' => [
+                'Confirmation du mot de passe' => [
                     'type'        => 'password',
                     'class'       => 'input-form',
                     'confirm'     => 'password',
