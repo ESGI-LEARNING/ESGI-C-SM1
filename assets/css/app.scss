@@ -1,7 +1,7 @@
-@import "variables";
-@import "reset";
-@import "./components/header";
-@import "./components/footer";
+@import "components/variables";
+@import "components/reset";
+@import "components/header";
+@import "components/footer";
 
 main {
   margin: 0 auto;
@@ -39,11 +39,20 @@ main p {
   margin: 2rem auto;
 }
 
+main fieldset{
+  border: none;
+}
+main fieldset legend h2{
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
 main form {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   margin: 2rem 0;
 }
 
@@ -54,6 +63,9 @@ main a {
   padding: 1rem 2rem;
   border: solid .2rem #000;
   margin: 1rem 0;
+}
+main form label{
+  font-weight: bold;
 }
 
 main form input {

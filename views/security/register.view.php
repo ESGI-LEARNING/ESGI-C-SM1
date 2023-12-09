@@ -1,14 +1,31 @@
+<?php
+use App\Form\Auth\LoginType;
+$form = new LoginType();
+$config = $form->getConfig();
+?>
 <section>
-	<h2>Page d'enregistrement</h2>
-	<p>Lorem ipsum dolor sit amet consectetu</p>
-	<form>
-		<label for="email">Email</label>
-		<input type="email" name="email" id="email">
-		<label for="password">Mot de passe</label>
-		<input type="password" name="password" id="password">
-		<label for="password2">Confirmer le mot de passe</label>
-		<input type="password" name="password2" id="password2">
-		<input type="submit" value="S'enregistrer">
-	</form>
+	<fieldset>
+		<legend><h2>S'inscrire</h2></legend>
+		<!--//Insérer le formulaire d'inscription-->
+		<form method="<?= $config["config"]["method"] ?>"
+		      action="<?= $config["config"]["action"] ?>"
+		      class="<?= $config["config"]["class"] ?>">
 
+            <?php foreach ($config["inputs"] as $name => $configInput): ?>
+				<label for="<?php echo $name ?>"><?php echo $name ?></label>
+				<input
+						name="<?= $name ?>"
+						placeholder="<?= $configInput["placeholder"] ?>"
+						class="<?= $configInput["class"] ?>"
+						id="<?= $configInput["placeholder"] ?>"
+						type="<?= $configInput["type"] ?>"
+                    <?= $configInput["required"] ? "required" : "" ?>
+				><br>
+            <?php endforeach; ?>
+			<input type="submit" name="submit" value="<?= $config["config"]["submit"] ?>">
+            <?php if (!empty($data["error"])): ?>
+				<p class="error"><?= $data["error"] ?></p>
+            <?php endif; ?>
+		</form>
+	</fieldset>
 </section>
