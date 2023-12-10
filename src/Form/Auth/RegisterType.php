@@ -54,4 +54,37 @@ class RegisterType
             ],
         ];
     }
+
+    public function registerUser(array $userData): bool
+    {
+        $verificationToken = $this->generateVerificationToken();
+
+        if ($verificationToken) {
+            return $this->sendVerificationEmail($userData, $verificationToken);
+        }
+
+        return false;
+    }
+
+    private function generateVerificationToken(): ?string
+    {
+        try {
+            return bin2hex(random_bytes(16));
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    private function sendVerificationEmail(array $userData, string $verificationToken): bool
+    {
+        $subject = 'Vérification de votre adresse email';
+        $message = 'Bonjour '.$userData['Prénom'].', veuillez cliquer sur ce lien pour vérifier votre email: https://www.example.com/verify?token='.$verificationToken;
+        $headers = 'From: webmaster@example.com';
+
+        if (filter_var($userData['Email'], FILTER_VALIDATE_EMAIL)) {
+            return mail($userData['Email'], $subject, $message, $headers);
+        }
+
+        return false;
+    }
 }
