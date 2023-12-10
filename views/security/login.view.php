@@ -1,31 +1,32 @@
 <?php
+
 use App\Form\Auth\RegisterType;
-$form = new RegisterType();
+
+$form   = new RegisterType();
 $config = $form->getConfig();
 ?>
 <section>
 	<fieldset>
 		<legend><h2>Se connecter</h2></legend>
-		<!--//Insérer le formulaire d'inscription-->
-		<form method="<?= $config["config"]["method"] ?>"
-		      action="<?= $config["config"]["action"] ?>"
-		      class="<?= $config["config"]["class"] ?>">
+		<form method="<?php echo $config['config']['method']; ?>"
+		      action="<?php echo $config['config']['action']; ?>"
+		      class="<?php echo $config['config']['class']; ?>">
 
-            <?php foreach ($config["inputs"] as $name => $configInput): ?>
-				<label for="<?php echo $name ?>"><?php echo $name ?></label>
+            <?php foreach ($config['inputs'] as $name => $configInput) { ?>
+				<label for="<?php echo $name; ?>"><?php echo $name; ?></label>
 				<input
-						name="<?= $name ?>"
-						placeholder="<?= $configInput["placeholder"] ?>"
-						class="<?= $configInput["class"] ?>"
-						id="<?= $configInput["placeholder"] ?>"
-						type="<?= $configInput["type"] ?>"
-                    <?= $configInput["required"] ? "required" : "" ?>
+						name="<?php echo $name; ?>"
+						placeholder="<?php echo $configInput['placeholder']; ?>"
+						class="<?php echo $configInput['class']; ?>"
+						id="<?php echo $configInput['placeholder']; ?>"
+						type="<?php echo $configInput['type']; ?>"
+                    <?php echo $configInput['required'] ? 'required' : ''; ?>
 				><br>
-            <?php endforeach; ?>
-			<input type="submit" name="submit" value="<?= $config["config"]["submit"] ?>">
-            <?php if (!empty($data["error"])): ?>
-				<p class="error"><?= $data["error"] ?></p>
-            <?php endif; ?>
+            <?php } ?>
+			<input type="submit" name="submit" value="<?php echo $config['config']['submit']; ?>">
+            <?php if (!empty($data['error'])) { ?>
+				<p class="error"><?php echo $data['error']; ?></p>
+            <?php } ?>
 		</form>
 	</fieldset>
 </section>

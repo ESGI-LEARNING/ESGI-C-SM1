@@ -8,6 +8,11 @@ class Router
 {
     private array $routes = [];
 
+    public function get(string $uri, array $callable): void
+    {
+        $this->addRoute('GET', $uri, $callable);
+    }
+
     public function addRoute(string $method, string $uri, array $callable): void
     {
         $this->routes[] = [
@@ -15,11 +20,6 @@ class Router
             'uri'      => $uri,
             'callable' => $callable,
         ];
-    }
-
-    public function get(string $uri, array $callable): void
-    {
-        $this->addRoute('GET', $uri, $callable);
     }
 
     public function post(string $uri, array $callable): void

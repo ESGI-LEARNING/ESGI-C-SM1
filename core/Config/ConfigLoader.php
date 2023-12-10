@@ -5,7 +5,7 @@ namespace Core\Config;
 class ConfigLoader
 {
     private static ?ConfigLoader $instance = null;
-    private array $config = [];
+    private array $config                  = [];
 
     public static function getInstance(): ConfigLoader
     {
@@ -29,17 +29,6 @@ class ConfigLoader
         }
     }
 
-    public function get(string $key): mixed
-    {
-        list($file, $configKey) = explode('.', $key, 2);
-
-        if (false !== getenv($key)) {
-            return getenv($key);
-        }
-
-        return $this->config[$file][$configKey] ?? null;
-    }
-
     private function loadEnv(): void
     {
         $filepath = '../.env';
@@ -51,5 +40,16 @@ class ConfigLoader
                 putenv("$key=$value");
             }
         }
+    }
+
+    public function get(string $key): mixed
+    {
+        list($file, $configKey) = explode('.', $key, 2);
+
+        if (false !== getenv($key)) {
+            return getenv($key);
+        }
+
+        return $this->config[$file][$configKey] ?? null;
     }
 }
