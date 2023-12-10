@@ -22,9 +22,28 @@ class DB
         $this->table = 'esgi_'.strtolower($table);
     }
 
-    public function getDataObject(): array
+    public static function populate(int $id): object
     {
-        return array_diff_key(get_object_vars($this), get_class_vars(get_class()));
+        $class  = get_called_class();
+        $object = new $class();
+
+        return $object->getOneBy(['id' => $id], 'object');
+    }
+
+    public function getOneBy(array $data, string $return = 'array')
+    {
+        $sql = 'SELECT * FROM '.$this->table.' WHERE ';
+        foreach ($data as $column => $value) {
+            $sql .= ' '.$column.'=:'.$column.' AND';
+        }
+        $sql           = substr($sql, 0, -3);
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute($data);
+        if ('object' == $return) {
+            $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
+        }
+
+        return $queryPrepared->fetch();
     }
 
     public function save()
@@ -47,28 +66,10 @@ class DB
         $queryPrepared->execute($data);
     }
 
-    public static function populate(int $id): object
-    {
-        $class  = get_called_class();
-        $object = new $class();
-
-        return $object->getOneBy(['id' => $id], 'object');
-    }
-
     // $data = ["id"=>1] ou ["email"=>"y.skrzypczyk@gmail.com"]
-    public function getOneBy(array $data, string $return = 'array')
-    {
-        $sql = 'SELECT * FROM '.$this->table.' WHERE ';
-        foreach ($data as $column => $value) {
-            $sql .= ' '.$column.'=:'.$column.' AND';
-        }
-        $sql           = substr($sql, 0, -3);
-        $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->execute($data);
-        if ('object' == $return) {
-            $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
-        }
 
-        return $queryPrepared->fetch();
+    public function getDataObject(): array
+    {
+        return array_diff_key(get_object_vars($this), get_class_vars(get_class()));
     }
 }

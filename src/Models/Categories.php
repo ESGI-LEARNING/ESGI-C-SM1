@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\core\DB\DB;
+use Core\DB\DB;
 
 class Categories extends DB
 {
