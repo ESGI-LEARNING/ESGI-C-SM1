@@ -4,105 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f8f8;
-        }
 
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 20px;
-        }
-
-        .gallery img {
-            width: 300px;
-            height: auto;
-            object-fit: cover;
-            margin: 10px;
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out;
-            border-radius: 8px;
-        }
-
-        .gallery img:hover {
-            transform: scale(1.05);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            overflow: auto; /* Permet le défilement si le contenu du modal est trop grand */
-        }
-
-        .modal-content {
-            position: relative;
-            max-width: 50%; /* Ajustez la largeur du contenu du modal */
-            margin: auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
-            overflow: auto; /* Permet le défilement si le contenu du modal est trop grand */
-        }
-
-        .close {
-            color: #333;
-            float: right;
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        #modal-image {
-            max-width: 100%;
-            max-height: 60vh;
-            border-radius: 8px;
-            box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
-        }
-
-        #modal-info {
-            margin-top: 20px;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            padding: 10px;
-            background-color: #4caf50;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-        #user-name {
-    cursor: pointer;
-    color: #007BFF; /* Couleur du lien *//
-        }
-
-#user-name:hover {
-    color: #0056b3; /* Changement de couleur au survol */
-}
-    </style>
 </head>
 <body>
 
@@ -116,7 +18,7 @@
         <p id="user-name" onclick="redirectToArtistPage()"><?php echo $photo->user->username; ?></p>
             <p id="photo-title"></p>
             <textarea id="comment" placeholder="Add a comment"></textarea>
-            <button onclick="addComment()">Add Comment</button>
+            <button class="btn_comment" onclick="addComment()">Add Comment</button>
         </div>
     </div>
 </div>
