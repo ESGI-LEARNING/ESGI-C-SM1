@@ -20,4 +20,9 @@ class SecurityController
     {
         $myView = new View('security/logout', 'front');
     }
+
+    public function resetPassword(): void
+    {
+        $myView = new View('security/resetPassword', 'front');
+    }
 }

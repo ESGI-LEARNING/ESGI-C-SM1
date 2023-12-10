@@ -25,6 +25,7 @@ $router->get('/gallery', [GalleryController::class, 'gallery']);
 $router->get('/login', [SecurityController::class, 'login']);
 $router->get('/register', [SecurityController::class, 'register']);
 $router->get('/logout', [SecurityController::class, 'logout']);
+$router->get('/reset-password', [SecurityController::class, 'resetPassword']);
 
 $router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
 $router->get('/admin/comments', [AdminController::class, 'comments']);
