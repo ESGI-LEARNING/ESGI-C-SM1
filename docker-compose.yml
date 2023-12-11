@@ -51,6 +51,19 @@ services:
     networks:
       - app_network
 
+  #Phpmyadmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8585:80"
+    container_name: ${APP_SLUG}_phpmyadmin
+    depends_on:
+      - database
+    environment:
+      PMA_HOST: ${DB_HOST}
+    networks:
+      - app_network
+
 # Docker Networks
 networks:
   app_network:
