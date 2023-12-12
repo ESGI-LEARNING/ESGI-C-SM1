@@ -10,26 +10,10 @@ class LoginType
             'config' => [
                 'method' => 'POST',
                 'action' => '',
-                'submit' => "S'inscrire",
+                'submit' => 'Se connecter',
                 'class'  => 'form',
             ],
             'inputs' => [
-                'Prénom' => [
-                    'type'        => 'text',
-                    'class'       => 'input-form',
-                    'placeholder' => 'prénom',
-                    'minlen'      => 2,
-                    'required'    => true,
-                    'error'       => 'Le prénom doit faire plus de 2 caractères'],
-
-                'Nom' => [
-                    'type'        => 'text',
-                    'class'       => 'input-form',
-                    'placeholder' => 'nom',
-                    'minlen'      => 2,
-                    'required'    => true,
-                    'error'       => 'Le nom doit faire plus de 2 caractères'],
-
                 'Email' => [
                     'type'        => 'email',
                     'class'       => 'input-form',
@@ -43,14 +27,6 @@ class LoginType
                     'placeholder' => 'mot de passe',
                     'required'    => true,
                     'error'       => 'Votre mot de passe doit faire plus de 8 caractères avec minuscule et chiffre'],
-
-                'Confirmation du mot de passe' => [
-                    'type'        => 'password',
-                    'class'       => 'input-form',
-                    'confirm'     => 'pwd',
-                    'placeholder' => 'confirmation',
-                    'required'    => true,
-                    'error'       => 'Votre mot de passe de confirmation ne correspond pas'],
             ],
         ];
     }

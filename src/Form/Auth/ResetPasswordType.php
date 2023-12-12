@@ -9,7 +9,7 @@ class ResetPasswordType
         return [
             'config' => [
                 'method' => 'POST',
-                'action' => '', // L'action du formulaire (URL où les données seront envoyées)
+                'action' => '',
                 'submit' => 'Réinitialiser le mot de passe',
                 'class'  => 'form',
             ],

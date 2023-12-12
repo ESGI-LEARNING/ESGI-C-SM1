@@ -2,18 +2,29 @@
 
 namespace App\Controllers\Auth;
 
+use App\Form\Auth\LoginType;
+use App\Form\Auth\RegisterType;
+use App\Form\Auth\ResetPasswordType;
 use Core\Views\View;
 
 class SecurityController
 {
     public function login(): void
     {
-        $myView = new View('security/login', 'front');
+        $form   = new LoginType();
+        $config = $form->getConfig();
+        $myView = new View('security/login', 'front', [
+            'config' => $config,
+        ]);
     }
 
     public function register(): void
     {
-        $myView = new View('security/register', 'front');
+        $form   = new RegisterType();
+        $config = $form->getConfig();
+        $myView = new View('security/register', 'front', [
+            'config' => $config,
+        ]);
     }
 
     public function logout(): void
@@ -23,6 +34,10 @@ class SecurityController
 
     public function resetPassword(): void
     {
-        $myView = new View('security/resetPassword', 'front');
+        $form   = new ResetPasswordType();
+        $config = $form->getConfig();
+        $myView = new View('security/resetPassword', 'front', [
+            'config' => $config,
+        ]);
     }
 }

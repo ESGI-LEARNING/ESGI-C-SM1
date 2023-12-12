@@ -7,6 +7,7 @@ class PHPSession implements SessionInterface
     public function get(string $key, mixed $default = null): mixed
     {
         $this->ensureStarted();
+
         return $_SESSION[$key] ?? $default;
     }
 
@@ -23,7 +24,7 @@ class PHPSession implements SessionInterface
     }
 
     /**
-     * Vérifie si la session est démarrée
+     * Vérifie si la session est démarrée.
      */
     private function ensureStarted(): void
     {
