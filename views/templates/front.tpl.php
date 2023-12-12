@@ -15,7 +15,7 @@
 		</ul>
 	</nav>
 </header>
-<main>
+<main class="main-front">
     <?php include $this->viewName; ?>
 </main>
 <footer>
