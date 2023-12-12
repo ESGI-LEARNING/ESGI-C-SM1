@@ -6,7 +6,7 @@ use App\Controllers\Auth\SecurityController;
 use App\Controllers\ContactController;
 use App\Controllers\GalleryController;
 use App\Controllers\MainController;
-use Core\ConfigLoader;
+use Core\Config\ConfigLoader;
 use Core\Router;
 
 require __DIR__.'/../vendor/autoload.php';

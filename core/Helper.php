@@ -1,6 +1,6 @@
 <?php
 
-use Core\ConfigLoader;
+use Core\Config\ConfigLoader;
 
 function config(string $key): mixed
 {
