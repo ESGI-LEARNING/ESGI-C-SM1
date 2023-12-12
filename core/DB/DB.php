@@ -11,7 +11,7 @@ class DB
     {
         // connexion à la bdd via pdo
         try {
-            $this->pdo = new \PDO(dsn: 'mysql:host=mariadb;dbname=esgi;charset=utf8', username: 'esgi', password: '');
+            $this->pdo = new \PDO(dsn: 'mysql:host='.config('database.host').';dbname='.config('database.name').';charset=utf8', username: config('database.username'), password: config('database.password'));
         } catch (\PDOException $e) {
             echo 'Erreur SQL : '.$e->getMessage();
         }
@@ -19,7 +19,7 @@ class DB
         $table       = get_called_class();
         $table       = explode('\\', $table);
         $table       = array_pop($table);
-        $this->table = 'esgi_'.strtolower($table);
+        $this->table = config('database.prefix').strtolower($table);
     }
 
     public static function populate(int $id): object
