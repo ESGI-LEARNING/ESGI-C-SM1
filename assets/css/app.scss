@@ -85,3 +85,11 @@ main form input[type="submit"] {
   font-weight: bold;
   cursor: pointer;
 }
+
+main fieldset label{
+  font-weight: bold;
+}
+main fieldset{
+  margin: 0 auto;
+  max-width: 90rem;
+}

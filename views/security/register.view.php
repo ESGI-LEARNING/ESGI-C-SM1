@@ -1,8 +1,8 @@
 <?php
 
-use App\Form\Auth\LoginType;
+use App\Form\Auth\RegisterType;
 
-$form   = new LoginType();
+$form   = new RegisterType();
 $config = $form->getConfig();
 ?>
 <section>
@@ -28,5 +28,6 @@ $config = $form->getConfig();
 				<p class="error"><?php echo $data['error']; ?></p>
             <?php } ?>
 		</form>
+		<a href="/reset-password">Mot de passe oublié ?</a>
 	</fieldset>
 </section>

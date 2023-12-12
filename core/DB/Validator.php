@@ -8,8 +8,7 @@ class Validator
 
     public function __construct(
         private readonly array $data,
-    )
-    {
+    ) {
     }
 
     public function required(string ...$keys): self
@@ -59,7 +58,7 @@ class Validator
     public function unique(string $table, string ...$keys): self
     {
         foreach ($keys as $key) {
-            $sql = 'SELECT * FROM '.$table.' WHERE '.$key.' = :'.$key;
+            $sql           = 'SELECT * FROM '.$table.' WHERE '.$key.' = :'.$key;
             $queryPrepared = DB::getInstance()->getPDO()->prepare($sql);
             $queryPrepared->execute([$key => $this->data[$key]]);
             $result = $queryPrepared->fetch();

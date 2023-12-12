@@ -6,11 +6,13 @@ class View
 {
     private string $templateName;
     private string $viewName;
+    private array $variables = [];
 
-    public function __construct(string $viewName, string $templateName = 'back')
+    public function __construct(string $viewName, string $templateName = 'back', array $variables = [])
     {
         $this->setViewName($viewName);
         $this->setTemplateName($templateName);
+        $this->setVariables($variables);
     }
 
     public function setTemplateName(string $templateName): void
@@ -29,8 +31,14 @@ class View
         $this->viewName = '../views/'.$viewName.'.view.php';
     }
 
+    public function setVariables(array $variables): void
+    {
+        $this->variables = $variables;
+    }
+
     public function __destruct()
     {
+        extract($this->variables);
         include $this->templateName;
     }
 }

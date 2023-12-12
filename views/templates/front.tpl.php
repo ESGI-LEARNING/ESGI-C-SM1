@@ -16,7 +16,6 @@
 	</nav>
 </header>
 <main>
-	<h1>Template Front</h1>
     <?php include $this->viewName; ?>
 </main>
 <footer>
