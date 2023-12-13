@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Core\DB\DB;
 
-class User extends DB
+class User
 {
     private ?int $id = null;
 
