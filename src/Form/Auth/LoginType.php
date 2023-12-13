@@ -2,7 +2,9 @@
 
 namespace App\Form\Auth;
 
-class LoginType
+use Core\Form\AbstractForm;
+
+class LoginType extends AbstractForm
 {
     public function getConfig(): array
     {
@@ -14,20 +16,28 @@ class LoginType
                 'class'  => 'form',
             ],
             'inputs' => [
-                'Email' => [
+                'email' => [
                     'type'        => 'email',
                     'class'       => 'input-form',
                     'placeholder' => 'email',
                     'required'    => true,
                     'error'       => "Le format de l'email est incorrect"],
 
-                'Mot de passe' => [
+                'password' => [
                     'type'        => 'password',
                     'class'       => 'input-form',
                     'placeholder' => 'mot de passe',
                     'required'    => true,
                     'error'       => 'Votre mot de passe doit faire plus de 8 caractères avec minuscule et chiffre'],
             ],
+        ];
+    }
+
+    public function rules(): array
+    {
+        return [
+            'email'    => ['required', 'email'],
+            'password' => ['required', 'min:8', 'alphanum'],
         ];
     }
 }

@@ -7,7 +7,7 @@ use App\Controllers\ContactController;
 use App\Controllers\GalleryController;
 use App\Controllers\MainController;
 use Core\Config\ConfigLoader;
-use Core\Router;
+use Core\Router\Router;
 
 require __DIR__.'/../vendor/autoload.php';
 
