@@ -5,45 +5,76 @@ namespace App\Controllers\Auth;
 use App\Form\Auth\LoginType;
 use App\Form\Auth\RegisterType;
 use App\Form\Auth\ResetPasswordType;
-use App\Repository\UserRepository;
-use Core\Auth\AuthenticatorInterface;
+use App\Models\User;
+use Core\Auth\Authenticator;
+use Core\Controller\AbstractController;
 use Core\Views\View;
 
-class SecurityController
+class SecurityController extends AbstractController
 {
-
-    public function login(): void
+    public function login(): View
     {
-        $form   = new LoginType();
+        $form = new LoginType();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $repository = new UserRepository();
-            $user = $repository->getOneBy([
-                'email' => $data['email']
-            ]);
+            $user = new User();
+            $user = $user->getOneBy([
+                'email' => $data['email'],
+            ], 'object');
 
-            var_dump($user); die();
+            if ($user && password_verify($data['password'], $user->getPassword())) {
+                $authenticator = new Authenticator();
+                $authenticator->login($user);
+
+                $this->success('Vous êtes connecté');
+                $this->redirect('/');
+            } else {
+                $this->error('Identifiants ou mot de passe incorrects');
+            }
         }
 
-        $myView = new View('security/login', 'front', [
-            'config' => $form->getConfig()
+        return $this->render('security/login', 'front', [
+            'config' => $form->getConfig(),
         ]);
     }
 
-    public function register(): void
+    public function register(): View
     {
         $form   = new RegisterType();
-        $config = $form->getConfig();
-        $myView = new View('security/register', 'front', [
-            'config' => $config,
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $user                = new User();
+            $verifyEmailExisting = $user->getOneBy([
+                'email' => $data['email'],
+            ], 'object');
+
+            if ($verifyEmailExisting) {
+                $this->error('Cet email est déjà utilisé');
+            } else {
+                $user = new User();
+                $user->setUsername($data['username']);
+                $user->setEmail($data['email']);
+                $user->setPassword($data['password']);
+
+                $user->save();
+
+                $this->redirect('/login');
+            }
+        }
+
+        return $this->render('security/register', 'front', [
+            'config' => $form->getConfig(),
         ]);
     }
 
     public function logout(): void
     {
-        $myView = new View('security/logout', 'front');
+        $newSession = new Authenticator();
+        $newSession->logout();
     }
 
     public function resetPassword(): void

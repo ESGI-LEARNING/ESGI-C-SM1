@@ -2,7 +2,9 @@
 
 namespace App\Form\Auth;
 
-class RegisterType
+use Core\Form\AbstractForm;
+
+class RegisterType extends AbstractForm
 {
     public function getConfig(): array
     {
@@ -14,7 +16,7 @@ class RegisterType
                 'class'  => 'form',
             ],
             'inputs' => [
-                'Prénom' => [
+                'username' => [
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'prénom',
@@ -22,29 +24,21 @@ class RegisterType
                     'required'    => true,
                     'error'       => 'Le prénom doit faire plus de 2 caractères'],
 
-                'Nom' => [
-                    'type'        => 'text',
-                    'class'       => 'input-form',
-                    'placeholder' => 'nom',
-                    'minlen'      => 2,
-                    'required'    => true,
-                    'error'       => 'Le nom doit faire plus de 2 caractères'],
-
-                'Email' => [
+                'email' => [
                     'type'        => 'email',
                     'class'       => 'input-form',
                     'placeholder' => 'email',
                     'required'    => true,
                     'error'       => "Le format de l'email est incorrect"],
 
-                'Mot de passe' => [
+                'password' => [
                     'type'        => 'password',
                     'class'       => 'input-form',
                     'placeholder' => 'mot de passe',
                     'required'    => true,
                     'error'       => 'Votre mot de passe doit faire plus de 8 caractères avec minuscule et chiffre'],
 
-                'Confirmation du mot de passe' => [
+                'confirmation_password' => [
                     'type'        => 'password',
                     'class'       => 'input-form',
                     'confirm'     => 'password',

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Core\DB\DB;
+use Core\DB\Model;
 
-class Roles extends DB
+class Roles extends Model
 {
     private ?int $id = null;
 
@@ -12,6 +12,11 @@ class Roles extends DB
 
     private \DateTime $created_at;
     private \DateTime $updated_at;
+
+    public function __construct()
+    {
+        parent::__construct($this);
+    }
 
     public function getUpdatedAt(): \DateTime
     {
