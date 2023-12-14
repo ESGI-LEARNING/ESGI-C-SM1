@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Core\DB\DB;
+use Core\DB\Model;
 
-class InformationPhotograph extends DB
+class InformationPhotograph extends Model
 {
     private ?int $id = null;
 
@@ -23,6 +23,11 @@ class InformationPhotograph extends DB
     private \DateTime $created_at;
 
     private \DateTime $updated_at;
+
+    public function __construct()
+    {
+        parent::__construct($this);
+    }
 
     public function getId(): ?int
     {

@@ -2,11 +2,16 @@
 
 namespace Core\DB;
 
-class AbstractRepository extends DB
+class Model extends DB
 {
-    public function getDataObject(): array
+    private string $table;
+    private mixed $entity;
+
+    public function __construct(mixed $entity)
     {
-        return array_diff_key(get_object_vars($this), get_class_vars(get_class()));
+        parent::__construct();
+        $this->entity = $entity;
+        $this->table  = $this->getTableName();
     }
 
     public static function find(int $id): object
@@ -25,7 +30,7 @@ class AbstractRepository extends DB
             $sql .= ' '.$column.'=:'.$column.' AND';
         }
 
-        $sql           = substr($sql, 0, -3);
+        $sql = substr($sql, 0, -3);
 
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($data);
@@ -41,11 +46,9 @@ class AbstractRepository extends DB
     {
         $data = $this->getDataObject();
 
-        if (empty($this->getId())) {
-
+        if (empty($this->entity->getId())) {
             $sql = 'INSERT INTO '.$this->table.'('.implode(',', array_keys($data)).') 
             VALUES (:'.implode(',:', array_keys($data)).')';
-
         } else {
             $sql = 'UPDATE '.$this->table.' SET ';
 
@@ -54,10 +57,24 @@ class AbstractRepository extends DB
             }
 
             $sql = substr($sql, 0, -1);
-            $sql .= ' WHERE id = '.$this->getId();
+            $sql .= ' WHERE id = '.$this->entity->getId();
         }
 
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($data);
+    }
+
+    public function getDataObject(): array
+    {
+        return array_diff_key(get_object_vars($this), get_class_vars(get_class()));
+    }
+
+    private function getTableName(): string
+    {
+        $table = get_called_class();
+        $table = explode('\\', $table);
+        $table = array_pop($table);
+
+        return config('database.prefix').strtolower($table);
     }
 }

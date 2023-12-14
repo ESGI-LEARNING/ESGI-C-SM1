@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
-use Core\DB\DB;
+use Core\DB\Model;
 
-class Picture extends DB
+class Picture extends Model
 {
     private ?int $id = null;
+
+    public function __construct()
+    {
+        parent::__construct($this);
+    }
 
     public function getId(): ?int
     {
