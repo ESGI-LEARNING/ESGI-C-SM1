@@ -8,6 +8,16 @@ function config(string $key): mixed
     return ConfigLoader::getInstance()->get($key);
 }
 
+function icon(string $iconName): string
+{
+    $iconPath = "../assets/images/icons/{$iconName}.svg";
+    if (file_exists($iconPath)) {
+        return file_get_contents($iconPath);
+    }
+
+    return '?';
+}
+
 function url(string $url, ?array $params = []): string
 {
     return config('app.url') . $url . '/' . implode('/', $params);

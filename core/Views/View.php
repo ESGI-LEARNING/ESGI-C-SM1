@@ -2,6 +2,8 @@
 
 namespace Core\Views;
 
+use Core\Router\Router;
+use Core\Config\ConfigAssets;
 use Core\Session\CsrfTokenService;
 
 class View

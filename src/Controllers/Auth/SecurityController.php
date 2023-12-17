@@ -4,6 +4,7 @@ namespace App\Controllers\Auth;
 
 use App\Form\Auth\LoginType;
 use App\Form\Auth\RegisterType;
+use App\Form\Auth\ResetPasswordType;
 use App\Mails\AuthMail;
 use App\Models\User;
 use Core\Auth\Authenticator;
@@ -32,11 +33,9 @@ class SecurityController extends AbstractController
                 $this->redirect('/login');
             }
         }
-
-        return $this->render('security/login', 'front', [
-            'config' => $form->getConfig(),
-        ]);
+        return $this->render('security/login', 'front');
     }
+
 
     public function register(): View
     {
