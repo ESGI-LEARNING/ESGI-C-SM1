@@ -14,4 +14,8 @@ class MainController
     {
         $myView = new View("main/artist", "front");
     }
+    public function template()
+    {
+        $myView = new View("main/template", "front");
+    }
 }
