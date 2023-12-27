@@ -4,7 +4,7 @@ namespace App\Form\Auth;
 
 use Core\Form\FormType;
 
-class ResetPasswordType extends FormType
+class ForgottenPasswordType extends FormType
 {
     public function setConfig(): void
     {
@@ -16,15 +16,10 @@ class ResetPasswordType extends FormType
                 'class'  => 'form',
             ],
             'inputs' => [
-                'password' => [
-                    'type'        => 'password',
+                'email' => [
+                    'type'        => 'email',
                     'class'       => 'input-form',
-                    'placeholder' => 'nouveau mot de passe',
-                ],
-                'password_confirm' => [
-                    'type'        => 'password',
-                    'class'       => 'input-form',
-                    'confirm'     => 'Nouveau mot de passe',
+                    'placeholder' => 'email',
                 ],
             ],
         ];
@@ -33,7 +28,7 @@ class ResetPasswordType extends FormType
     public function rules(): array
     {
         return [
-            'password' => ['required', 'min:8', 'confirm'],
+            'email' => ['email', 'exist:user.email'],
         ];
     }
 
