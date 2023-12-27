@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'driver'   => 'smtp',
     'host'     => getenv('DB_HOST') ?: 'localhost',
     'database' => getenv('DB_DATABASE') ?: null,
     'port'     => getenv('DB_HOST') ?: '3306',

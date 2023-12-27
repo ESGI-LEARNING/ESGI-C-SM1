@@ -4,7 +4,6 @@ namespace App\Controllers\Auth;
 
 use App\Form\Auth\LoginType;
 use App\Form\Auth\RegisterType;
-use App\Form\Auth\ResetPasswordType;
 use App\Models\User;
 use Core\Auth\Authenticator;
 use Core\Controller\AbstractController;
@@ -29,7 +28,7 @@ class SecurityController extends AbstractController
                 $authenticator->login($user);
 
                 $this->success('Vous êtes connecté');
-                $this->redirect('/');
+                $this->redirect('login');
             } else {
                 $this->error('Identifiants ou mot de passe incorrects');
             }
@@ -42,28 +41,18 @@ class SecurityController extends AbstractController
 
     public function register(): View
     {
-        $form   = new RegisterType();
+        $form = new RegisterType();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $user                = new User();
-            $verifyEmailExisting = $user->getOneBy([
-                'email' => $data['email'],
-            ], 'object');
+            $user = new User();
+            $user->setUsername($data['username']);
+            $user->setEmail($data['email']);
+            $user->setPassword($data['password']);
+            $user->save();
 
-            if ($verifyEmailExisting) {
-                $this->error('Cet email est déjà utilisé');
-            } else {
-                $user = new User();
-                $user->setUsername($data['username']);
-                $user->setEmail($data['email']);
-                $user->setPassword($data['password']);
-
-                $user->save();
-
-                $this->redirect('/login');
-            }
+            $this->redirect('/login');
         }
 
         return $this->render('security/register', 'front', [
@@ -75,14 +64,5 @@ class SecurityController extends AbstractController
     {
         $newSession = new Authenticator();
         $newSession->logout();
-    }
-
-    public function resetPassword(): void
-    {
-        $form   = new ResetPasswordType();
-        $config = $form->getConfig();
-        $myView = new View('security/resetPassword', 'front', [
-            'config' => $config,
-        ]);
     }
 }

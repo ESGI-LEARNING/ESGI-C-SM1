@@ -2,13 +2,13 @@
 
 namespace App\Form\Auth;
 
-use Core\Form\AbstractForm;
+use Core\Form\FormType;
 
-class LoginType extends AbstractForm
+class LoginType extends FormType
 {
-    public function getConfig(): array
+    public function setConfig(): void
     {
-        return [
+        $this->config =  [
             'config' => [
                 'method' => 'POST',
                 'action' => '',

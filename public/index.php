@@ -2,6 +2,7 @@
 
 use App\Controllers\AboutUsController;
 use App\Controllers\Admin\AdminController;
+use App\Controllers\Auth\ForgotPasswordController;
 use App\Controllers\Auth\SecurityController;
 use App\Controllers\ContactController;
 use App\Controllers\GalleryController;
@@ -25,7 +26,8 @@ $router->get('/gallery', [GalleryController::class, 'gallery']);
 $router->get('/login', [SecurityController::class, 'login']);
 $router->get('/register', [SecurityController::class, 'register']);
 $router->get('/logout', [SecurityController::class, 'logout']);
-$router->get('/reset-password', [SecurityController::class, 'resetPassword']);
+$router->get('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+$router->get('/reset/{token}', [ForgotPasswordController::class, 'resetPassword']);
 
 $router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
 $router->get('/admin/comments', [AdminController::class, 'comments']);
