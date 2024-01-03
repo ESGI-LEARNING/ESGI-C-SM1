@@ -75,6 +75,6 @@ class Model extends DB
         $table = explode('\\', $table);
         $table = array_pop($table);
 
-        return config('database.prefix').strtolower($table);
+        return config('database.prefix'). '_' .strtolower($table);
     }
 }
