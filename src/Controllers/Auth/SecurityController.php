@@ -27,10 +27,10 @@ class SecurityController extends AbstractController
                 $authenticator = new Authenticator();
                 $authenticator->login($user);
 
-                $this->success('Vous êtes connecté');
+                $this->addFlash('success', 'Vous êtes connecté');
                 $this->redirect('login');
             } else {
-                $this->error('Identifiants ou mot de passe incorrects');
+                $this->addFlash('error','Identifiants ou mot de passe incorrects');
             }
         }
 
@@ -52,6 +52,7 @@ class SecurityController extends AbstractController
             $user->setPassword($data['password']);
             $user->save();
 
+            $this->addFlash('success', 'Votre compte a bien été créé');
             $this->redirect('/login');
         }
 

@@ -2,19 +2,32 @@
 
 namespace Core\Controller;
 
-use Core\Router\Router;
-use Core\Session\FlashSession;
+use Core\Session\FlashService;
 use Core\Views\View;
 
-class AbstractController extends FlashSession
+class AbstractController
 {
     public function redirect(string $name): void
     {
-        Router::class->getInstance()->redirect($name);
+        header('Location: ' . $name);
     }
 
     public function render(string $view, string $template, array $params = []): View
     {
         return new View($view, $template, $params);
+    }
+
+    public function addFlash(string $type, string $message): void
+    {
+        $flash = new FlashService();
+
+        switch ($type) {
+            case 'success':
+                $flash->success($message);
+                break;
+            case 'error':
+                $flash->error($message);
+                break;
+        }
     }
 }
