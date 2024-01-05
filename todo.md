@@ -22,13 +22,13 @@
     - [ ] Email admin
   - [ ] Redirection vers la page de login admin
 
-- [ ] Authentification
-  - [ ] Register
+- [x] Authentification
+  - [x] Register
     - [ ] Envoi de mail de verification avec token
-    - [ ] (username, email, password, confirm password)
-  - [ ] Login
-    - [ ] (username, password)
-  - [ ] Logout
+    - [x] (username, email, password, confirm password)
+  - [x] Login
+    - [x] (username, password)
+  - [x] Logout
   - [ ] Reset password
     - [ ] Envoi de mail
     - [ ] Génération de token

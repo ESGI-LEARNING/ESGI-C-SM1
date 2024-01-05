@@ -23,7 +23,7 @@ class ForgotPasswordController extends AbstractController
             $mailer->send(
                 $data['email'],
                 'reset password',
-                'mail.auth.resetPassword',
+                'auth.resetPassword',
                 ''
             );
 
@@ -38,6 +38,26 @@ class ForgotPasswordController extends AbstractController
     public function resetPassword(string $token): View
     {
         $form = new ResetPasswordType();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $resetPassword = new ResetPassword();
+            $resetPassword = $resetPassword->getOneBy(['token' => $token,], 'object');
+
+            if ($resetPassword) {
+                $user = $resetPassword->getUser();
+                $user->setPassword($data['password']);
+                $user->save();
+
+                $resetPassword->delete();
+
+                $this->addFlash('success', 'Votre mot de passe a bien été modifié');
+                $this->redirect('/login');
+            } else {
+                $this->addFlash('error', 'Token invalide');
+            }
+        }
 
         return $this->render('security/resetPassword', 'front', [
             'config' => $form->getConfig(),

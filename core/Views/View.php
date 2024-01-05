@@ -42,11 +42,6 @@ class View
         include "../views/components/".$component.".php";
     }
 
-    public function path(string $path): string
-    {
-        return Router::getInstance()->path($path);
-    }
-
     public function setVariables(array $params): void
     {
         $this->params = $params;
