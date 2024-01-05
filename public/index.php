@@ -20,7 +20,7 @@ $router = new Router();
 
 $router->get('/', [MainController::class, 'home']);
 $router->get('/contact', [ContactController::class, 'contact']);
-$router->get('/a-propos', [AboutUsController::class, 'aboutUs']);
+$router->get('/about', [AboutUsController::class, 'aboutUs']);
 $router->get('/gallery', [GalleryController::class, 'gallery']);
 
 $router->get('/login', [SecurityController::class, 'login']);

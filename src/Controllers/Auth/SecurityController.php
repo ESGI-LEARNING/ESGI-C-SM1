@@ -4,6 +4,7 @@ namespace App\Controllers\Auth;
 
 use App\Form\Auth\LoginType;
 use App\Form\Auth\RegisterType;
+use App\Mails\AuthMail;
 use App\Models\User;
 use Core\Auth\Authenticator;
 use Core\Controller\AbstractController;
@@ -27,10 +28,11 @@ class SecurityController extends AbstractController
                 $authenticator = new Authenticator();
                 $authenticator->login($user);
 
-                $this->addFlash('success', 'Vous êtes connecté');
-                $this->redirect('login');
+                $this->addFlash('success', 'Vous êtes bien connecté');
+                $this->redirect('/');
             } else {
                 $this->addFlash('error','Identifiants ou mot de passe incorrects');
+                $this->redirect('/login');
             }
         }
 
@@ -52,6 +54,12 @@ class SecurityController extends AbstractController
             $user->setPassword($data['password']);
             $user->save();
 
+            //Send mails for verify email
+            $mailer = new AuthMail();
+            $mailer->sendVerifyEmail($data['email'], [
+                'username' => $data['username'],
+            ]);
+
             $this->addFlash('success', 'Votre compte a bien été créé');
             $this->redirect('/login');
         }
@@ -65,5 +73,8 @@ class SecurityController extends AbstractController
     {
         $newSession = new Authenticator();
         $newSession->logout();
+
+        $this->addFlash('success', 'Vous êtes bien déconnecté');
+        $this->redirect('/');
     }
 }

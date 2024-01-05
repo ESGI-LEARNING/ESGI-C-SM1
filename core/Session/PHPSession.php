@@ -2,7 +2,7 @@
 
 namespace Core\Session;
 
-class PHPSession implements SessionInterface
+class PHPSession
 {
     public function get(string $key, mixed $default = null): mixed
     {
