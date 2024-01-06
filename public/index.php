@@ -25,9 +25,12 @@ $router->get('/gallery', [GalleryController::class, 'gallery']);
 
 $router->get('/login', [SecurityController::class, 'login']);
 $router->get('/register', [SecurityController::class, 'register']);
+$router->post('/register', [SecurityController::class, 'register']);
 $router->get('/logout', [SecurityController::class, 'logout']);
 $router->get('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
-$router->get('/reset/{token}', [ForgotPasswordController::class, 'resetPassword']);
+$router->post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+$router->get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword']);
+$router->post('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword']);
 
 $router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
 $router->get('/admin/comments', [AdminController::class, 'comments']);

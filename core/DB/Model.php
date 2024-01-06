@@ -56,12 +56,20 @@ class Model extends DB
                 $sql .= $column.'=:'.$column.',';
             }
 
-            $sql = substr($sql, 0, -1);
-            $sql .= ' WHERE id = '.$this->entity->getId();
+            $sql = rtrim($sql, ',');
+            $sql .= ' WHERE id = :id';
+            $data['id'] = $this->entity->getId();
         }
 
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($data);
+    }
+
+    public function delete(): void
+    {
+        $sql = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute(['id' => $this->entity->getId()]);
     }
 
     public function getDataObject(): array
@@ -74,6 +82,8 @@ class Model extends DB
         $table = get_called_class();
         $table = explode('\\', $table);
         $table = array_pop($table);
+
+        $table = preg_replace('/(?<!^)([A-Z])/', '_$1', $table);
 
         return config('database.prefix'). '_' .strtolower($table);
     }
