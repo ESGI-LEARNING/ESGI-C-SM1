@@ -6,17 +6,20 @@ use Core\DB\Model;
 
 class ResetPassword extends Model
 {
-    private ?int $id = null;
+    protected ?int $id = null;
 
-    private ?string $token = null;
+    protected ?string $token = null;
 
-    private User $user;
+    protected int $user_id;
 
-    private \DateTime $created_at;
+    protected string $created_at;
+
+    protected string $expired_at;
 
     public function __construct()
     {
         parent::__construct($this);
+        $this->created_at = date('Y-m-d H:i:s');
     }
 
     public function getId(): ?int
@@ -39,23 +42,33 @@ class ResetPassword extends Model
         $this->token = $token;
     }
 
-    public function getUser(): User
+    public function getUserId(): int
     {
-        return $this->user;
+        return $this->user_id;
     }
 
-    public function setUser(User $user): void
+    public function setUserId(int $user_id): void
     {
-        $this->user = $user;
+        $this->user_id = $user_id;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): string
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTime $created_at): void
+    public function setCreatedAt(string $created_at): void
     {
         $this->created_at = $created_at;
+    }
+
+    public function getExpiredAt(): string
+    {
+        return $this->expired_at;
+    }
+
+    public function setExpiredAt(string $expired_at): void
+    {
+        $this->expired_at = $expired_at;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Controllers\Auth;
 
 use App\Form\Auth\ForgottenPasswordType;
 use App\Form\Auth\ResetPasswordType;
+use App\Mails\AuthMail;
 use App\Models\ResetPassword;
 use App\Models\User;
 use Core\Controller\AbstractController;
@@ -19,14 +20,18 @@ class ForgotPasswordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $mailer = new Mailer();
-            $mailer->send(
-                $data['email'],
-                'reset password',
-                'auth.resetPassword',
-                ''
-            );
+            $user = new User();
+            $user = $user->getOneBy(['email' => $data['email']], 'object');
 
+            $token = $this->setToken($user->getId());
+
+            $mailer = new AuthMail();
+            $mailer->sendResetPassword($data['email'], [
+                'username' => $user->getUsername(),
+                'token' => $token,
+            ]);
+
+            $this->addFlash('success', 'Un email vous a été envoyé pour réinitialiser votre mot de passe');
             $this->redirect('/login');
         }
 
@@ -38,25 +43,26 @@ class ForgotPasswordController extends AbstractController
     public function resetPassword(string $token): View
     {
         $form = new ResetPasswordType();
+        $resetPassword = new ResetPassword();
+        $resetPassword = $resetPassword->getOneBy(['token' => $token], 'object');
+
+        if ($resetPassword->getExpiredAt() < date('Y-m-d H:i:s')) {
+            $this->addFlash('error', 'Token expiré');
+            $this->redirect('/login');
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $resetPassword = new ResetPassword();
-            $resetPassword = $resetPassword->getOneBy(['token' => $token,], 'object');
+            $user = new User();
+            $user = $user->find($resetPassword->getUserId());
+            $user->setPassword($data['password']);
+            $user->save();
 
-            if ($resetPassword) {
-                $user = $resetPassword->getUser();
-                $user->setPassword($data['password']);
-                $user->save();
+            $resetPassword->delete();
 
-                $resetPassword->delete();
-
-                $this->addFlash('success', 'Votre mot de passe a bien été modifié');
-                $this->redirect('/login');
-            } else {
-                $this->addFlash('error', 'Token invalide');
-            }
+            $this->addFlash('success', 'Votre mot de passe a bien été modifié');
+            $this->redirect('/login');
         }
 
         return $this->render('security/resetPassword', 'front', [
@@ -64,16 +70,14 @@ class ForgotPasswordController extends AbstractController
         ]);
     }
 
-    private function setToken(string $email): string
+    private function setToken(string $id): string
     {
-        $token = bin2hex(random_bytes(60));
-
-        $user = new User();
-        $user->getOneBy(['email' => $email]);
+        $token = bin2hex(random_bytes(32));
 
         $resetPassword = new ResetPassword();
         $resetPassword->setToken($token);
-        $resetPassword->setUser($user);
+        $resetPassword->setUserId($id);
+        $resetPassword->setExpiredAt(date('Y-m-d H:i:s', strtotime('+1 hour')));
         $resetPassword->save();
 
         return $token;

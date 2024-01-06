@@ -16,7 +16,9 @@ class User extends Model
 
     protected ?string $avatar = null;
 
-    protected bool $isDeleted;
+    protected int $is_deleted = 0;
+
+    protected int $verify = 0;
 
     protected string $created_at;
 
@@ -47,7 +49,7 @@ class User extends Model
 
     public function setUsername(string $username): void
     {
-        $this->username = strtoupper(trim($username));
+        $this->username =  ucwords(strtolower(trim($username)));
     }
 
     public function getEmail(): string
@@ -100,13 +102,23 @@ class User extends Model
         $this->updated_at = date('Y-m-d H:i:s', strtotime($updated_at));
     }
 
-    public function isDeleted(): bool
+    public function getIsDeleted(): int
     {
-        return $this->isDeleted;
+        return $this->is_deleted;
     }
 
-    public function setIsDeleted(bool $isDeleted): void
+    public function setIsDeleted(int $is_deleted): int
     {
-        $this->isDeleted = $isDeleted;
+        $this->is_deleted = $is_deleted;
+    }
+
+    public function getIdVerify(): int
+    {
+        return $this->verify;
+    }
+
+    public function setVerify(int $verify): int
+    {
+        $this->verify = $verify;
     }
 }
