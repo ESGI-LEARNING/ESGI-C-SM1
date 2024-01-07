@@ -2,12 +2,13 @@
 
 namespace App\Controllers;
 
+use Core\Controller\AbstractController;
 use Core\Views\View;
 
-class ContactController
+class ContactController extends AbstractController
 {
-    public function contact(): void
+    public function contact(): View
     {
-        $myView = new View('main/contact', 'front');
+        return $this->render('main/contact', 'front');
     }
 }

@@ -1,11 +1,11 @@
-<?php echo $this->includeComponent('meta', $config = []); ?>
+<?= $this->component('meta', $config = []); ?>
 <body>
 <header>
-    <?php echo $this->includeComponent('navbar', $config = []); ?>
+    <?= $this->component('navbarAdmin', $config = []); ?>
 </header>
-<main>
-    <?php include $this->viewName; ?>
+<main class="main-admin">
+    <?= $this->component('darkMode', $config = []); ?>
+    <?= include $this->viewName; ?>
 </main>
-<?php echo $this->includeComponent('footer', $config = []); ?>
 </body>
 </html>

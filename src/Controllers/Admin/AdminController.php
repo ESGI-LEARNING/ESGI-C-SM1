@@ -2,27 +2,43 @@
 
 namespace App\Controllers\Admin;
 
+use App\Models\Comment;
+use App\Models\Picture;
+use App\Models\User;
+use Core\Controller\AbstractController;
 use Core\Views\View;
 
-class AdminController
+class AdminController extends AbstractController
 {
-    public function dashboard(): void
+    public function dashboard(): View
     {
-        $myView = new View('admin/dashboard', 'back');
+        $nbUsers    = User::count();
+        $nbComments = Comment::count();
+        $nbImages   = Picture::count();
+
+        return $this->render('admin/dashboard', 'back', [
+            'nbUsers'    => $nbUsers,
+            'nbComments' => $nbComments,
+            'nbImages'   => $nbImages,
+        ]);
     }
 
-    public function comments(): void
+    public function comments(): View
     {
-        $myView = new View('admin/comments', 'back');
+        $comments = Comment::findAll();
+
+        return $this->render('admin/comments', 'back', [
+            'comments' => $comments,
+        ]);
     }
 
-    public function roles(): void
+    public function roles(): View
     {
-        $myView = new View('admin/roles', 'back');
+        return $this->render('admin/roles', 'back');
     }
 
-    public function pages(): void
+    public function pages(): View
     {
-        $myView = new View('admin/pages', 'back');
+        return $this->render('admin/pages', 'back');
     }
 }

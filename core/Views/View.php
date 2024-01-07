@@ -2,8 +2,6 @@
 
 namespace Core\Views;
 
-use Core\Router\Router;
-use Core\Config\ConfigAssets;
 use Core\Session\CsrfTokenService;
 
 class View
@@ -40,11 +38,10 @@ class View
 
     public function component(string $component, array $config, array $data = []): void
     {
-        if(!file_exists("../views/components/".$component.".php"))
-        {
-            die("Le composant views/components/".$component.".php n'existe pas");
+        if (!file_exists('../views/components/'.$component.'.php')) {
+            exit('Le composant views/components/'.$component.".php n'existe pas");
         }
-        include "../views/components/".$component.".php";
+        include '../views/components/'.$component.'.php';
     }
 
     public function setVariables(array $params): void
@@ -55,6 +52,7 @@ class View
     public function setCsrf(): string
     {
         $csrfTokenService = new CsrfTokenService();
+
         return $csrfTokenService->generateToken();
     }
 

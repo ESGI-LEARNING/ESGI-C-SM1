@@ -10,14 +10,14 @@ class FlashService extends PHPSession
 
     public function success(string $message): void
     {
-        $flash = $this->get(self::SESSION_KEY, []);
+        $flash            = $this->get(self::SESSION_KEY, []);
         $flash['success'] = $message;
         $this->set(self::SESSION_KEY, $flash);
     }
 
     public function error(string $message): void
     {
-        $flash = $this->get(self::SESSION_KEY, []);
+        $flash          = $this->get(self::SESSION_KEY, []);
         $flash['error'] = $message;
         $this->set(self::SESSION_KEY, $flash);
     }

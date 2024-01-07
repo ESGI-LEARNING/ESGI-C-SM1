@@ -36,5 +36,4 @@ class ResetPasswordType extends FormType
             'password' => ['required', 'min:8', 'confirm'],
         ];
     }
-
 }

@@ -1,29 +1,31 @@
-<form method="<?php echo $config['config']['method']; ?>"
-      action="<?php echo $config['config']['action']; ?>"
-      class="<?php echo $config['config']['class']; ?>">
+<form method="<?= $config['config']['method']; ?>"
+      action="<?= $config['config']['action']; ?>"
+      class="<?= $config['config']['class']; ?>">
+	<fieldset>
+        <?php foreach ($config['inputs'] as $name => $configInput) { ?>
+	        <legend><h2><?= $name; ?></h2></legend>
+	        <input
+					name="<?= $name; ?>"
+					type="<?= $configInput['type']               ?? 'text'; ?>"
+					id="<?= $configInput['id']                   ?? ''; ?>"
+					class="<?= $configInput['class']             ?? ''; ?>"
+					placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
+					value="<?= $configInput['value']             ?? ''; ?>"
+			><br>
 
-    <?php foreach ($config['inputs'] as $name => $configInput) { ?>
-
-        <input
-            name="<?php echo $name; ?>"
-            type="<?php echo $configInput['type']               ?? 'text'; ?>"
-            id="<?php echo $configInput['id']                   ?? ''; ?>"
-            class="<?php echo $configInput['class']             ?? ''; ?>"
-            placeholder="<?php echo $configInput['placeholder'] ?? ''; ?>"
-            value="<?php echo $configInput['value']             ?? ''; ?>"
-        ><br>
-
-        <?php if (!empty($configInput['errors'])) { ?>
-            <?php foreach ($configInput['errors'] as $fieldErrors) { ?>
-                <?php foreach ((array) $fieldErrors as $error) { ?>
-                    <p class="error"><?php echo $error; ?></p>
+            <?php if (!empty($configInput['errors'])) { ?>
+                <?php foreach ($configInput['errors'] as $fieldErrors) { ?>
+			        <ul class="alert-list alert alert-error">
+                        <?php foreach ((array) $fieldErrors as $error) { ?>
+					        <li><?= $error; ?></li>
+                        <?php } ?>
+			        </ul>
                 <?php } ?>
             <?php } ?>
-        <?php } ?>
 
     <?php } ?>
 
     <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
 
-    <input type="submit" name="submit" value="<?php echo $config['config']['submit']; ?>">
+    <input type="submit" name="submit" value="<?= $config['config']['submit']; ?>">
 </form>

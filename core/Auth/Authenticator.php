@@ -31,11 +31,13 @@ class Authenticator extends PHPSession
 
         if ($userId) {
             try {
-                $user = new User();
+                $user       = new User();
                 $this->user = $user->getOneBy(['id' => $userId], 'object');
+
                 return $this->user;
             } catch (\Exception $e) {
                 $this->logout();
+
                 return null;
             }
         }

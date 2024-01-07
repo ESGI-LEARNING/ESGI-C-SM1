@@ -1,7 +1,7 @@
 <table class="subcopy" width="100%" cellpadding="0" cellspacing="0" role="presentation">
     <tr>
         <td>
-            Bonjour, <?= $username ?>!
+            Bonjour, <?= $username; ?>!
         </td>
     </tr>
 </table>
@@ -23,7 +23,7 @@
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation">
                             <tr>
                                 <td>
-                                    <a href="<?= url('/reset-password', ['token' => $token]) ?>" class="button button-primary" target="_blank"
+                                    <a href="<?= url('/reset-password', ['token' => $token]); ?>" class="button button-primary" target="_blank"
                                        rel="noopener">
                                         Modifier mon mot de passe
                                     </a>

@@ -8,7 +8,6 @@ use App\Mails\AuthMail;
 use App\Models\ResetPassword;
 use App\Models\User;
 use Core\Controller\AbstractController;
-use Core\Mailer\Mailer;
 use Core\Views\View;
 
 class ForgotPasswordController extends AbstractController
@@ -20,13 +19,13 @@ class ForgotPasswordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $user = User::findBy(['email' => $data['email']]);
+            $user  = User::findBy(['email' => $data['email']]);
             $token = $this->setToken($user->getId());
 
             $mailer = new AuthMail();
             $mailer->sendResetPassword($data['email'], [
                 'username' => $user->getUsername(),
-                'token' => $token,
+                'token'    => $token,
             ]);
 
             $this->addFlash('success', 'Un email vous a été envoyé pour réinitialiser votre mot de passe');
@@ -34,13 +33,13 @@ class ForgotPasswordController extends AbstractController
         }
 
         return $this->render('security/forgottenPassword', 'front', [
-            'config' => $form->getConfig(),
+            'form' => $form->getConfig(),
         ]);
     }
 
     public function resetPassword(string $token): View
     {
-        $form = new ResetPasswordType();
+        $form          = new ResetPasswordType();
         $resetPassword = ResetPassword::findBy(['token' => $token]);
 
         if ($resetPassword->getExpiredAt() < date('Y-m-d H:i:s')) {
@@ -63,7 +62,7 @@ class ForgotPasswordController extends AbstractController
         }
 
         return $this->render('security/resetPassword', 'front', [
-            'config' => $form->getConfig(),
+            'form' => $form->getConfig(),
         ]);
     }
 

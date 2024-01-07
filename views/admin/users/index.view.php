@@ -1,38 +1,43 @@
-<div>
-    <h1>Users</h1>
-    <a href="/admin/users/create">
-        Créer un utilisateurs
-    </a>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($users as $user): ?>
-                <tr>
-                    <td><?= $user->getId() ?></td>
-                    <td><?= $user->getUsername() ?></td>
-                    <td><?= $user->getEmail() ?></td>
-                    <td>
-                        #
-                    </td>
-                    <td>
-                        <a href="/admin/users/edit/<?= $user->getId() ?>">
-                            Modifier
-                        </a>
-                        <form method="POST" action="/admin/users/delete/<?= $user->getId() ?>" onsubmit="return confirm('Etes vous vraiment sur ?')">
-                            <button type="submit">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-            <?php endforeach ?>
-        </tbody>
-    </table>
+<div class="admin-container">
+    <?= $this->component('sideBarAdmin', $config = []); ?>
+	<section class="table-view-container">
+		<div class="table-view-header">
+			<h2>Utilisateur</h2>
+			<a class="button button-white button-md" href="/admin/users/create">
+				Créer un utilisateurs
+			</a>
+		</div>
+		<table>
+			<thead>
+			<tr>
+				<th>Id</th>
+				<th>Username</th>
+				<th>Email</th>
+				<th>Roles</th>
+				<th>Actions</th>
+			</tr>
+			</thead>
+			<tbody>
+            <?php foreach ($users as $user) { ?>
+				<tr>
+					<td><?= $user->getId(); ?></td>
+					<td><?= $user->getUsername(); ?></td>
+					<td><?= $user->getEmail(); ?></td>
+					<td>
+						#
+					</td>
+					<td class="tableau-action">
+						<a class="button button-blue button-sm" href="/admin/users/edit/<?= $user->getId(); ?>">
+							<?= icon('square-pen'); ?>
+						</a>
+						<form method="POST" action="/admin/users/delete/<?= $user->getId(); ?>"
+						      onsubmit="return confirm('Etes vous vraiment sur ?')">
+							<button class="button button-red button-sm" type="submit"><?= icon('x'); ?></button>
+						</form>
+					</td>
+				</tr>
+            <?php } ?>
+			</tbody>
+		</table>
+	</section>
 </div>

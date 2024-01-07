@@ -2,12 +2,13 @@
 
 namespace App\Controllers;
 
+use Core\Controller\AbstractController;
 use Core\Views\View;
 
-class GalleryController
+class GalleryController extends AbstractController
 {
-    public function gallery(): void
+    public function gallery(): View
     {
-        $myView = new View('main/gallery', 'front');
+        return $this->render('main/gallery', 'front');
     }
 }

@@ -1,8 +1,4 @@
 <section>
-	<fieldset>
-        <fieldset>
-            <legend><h2>Mot de passe oublié</h2></legend>
-            <?= $this->component('form', $configForm) ?>
-        </fieldset>
-	</fieldset>
+	<h2>Réinitialisation du mot de passe</h2>
+	<?= $this->component('form', $form); ?>
 </section>

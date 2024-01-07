@@ -2,7 +2,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title><?= config('app.name') ?? 'Photography' ?></title>
+    <title><?= config('app.name') ?? 'Photography'; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="color-scheme" content="light">
@@ -37,7 +37,7 @@
                 <tr>
                     <td class="header">
                         <a href="#" style="display: inline-block;">
-                            <?= config('app.name') ?? 'Photography' ?>
+                            <?= config('app.name') ?? 'Photography'; ?>
                         </a>
                     </td>
                 </tr>
@@ -64,7 +64,7 @@
                                role="presentation">
                             <tr>
                                 <td class="content-cell" align="start">
-                                    © <?= date('Y') ?> <?= config('app.name') ?? 'Photography' ?>. All rights reserved.
+                                    © <?= date('Y'); ?> <?= config('app.name') ?? 'Photography'; ?>. All rights reserved.
                                 </td>
                             </tr>
                         </table>

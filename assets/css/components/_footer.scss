@@ -1,5 +1,4 @@
-/* FOOTER */
-footer {
+.footer-container {
   background-color: var(--black-light);
   color: var(--white);
   width: 100%;
@@ -9,21 +8,58 @@ footer {
     justify-content: space-between;
     background: var(--black);
     padding: 2rem 5rem;
+    align-items: center;
+    @media screen and (max-width: 600px) {
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
 
-    ul {
+    }
+
+    .social-icons {
       display: flex;
       align-items: center;
+      @media screen and (max-width: 600px) {
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      li {
+        margin: 0 1rem;
+        @media screen and (max-width: 600px) {
+          margin: 1rem 0;
+
+        }
+
+        a {
+          color: var(--white);
+          text-decoration: none;
+        }
+
+        svg {
+          color: var(--white);
+        }
+      }
+    }
+
+    .legal-links {
+      display: flex;
+      align-items: center;
+      @media screen and (max-width: 600px) {
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
 
       li {
         margin: 0 1rem;
 
         a {
-          color: #fff;
-          font-weight: normal;
+          color: var(--white);
           text-decoration: none;
         }
       }
     }
   }
-
 }

@@ -1,7 +1,4 @@
 <section>
-    <fieldset>
-        <legend><h2>S'inscrire</h2></legend>
-        <?= $this->component('form', $config) ?>
-        <a href="/forgot-password">Mot de passe oublié ?</a>
-    </fieldset>
+	<h2>Inscription</h2>
+    <?= $this->component('form', $form); ?>
 </section>

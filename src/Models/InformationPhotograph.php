@@ -102,7 +102,7 @@ class InformationPhotograph extends Model
         $this->is_deleted = $id_deleted;
     }
 
-    public function getCreatedAt():string
+    public function getCreatedAt(): string
     {
         return $this->created_at;
     }
@@ -112,7 +112,7 @@ class InformationPhotograph extends Model
         $this->created_at = $created_at;
     }
 
-    public function getUpdatedAt():string
+    public function getUpdatedAt(): string
     {
         return $this->updated_at;
     }

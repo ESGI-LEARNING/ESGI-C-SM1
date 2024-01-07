@@ -35,7 +35,7 @@ class AdminUserController extends AbstractController
         }
 
         return $this->render('admin/users/create', 'back', [
-            'form' => $form->getConfig()
+            'form' => $form->getConfig(),
         ]);
     }
 
@@ -59,7 +59,7 @@ class AdminUserController extends AbstractController
 
         return $this->render('admin/users/edit', 'back', [
             'user' => $user,
-            'form' => $form->getConfig()
+            'form' => $form->getConfig(),
         ]);
     }
 

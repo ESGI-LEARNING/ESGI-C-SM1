@@ -31,5 +31,4 @@ class ForgottenPasswordType extends FormType
             'email' => ['email', 'exist:user.email'],
         ];
     }
-
 }

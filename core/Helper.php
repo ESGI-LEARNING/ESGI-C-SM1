@@ -1,7 +1,6 @@
 <?php
 
 use Core\Config\ConfigLoader;
-use Core\Session\CsrfTokenService;
 
 function config(string $key): mixed
 {
@@ -20,7 +19,7 @@ function icon(string $iconName): string
 
 function url(string $url, ?array $params = []): string
 {
-    return config('app.url') . $url . '/' . implode('/', $params);
+    return config('app.url').$url.'/'.implode('/', $params);
 }
 
 function assetLoader(): string
@@ -44,8 +43,8 @@ function assetLoader(): string
 /** Pour le dev **/
 function dd(mixed $var): void
 {
-    echo "<pre>";
+    echo '<pre>';
     var_dump($var);
-    echo "</pre>";
-    die();
+    echo '</pre>';
+    exit;
 }

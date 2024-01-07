@@ -14,7 +14,7 @@ class Material extends Model
 
     protected string $description;
 
-    protected  ?string $link = null;
+    protected ?string $link = null;
 
     protected ?string $image = null;
 
