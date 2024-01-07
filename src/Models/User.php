@@ -107,7 +107,7 @@ class User extends Model
         return $this->is_deleted;
     }
 
-    public function setIsDeleted(int $is_deleted): int
+    public function setIsDeleted(int $is_deleted): void
     {
         $this->is_deleted = $is_deleted;
     }
@@ -117,7 +117,7 @@ class User extends Model
         return $this->verify;
     }
 
-    public function setVerify(int $verify): int
+    public function setVerify(int $verify): void
     {
         $this->verify = $verify;
     }

@@ -5,9 +5,11 @@ namespace Core\Form;
 class FormType
 {
     protected array $config = [];
+    protected ?object $data = null;
 
-    public function __construct()
+    public function __construct(?object $data = null)
     {
+        $this->data = $data;
         $this->setConfig();
     }
 
