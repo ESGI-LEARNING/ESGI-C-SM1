@@ -10,8 +10,7 @@ class Validator
 
     public function __construct(
         private readonly array $data = []
-    )
-    {
+    ) {
     }
 
     public function validate(array $rules): void
@@ -26,8 +25,8 @@ class Validator
     public function applyRule(mixed $field, $rule): void
     {
         $ruleParts = explode(':', $rule);
-        $ruleName = $ruleParts[0];
-        $ruleArgs = isset($ruleParts[1]) ? explode(',', $ruleParts[1]) : [];
+        $ruleName  = $ruleParts[0];
+        $ruleArgs  = isset($ruleParts[1]) ? explode(',', $ruleParts[1]) : [];
 
         switch ($ruleName) {
             case 'required':
@@ -73,22 +72,22 @@ class Validator
 
     private function min(string $min, string $field): void
     {
-        if (strlen($this->data[$field]) < (int)$min) {
-            $this->errors[$field][] = 'Le champ doit contenir au moins ' . $min . ' caractères';
+        if (strlen($this->data[$field]) < (int) $min) {
+            $this->errors[$field][] = 'Le champ doit contenir au moins '.$min.' caractères';
         }
     }
 
     private function max(string $max, string $field): void
     {
-        if (strlen($this->data[$field]) > (int)$max) {
-            $this->errors[$field][] = 'Le champ doit contenir au plus ' . $max . ' caractères';
+        if (strlen($this->data[$field]) > (int) $max) {
+            $this->errors[$field][] = 'Le champ doit contenir au plus '.$max.' caractères';
         }
     }
 
     private function confirm(string $filed): void
     {
-        if ($this->data[$filed] !== $this->data[$filed . '_confirm']) {
-            $this->errors[$filed] = 'Le champ ' . $filed . ' doit être identique au champ confirmation';
+        if ($this->data[$filed] !== $this->data[$filed.'_confirm']) {
+            $this->errors[$filed] = 'Le champ '.$filed.' doit être identique au champ confirmation';
         }
     }
 
@@ -99,8 +98,8 @@ class Validator
 
     private function exist(string $field, string $table, string $column): void
     {
-        $db = new DB();
-        $table = config('database.prefix') . '_' . $table;
+        $db    = new DB();
+        $table = config('database.prefix').'_'.$table;
 
         $sql = "SELECT * FROM $table WHERE $column = :$column";
 
@@ -111,7 +110,7 @@ class Validator
         $result = $query->fetch();
 
         if (!$result) {
-            $this->errors[$field][] = 'L\'' . $field . ' n\'existe pas';
+            $this->errors[$field][] = 'L\''.$field.' n\'existe pas';
         }
     }
 }

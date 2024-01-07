@@ -14,7 +14,7 @@ class Picture extends Model
 
     protected string $description;
 
-    protected  ?string $image = null;
+    protected ?string $image = null;
 
     protected int $user_id;
 

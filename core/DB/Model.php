@@ -8,10 +8,10 @@ class Model extends DB
     private mixed $entity;
 
     private array $whereCondition = [];
-    private array $joins = [];
-    private array $orderBy = [];
-    private array $columns = [];
-    private array $limit = [];
+    private array $joins          = [];
+    private array $orderBy        = [];
+    private array $columns        = [];
+    private array $limit          = [];
 
     public function __construct(mixed $entity)
     {
@@ -23,36 +23,42 @@ class Model extends DB
     public static function instance(): object
     {
         $class  = get_called_class();
-        return  new $class();
+
+        return new $class();
     }
 
     public function select(array $columns): object
     {
         $this->columns[] = $columns;
+
         return $this;
     }
 
     public function limit(int $limit): object
     {
         $this->limit[] = $limit;
+
         return $this;
     }
 
     public function where(array $data): object
     {
         $this->whereCondition = $data;
+
         return $this;
     }
 
     public function join(string $table, string $on): self
     {
         $this->joins[] = "JOIN $table ON $on";
+
         return $this;
     }
 
     public function orderBy(string $column, string $order = 'ASC'): self
     {
         $this->orderBy[] = "ORDER BY $column $order";
+
         return $this;
     }
 
@@ -102,7 +108,7 @@ class Model extends DB
     {
         $object = self::instance();
 
-        $sql = 'SELECT COUNT(*) FROM '.$object->table;
+        $sql           = 'SELECT COUNT(*) FROM '.$object->table;
         $queryPrepared = $object->pdo->prepare($sql);
         $queryPrepared->execute();
 
@@ -112,12 +118,14 @@ class Model extends DB
     public static function find(int $id): object
     {
         $object = self::instance();
+
         return $object->getOneBy(['id' => $id], 'object');
     }
 
     public static function findBy(array $data): object
     {
         $object = self::instance();
+
         return $object->getOneBy($data, 'object');
     }
 
@@ -125,7 +133,7 @@ class Model extends DB
     {
         $object = self::instance();
 
-        $sql = 'SELECT * FROM '. $object->table . ' WHERE is_deleted = 0';
+        $sql = 'SELECT * FROM '.$object->table.' WHERE is_deleted = 0';
 
         $queryPrepared = $object->pdo->prepare($sql);
         $queryPrepared->execute();
@@ -133,7 +141,7 @@ class Model extends DB
         return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
     }
 
-    private function getOneBy(array $data, string $return = 'array')
+    public function getOneBy(array $data, string $return = 'array')
     {
         $sql = 'SELECT * FROM '.$this->table.' WHERE ';
 
@@ -178,7 +186,7 @@ class Model extends DB
 
     public function delete(): void
     {
-        $sql = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
+        $sql           = 'DELETE FROM '.$this->table.' WHERE id = :id';
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute(['id' => $this->entity->getId()]);
     }
@@ -196,6 +204,6 @@ class Model extends DB
 
         $table = preg_replace('/(?<!^)([A-Z])/', '_$1', $table);
 
-        return config('database.prefix'). '_' .strtolower($table);
+        return config('database.prefix').'_'.strtolower($table);
     }
 }

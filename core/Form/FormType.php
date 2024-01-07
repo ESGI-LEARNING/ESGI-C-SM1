@@ -11,9 +11,9 @@ class FormType
 
     private CsrfTokenService $csrfTokenService;
 
-    public function __construct(?object $data = null)
+    public function __construct(object $data = null)
     {
-        $this->data = $data;
+        $this->data             = $data;
         $this->csrfTokenService = new CsrfTokenService();
         $this->setConfig();
     }
@@ -44,7 +44,6 @@ class FormType
 
     public function isValid(): bool
     {
-
         $validator = new Validator($this->getData());
         $validator->validate($this->rules());
 

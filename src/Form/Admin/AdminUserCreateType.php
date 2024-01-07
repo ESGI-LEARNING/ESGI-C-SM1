@@ -12,7 +12,7 @@ class AdminUserCreateType extends FormType
             'config' => [
                 'method' => 'POST',
                 'action' => '',
-                'submit' => "Créer",
+                'submit' => 'Créer',
                 'class'  => 'form',
             ],
             'inputs' => [

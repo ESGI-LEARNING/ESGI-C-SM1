@@ -2,12 +2,13 @@
 
 namespace App\Controllers;
 
+use Core\Controller\AbstractController;
 use Core\Views\View;
 
-class ErrorController
+class ErrorController extends AbstractController
 {
-    public function page404(): void
+    public function page404(): View
     {
-        $myView = new View('error/404', 'front');
+        return $this->render('error/404', 'front');
     }
 }

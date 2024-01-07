@@ -2,12 +2,13 @@
 
 namespace App\Controllers;
 
+use Core\Controller\AbstractController;
 use Core\Views\View;
 
-class AboutUsController
+class AboutUsController extends AbstractController
 {
-    public function aboutUs(): void
+    public function aboutUs(): View
     {
-        $myView = new View('main/aboutUs', 'front');
+        return $this->render('main/aboutUs', 'front');
     }
 }

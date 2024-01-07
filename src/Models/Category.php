@@ -18,7 +18,6 @@ class Category extends Model
 
     protected string $updated_at;
 
-
     public function __construct()
     {
         parent::__construct($this);

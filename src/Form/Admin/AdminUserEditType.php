@@ -6,7 +6,6 @@ use Core\Form\FormType;
 
 class AdminUserEditType extends FormType
 {
-
     public function setConfig(): void
     {
         $this->config =  [

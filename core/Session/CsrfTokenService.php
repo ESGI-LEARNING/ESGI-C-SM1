@@ -15,6 +15,7 @@ class CsrfTokenService extends PHPSession
     public function isValidCsrfToken(string $csrf): bool
     {
         $token = $this->get('csrf_token');
+
         return $token === $csrf;
     }
 }

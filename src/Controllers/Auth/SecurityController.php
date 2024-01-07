@@ -4,7 +4,6 @@ namespace App\Controllers\Auth;
 
 use App\Form\Auth\LoginType;
 use App\Form\Auth\RegisterType;
-use App\Form\Auth\ResetPasswordType;
 use App\Mails\AuthMail;
 use App\Models\User;
 use Core\Auth\Authenticator;
@@ -29,13 +28,16 @@ class SecurityController extends AbstractController
                 $this->addFlash('success', 'Vous êtes bien connecté');
                 $this->redirect('/');
             } else {
-                $this->addFlash('error','Identifiants ou mot de passe incorrects');
+                $this->addFlash('error', 'Identifiants ou mot de passe incorrects');
                 $this->redirect('/login');
             }
         }
-        return $this->render('security/login', 'front');
-    }
+        $config = $form->getConfig();
 
+        return $this->render('security/login', 'front', [
+            'form' => $config,
+        ]);
+    }
 
     public function register(): View
     {
@@ -50,7 +52,7 @@ class SecurityController extends AbstractController
             $user->setPassword($data['password']);
             $user->save();
 
-            //Send mails for verify email
+            // Send mails for verify email
             $mailer = new AuthMail();
             $mailer->sendVerifyEmail($data['email'], [
                 'username' => $data['username'],
@@ -61,7 +63,7 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/register', 'front', [
-            'config' => $form->getConfig(),
+            'form' => $form->getConfig(),
         ]);
     }
 

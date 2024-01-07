@@ -2,20 +2,23 @@
 
 namespace App\Controllers;
 
+use Core\Controller\AbstractController;
 use Core\Views\View;
 
-class MainController
+class MainController extends AbstractController
 {
-    public function home(): void
+    public function home(): View
     {
-        $myView = new View('main/home', 'front');
+        return $this->render('main/home', 'front');
     }
-    public function artist()
+
+    public function artist(): View
     {
-        $myView = new View("main/artist", "front");
+        return $this->render('main/artist', 'front');
     }
-    public function template()
+
+    public function template(): View
     {
-        $myView = new View("main/template", "front");
+        return $this->render('main/template', 'front');
     }
 }

@@ -11,6 +11,7 @@ class AuthMiddleware
         }
 
         $response = $next($request, $response);
+
         return $response;
     }
 }

@@ -13,5 +13,6 @@ return (new PhpCsFixer\Config())
         ],
         'array_syntax' => ['syntax' => 'short'],
         'yoda_style' => false,
+        'echo_tag_syntax' => ['format' => 'short', 'shorten_simple_statements_only' => false],
     ])
     ->setFinder($finder);
