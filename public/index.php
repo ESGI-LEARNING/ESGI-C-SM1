@@ -2,6 +2,7 @@
 
 use App\Controllers\AboutUsController;
 use App\Controllers\Admin\AdminController;
+use App\Controllers\Admin\AdminUserController;
 use App\Controllers\Auth\ForgotPasswordController;
 use App\Controllers\Auth\SecurityController;
 use App\Controllers\ContactController;
@@ -37,5 +38,12 @@ $router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
 $router->get('/admin/comments', [AdminController::class, 'comments']);
 $router->get('/admin/roles', [AdminController::class, 'roles']);
 $router->get('/admin/pages', [AdminController::class, 'pages']);
+
+$router->get('/admin/users', [AdminUserController::class, 'index']);
+$router->get('/admin/users/create', [AdminUserController::class, 'create']);
+$router->post('/admin/users/create', [AdminUserController::class, 'create']);
+$router->get('/admin/users/edit/{id}', [AdminUserController::class, 'edit']);
+$router->post('/admin/users/edit/{id}', [AdminUserController::class, 'edit']);
+$router->post('/admin/users/delete/{id}', [AdminUserController::class, 'delete']);
 
 $router->run();

@@ -14,12 +14,30 @@ class Model extends DB
         $this->table  = $this->getTableName();
     }
 
-    public static function find(int $id): object
+    public function find(int $id): object
     {
         $class  = get_called_class();
         $object = new $class();
 
         return $object->getOneBy(['id' => $id], 'object');
+    }
+
+    public function getAll(): array
+    {
+        $sql = 'SELECT * FROM '. $this->table . ' WHERE is_deleted = 0';
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+
+        return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
+    }
+
+    public function paginate(int $perPage, int $currentPage): array
+    {
+        $sql = 'SELECT * FROM '.$this->table.' WHERE is_deleted = 0 LIMIT '.($currentPage - 1) * $perPage.','.$perPage;
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+
+        return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
     }
 
     public function getOneBy(array $data, string $return = 'array')
