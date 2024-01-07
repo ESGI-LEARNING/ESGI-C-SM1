@@ -24,6 +24,7 @@ $router->get('/about', [AboutUsController::class, 'aboutUs']);
 $router->get('/gallery', [GalleryController::class, 'gallery']);
 
 $router->get('/login', [SecurityController::class, 'login']);
+$router->post('/login', [SecurityController::class, 'login']);
 $router->get('/register', [SecurityController::class, 'register']);
 $router->post('/register', [SecurityController::class, 'register']);
 $router->get('/logout', [SecurityController::class, 'logout']);
