@@ -29,9 +29,9 @@
   - [x] Login
     - [x] (username, password)
   - [x] Logout
-  - [ ] Reset password
-    - [ ] Envoi de mail
-    - [ ] Génération de token
+  - [x] Reset password
+    - [x] Envoi de mail
+    - [x] Génération de token
 
 - [ ] Gestion des commentaires
     - [ ] Créer un commentaire
