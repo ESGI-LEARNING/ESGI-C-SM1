@@ -2,7 +2,7 @@
 
 namespace Core\Views;
 
-use Core\Router\Router;
+use Core\Session\CsrfTokenService;
 
 class View
 {
@@ -10,11 +10,14 @@ class View
     private string $viewName;
     private array $params = [];
 
+    protected string $csrfToken;
+
     public function __construct(string $viewName, string $templateName = 'back', array $params = [])
     {
         $this->setViewName($viewName);
         $this->setTemplateName($templateName);
         $this->setVariables($params);
+        $this->csrfToken = $this->setCsrf();
     }
 
     public function setTemplateName(string $templateName): void
@@ -45,6 +48,12 @@ class View
     public function setVariables(array $params): void
     {
         $this->params = $params;
+    }
+
+    public function setCsrf(): string
+    {
+        $csrfTokenService = new CsrfTokenService();
+        return $csrfTokenService->generateToken();
     }
 
     public function __destruct()

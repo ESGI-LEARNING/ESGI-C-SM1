@@ -2,14 +2,19 @@
 
 namespace Core\Form;
 
+use Core\Session\CsrfTokenService;
+
 class FormType
 {
     protected array $config = [];
     protected ?object $data = null;
 
+    private CsrfTokenService $csrfTokenService;
+
     public function __construct(?object $data = null)
     {
         $this->data = $data;
+        $this->csrfTokenService = new CsrfTokenService();
         $this->setConfig();
     }
 
@@ -28,13 +33,18 @@ class FormType
         return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
 
-    public function getData(): array
+    public function getData(): bool|array
     {
+        if (!$this->csrfTokenService->isValidCsrfToken($_POST['csrf_token'])) {
+            return false;
+        }
+
         return $_POST;
     }
 
     public function isValid(): bool
     {
+
         $validator = new Validator($this->getData());
         $validator->validate($this->rules());
 
