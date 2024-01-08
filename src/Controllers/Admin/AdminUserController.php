@@ -13,10 +13,9 @@ class AdminUserController extends AbstractController
     public function index(): View
     {
         $users = new User();
-        $users = $users->getAll();
 
         return $this->render('admin/users/index', 'back', [
-            'users' => $users,
+            'users' => $users->getAll(),
         ]);
     }
 
@@ -44,8 +43,7 @@ class AdminUserController extends AbstractController
 
     public function edit(int $id): View
     {
-        $user = new User();
-        $user = $user->find($id);
+        $user = User::find($id);
 
         $form  = new AdminUserEditType($user);
 
@@ -69,8 +67,7 @@ class AdminUserController extends AbstractController
 
     public function delete(int $id): void
     {
-        $user = new User();
-        $user = $user->find($id);
+        $user = User::find($id);
 
         if ($user) {
             $user->setIsDeleted(1);

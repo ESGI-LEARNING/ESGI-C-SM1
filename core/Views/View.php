@@ -14,10 +14,10 @@ class View
 
     public function __construct(string $viewName, string $templateName = 'back', array $params = [])
     {
+        $this->csrfToken = $this->setCsrf();
         $this->setViewName($viewName);
         $this->setTemplateName($templateName);
         $this->setVariables($params);
-        $this->csrfToken = $this->setCsrf();
     }
 
     public function setTemplateName(string $templateName): void

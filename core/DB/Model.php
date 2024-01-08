@@ -14,7 +14,7 @@ class Model extends DB
         $this->table  = $this->getTableName();
     }
 
-    public function find(int $id): object
+    public static function find(int $id): object
     {
         $class  = get_called_class();
         $object = new $class();
