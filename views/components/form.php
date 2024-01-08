@@ -22,5 +22,8 @@
         <?php } ?>
 
     <?php } ?>
+
+    <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
+
     <input type="submit" name="submit" value="<?php echo $config['config']['submit']; ?>">
 </form>

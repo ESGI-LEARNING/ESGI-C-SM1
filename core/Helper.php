@@ -1,6 +1,7 @@
 <?php
 
 use Core\Config\ConfigLoader;
+use Core\Session\CsrfTokenService;
 
 function config(string $key): mixed
 {
