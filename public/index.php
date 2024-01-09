@@ -7,6 +7,7 @@ use App\Controllers\Admin\AdminLogController;
 use App\Controllers\Admin\AdminUserController;
 use App\Controllers\ArticleController;
 use App\Controllers\Auth\ForgotPasswordController;
+use App\Controllers\Admin\AdminCommentController;
 use App\Controllers\Auth\SecurityController;
 use App\Controllers\Auth\VerifyEmailController;
 use App\Controllers\ErrorController;
@@ -64,7 +65,6 @@ $router->middleware(['installed'])->group(function (Router $router) {
 
         $router->middleware(['admin'])->prefix('/admin')->group(function (Router $router) {
             $router->get('/', [AdminController::class, 'dashboard']);
-            $router->get('/comments', [AdminController::class, 'comments']);
             $router->get('/roles', [AdminController::class, 'roles']);
             $router->get('/pages', [AdminController::class, 'pages']);
 
@@ -95,6 +95,12 @@ $router->middleware(['installed'])->group(function (Router $router) {
                 $router->post('/delete/{id}', 'delete');
                 $router->post('/delete/images/{id}', 'deleteImage');
             });
+            $router->controller(AdminCommentController::class)->prefix('/comments')->group(function (Router $router) {
+                $router->get('/', 'index');
+                $router->post('/report/{id}', 'report');
+                $router->post('/delete/{id}', 'delete');
+                $router->post('/keep/{id}', 'keep');
+            });
 
             $router->controller(AdminLogController::class)->prefix('/logs')->group(function (Router $router) {
                 $router->get('/', 'index');
@@ -103,4 +109,6 @@ $router->middleware(['installed'])->group(function (Router $router) {
     });
 });
 
+
 $router->run();
+
