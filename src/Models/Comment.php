@@ -121,4 +121,13 @@ class Comment extends Model
     {
         $this->is_deleted = $is_deleted;
     }
+    public function getUser(): ?User
+    {
+        if ($this->user_id) {
+            $userModel = new User();
+            return $userModel->find($this->user_id);
+        }
+
+        return null;
+    }
 }
