@@ -6,6 +6,7 @@ use App\Controllers\Admin\AdminController;
 use App\Controllers\Admin\AdminLogController;
 use App\Controllers\Admin\AdminUserController;
 use App\Controllers\ArticleController;
+use App\Controllers\Admin\AdminCommentController;
 use App\Controllers\Auth\ForgotPasswordController;
 use App\Controllers\Admin\AdminCommentController;
 use App\Controllers\Auth\SecurityController;
@@ -109,6 +110,13 @@ $router->middleware(['installed'])->group(function (Router $router) {
     });
 });
 
+
+$router->get('/admin/comments', [AdminCommentController::class, 'index']);
+// $router->get('/admin/comments/create', [AdminCommentController::class, 'create']);
+// $router->post('/admin/comments/create', [AdminCommentController::class, 'create']);
+// $router->get('/admin/comments/edit/{id}', [AdminCommentController::class, 'edit']);
+// $router->post('/admin/comments/edit/{id}', [AdminCommentController::class, 'edit']);
+$router->post('/admin/comments/delete/{id}', [AdminCommentController::class, 'delete']);
 
 $router->run();
 
