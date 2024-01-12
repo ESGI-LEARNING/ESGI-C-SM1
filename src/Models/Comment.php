@@ -3,14 +3,17 @@
 namespace App\Models;
 
 use Core\DB\Model;
+use DateTime;
 
 class Comment extends Model
 {
     protected ?int $id = null;
 
-    protected string $content;
+    protected ?string $content = null;
 
-    protected int $is_reported = 0;
+    private ?string $content = null;
+
+    private bool $isReported = false;
 
     protected int $user_id;
 
@@ -50,27 +53,36 @@ class Comment extends Model
         $this->content = $content;
     }
 
-    public function isReported(): bool
+    public function isReported(): int
     {
         return $this->is_reported;
     }
 
-    public function setIsReported(bool $is_reported): void
+    public function setIsReported(int $isReported): void
     {
         $this->is_reported = $is_reported;
     }
 
-    public function getUser(): int
+    public function getUserId(): int
     {
         return $this->user_id;
     }
 
-    public function setUser(int $user_id): void
+    public function setUserId(int $user_id): void
     {
         $this->user_id = $user_id;
     }
 
-    public function getComment(): int
+    public function getIsDeleted(): int
+    {
+        return $this->is_deleted;
+    }
+
+    public function setIsDeleted(int $is_deleted): void
+    {
+        $this->is_deleted = $is_deleted;
+    }
+    public function getComment(): Comment
     {
         return $this->comment_id;
     }
@@ -87,7 +99,7 @@ class Comment extends Model
 
     public function setCreatedAt(string $created_at): void
     {
-        $this->created_at = $created_at;
+        $this->created_at = date('Y-m-d H:i:s', strtotime($created_at));
     }
 
     public function getUpdatedAt(): string
