@@ -15,8 +15,8 @@ function url(string $url, ?array $params = []): string
 
 function assetLoader(): string
 {
-    $manifest = json_decode(file_get_contents(__DIR__.'/../public/build/manifest.json'), true);
-    $css      = $manifest['assets/js/app.css']['file'];
+    $manifest = json_decode(file_get_contents(__DIR__.'/../public/build/.vite/manifest.json'), true);
+    $css      = $manifest['assets/js/app.js']['css'][0];
     $js       = $manifest['assets/js/app.js']['file'];
 
     if (config('app.env') === 'dev') {
