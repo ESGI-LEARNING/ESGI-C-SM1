@@ -12,10 +12,8 @@ class AdminUserController extends AbstractController
 {
     public function index(): View
     {
-        $users = new User();
-
         return $this->render('admin/users/index', 'back', [
-            'users' => $users->getAll(),
+            'users' => User::findAll(),
         ]);
     }
 

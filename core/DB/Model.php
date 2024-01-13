@@ -7,6 +7,12 @@ class Model extends DB
     private string $table;
     private mixed $entity;
 
+    private array $whereCondition = [];
+    private array $joins = [];
+    private array $orderBy = [];
+    private array $columns = [];
+    private array $limit = [];
+
     public function __construct(mixed $entity)
     {
         parent::__construct();
@@ -14,33 +20,120 @@ class Model extends DB
         $this->table  = $this->getTableName();
     }
 
-    public static function find(int $id): object
+    public static function instance(): object
     {
         $class  = get_called_class();
-        $object = new $class();
+        return  new $class();
+    }
 
+    public function select(array $columns): object
+    {
+        $this->columns[] = $columns;
+        return $this;
+    }
+
+    public function limit(int $limit): object
+    {
+        $this->limit[] = $limit;
+        return $this;
+    }
+
+    public function where(array $data): object
+    {
+        $this->whereCondition = $data;
+        return $this;
+    }
+
+    public function join(string $table, string $on): self
+    {
+        $this->joins[] = "JOIN $table ON $on";
+        return $this;
+    }
+
+    public function orderBy(string $column, string $order = 'ASC'): self
+    {
+        $this->orderBy[] = "ORDER BY $column $order";
+        return $this;
+    }
+
+    public static function get(): false|array
+    {
+        $object = self::instance();
+
+        $sql = 'SELECT ';
+
+        if (!empty($object->columns)) {
+            $sql .= implode(',', $object->columns);
+        } else {
+            $sql .= '*';
+        }
+
+        $sql = ' FROM '.$object->table;
+
+        if (!empty($object->joins)) {
+            $sql .= ' '.implode(' ', $object->joins);
+        }
+
+        if (!empty($object->whereCondition)) {
+            $sql .= ' WHERE ';
+
+            foreach ($object->whereCondition as $column => $value) {
+                $sql .= ' '.$column.'=:'.$column.' AND';
+            }
+
+            $sql = substr($sql, 0, -3);
+        }
+
+        if (!empty($object->orderBy)) {
+            $sql .= ' '.implode(' ', $object->orderBy);
+        }
+
+        if (!empty($object->limit)) {
+            $sql .= ' LIMIT '.implode(',', $object->limit);
+        }
+
+        $queryPrepared = $object->pdo->prepare($sql);
+        $queryPrepared->execute($object->whereCondition);
+
+        return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
+    }
+
+    public static function count(): int
+    {
+        $object = self::instance();
+
+        $sql = 'SELECT COUNT(*) FROM '.$object->table;
+        $queryPrepared = $object->pdo->prepare($sql);
+        $queryPrepared->execute();
+
+        return $queryPrepared->fetchColumn();
+    }
+
+    public static function find(int $id): object
+    {
+        $object = self::instance();
         return $object->getOneBy(['id' => $id], 'object');
     }
 
-    public function getAll(): array
+    public static function finBy(array $data): object
     {
-        $sql = 'SELECT * FROM '. $this->table . ' WHERE is_deleted = 0';
-        $queryPrepared = $this->pdo->prepare($sql);
+        $object = self::instance();
+        return $object->getOneBy($data, 'object');
+    }
+
+    public static function findAll(): array
+    {
+        $object = self::instance();
+
+        $sql = 'SELECT * FROM '. $object->table . ' WHERE is_deleted = 0';
+
+        $queryPrepared = $object->pdo->prepare($sql);
         $queryPrepared->execute();
 
         return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
     }
 
-    public function paginate(int $perPage, int $currentPage): array
-    {
-        $sql = 'SELECT * FROM '.$this->table.' WHERE is_deleted = 0 LIMIT '.($currentPage - 1) * $perPage.','.$perPage;
-        $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->execute();
-
-        return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
-    }
-
-    public function getOneBy(array $data, string $return = 'array')
+    private function getOneBy(array $data, string $return = 'array')
     {
         $sql = 'SELECT * FROM '.$this->table.' WHERE ';
 
@@ -90,7 +183,7 @@ class Model extends DB
         $queryPrepared->execute(['id' => $this->entity->getId()]);
     }
 
-    public function getDataObject(): array
+    private function getDataObject(): array
     {
         return array_diff_key(get_object_vars($this), get_class_vars(get_class()));
     }
