@@ -19,10 +19,7 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $user = new User();
-            $user = $user->getOneBy([
-                'email' => $data['email'],
-            ], 'object');
+            $user = User::findBy(['email' => $data['email']]);
 
             if ($user && password_verify($data['password'], $user->getPassword())) {
                 $authenticator = new Authenticator();

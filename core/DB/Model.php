@@ -115,7 +115,7 @@ class Model extends DB
         return $object->getOneBy(['id' => $id], 'object');
     }
 
-    public static function finBy(array $data): object
+    public static function findBy(array $data): object
     {
         $object = self::instance();
         return $object->getOneBy($data, 'object');

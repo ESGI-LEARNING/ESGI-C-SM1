@@ -20,9 +20,7 @@ class ForgotPasswordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $user = new User();
-            $user = $user->getOneBy(['email' => $data['email']], 'object');
-
+            $user = User::findBy(['email' => $data['email']]);
             $token = $this->setToken($user->getId());
 
             $mailer = new AuthMail();
@@ -43,8 +41,7 @@ class ForgotPasswordController extends AbstractController
     public function resetPassword(string $token): View
     {
         $form = new ResetPasswordType();
-        $resetPassword = new ResetPassword();
-        $resetPassword = $resetPassword->getOneBy(['token' => $token], 'object');
+        $resetPassword = ResetPassword::findBy(['token' => $token]);
 
         if ($resetPassword->getExpiredAt() < date('Y-m-d H:i:s')) {
             $this->addFlash('error', 'Token expiré');
