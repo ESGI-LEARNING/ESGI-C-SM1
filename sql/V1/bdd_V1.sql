@@ -7,8 +7,8 @@ CREATE TABLE esgi_user
     avatar     VARCHAR(255),
     verify     TINYINT(1) DEFAULT 0,
     is_deleted TINYINT(1) DEFAULT 0,
-    created_at DATETIME   DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME   DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE esgi_information_photograph
