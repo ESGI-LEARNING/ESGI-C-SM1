@@ -4,36 +4,39 @@ namespace App\Models;
 
 use Core\DB\Model;
 
-class Roles extends Model
+class Role extends Model
 {
-    private ?int $id = null;
+    protected ?int $id = null;
 
-    private string $name;
+    protected string $name;
 
-    private \DateTime $created_at;
-    private \DateTime $updated_at;
+    protected string $created_at;
+    protected string $updated_at;
 
     public function __construct()
     {
         parent::__construct($this);
+
+        $this->setCreatedAt(date('Y-m-d H:i:s'));
+        $this->setUpdatedAt(date('Y-m-d H:i:s'));
     }
 
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt(): string
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTime $updated_at): void
+    public function setUpdatedAt(string $updated_at): void
     {
         $this->updated_at = $updated_at;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): string
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTime $created_at): void
+    public function setCreatedAt(string $created_at): void
     {
         $this->created_at = $created_at;
     }

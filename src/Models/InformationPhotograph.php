@@ -6,27 +6,30 @@ use Core\DB\Model;
 
 class InformationPhotograph extends Model
 {
-    private ?int $id = null;
+    protected ?int $id = null;
 
-    private string $firstName;
+    protected string $firstName;
 
-    private string $lastName;
+    protected string $lastName;
 
-    private string $description;
+    protected string $description;
 
-    private string $city;
+    protected ?string $city = null;
 
-    private string $country;
+    protected ?string $country = null;
 
-    private string $isDeleted;
+    protected int $is_deleted = 0;
 
-    private \DateTime $created_at;
+    protected string $created_at;
 
-    private \DateTime $updated_at;
+    protected string $updated_at;
 
     public function __construct()
     {
         parent::__construct($this);
+
+        $this->setCreatedAt(date('Y-m-d H:i:s'));
+        $this->setUpdatedAt(date('Y-m-d H:i:s'));
     }
 
     public function getId(): ?int
@@ -91,30 +94,30 @@ class InformationPhotograph extends Model
 
     public function getIsDeleted(): string
     {
-        return $this->isDeleted;
+        return $this->is_deleted;
     }
 
-    public function setIsDeleted(string $isDeleted): void
+    public function setIsDeleted(string $id_deleted): void
     {
-        $this->isDeleted = $isDeleted;
+        $this->is_deleted = $id_deleted;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt():string
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTime $created_at): void
+    public function setCreatedAt(string $created_at): void
     {
         $this->created_at = $created_at;
     }
 
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt():string
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTime $updated_at): void
+    public function setUpdatedAt(string $updated_at): void
     {
         $this->updated_at = $updated_at;
     }

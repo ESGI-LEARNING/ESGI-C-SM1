@@ -6,11 +6,21 @@ use Core\DB\Model;
 
 class Log extends Model
 {
-    private ?int $id = null;
+    protected ?int $id = null;
+
+    protected int $user_id;
+
+    protected string $action;
+
+    protected string $subject;
+
+    protected string $created_at;
 
     public function __construct()
     {
         parent::__construct($this);
+
+        $this->setCreatedAt(date('Y-m-d H:i:s'));
     }
 
     public function getId(): ?int
@@ -21,5 +31,45 @@ class Log extends Model
     public function setId(?int $id): void
     {
         $this->id = $id;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(int $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    public function getAction(): string
+    {
+        return $this->action;
+    }
+
+    public function setAction(string $action): void
+    {
+        $this->action = $action;
+    }
+
+    public function getSubject(): string
+    {
+        return $this->subject;
+    }
+
+    public function setSubject(string $subject): void
+    {
+        $this->subject = $subject;
+    }
+
+    public function getCreatedAt(): string
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(string $created_at): void
+    {
+        $this->created_at = $created_at;
     }
 }
