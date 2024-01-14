@@ -13,10 +13,8 @@ class AdminImageController extends AbstractController
 {
     public function index(): View
     {
-        $images = new Picture();
-
         return $this->render('admin/images/index', 'back', [
-            'images' => $images->getAll(),
+            'images' => Picture::findAll(),
         ]);
     }
 
