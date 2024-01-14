@@ -9,11 +9,12 @@ class Comment extends Model
 {
     protected ?int $id = null;
 
-    protected ?string $content = null;
+    protected string $content;
 
     private ?string $content = null;
 
     private bool $isReported = false;
+    protected int $is_reported = 0;
 
     protected int $user_id;
 
@@ -25,12 +26,11 @@ class Comment extends Model
 
     protected string $updated_at;
 
+    protected int $is_deleted = 0;
+
     public function __construct()
     {
         parent::__construct($this);
-
-        $this->setCreatedAt(date('Y-m-d H:i:s'));
-        $this->setUpdatedAt(date('Y-m-d H:i:s'));
     }
 
     public function getId(): ?int
@@ -58,17 +58,17 @@ class Comment extends Model
         return $this->is_reported;
     }
 
-    public function setIsReported(int $isReported): void
+    public function setIsReported(bool $is_reported): void
     {
         $this->is_reported = $is_reported;
     }
 
-    public function getUserId(): int
+    public function getUser(): int
     {
         return $this->user_id;
     }
 
-    public function setUserId(int $user_id): void
+    public function setUser(int $user_id): void
     {
         $this->user_id = $user_id;
     }
@@ -121,13 +121,26 @@ class Comment extends Model
     {
         $this->is_deleted = $is_deleted;
     }
-    public function getUser(): ?User
+
+    public function getIsDeleted(): int
     {
-        if ($this->user_id) {
-            $userModel = new User();
-            return $userModel->find($this->user_id);
+        return $this->is_deleted;
+    }
+
+    public function setIsDeleted(int $is_deleted): void
+    {
+        $this->is_deleted = $is_deleted;
+    }
+    public function getUsername(): string
+    {
+        $userModel = new User();
+        $user = $userModel->find($this->getUser());
+
+        if ($user) {
+            return $user->getUsername();
         }
 
-        return null;
+        return '';
     }
+
 }
