@@ -6,23 +6,26 @@ use Core\DB\Model;
 
 class Comment extends Model
 {
-    private ?int $id = null;
+    protected ?int $id = null;
 
-    private ?string $content = null;
+    protected string $content;
 
-    private bool $isReported = false;
+    protected int $is_reported = 0;
 
-    private User $user;
+    protected int $user_id;
 
-    private Comment $comment;
+    protected ?int $comment_id = null;
 
-    private \DateTime $created_at;
+    protected string $created_at;
 
-    private \DateTime $updated_at;
+    protected string $updated_at;
 
     public function __construct()
     {
         parent::__construct($this);
+
+        $this->setCreatedAt(date('Y-m-d H:i:s'));
+        $this->setUpdatedAt(date('Y-m-d H:i:s'));
     }
 
     public function getId(): ?int
@@ -47,50 +50,50 @@ class Comment extends Model
 
     public function isReported(): bool
     {
-        return $this->isReported;
+        return $this->is_reported;
     }
 
-    public function setIsReported(bool $isReported): void
+    public function setIsReported(bool $is_reported): void
     {
-        $this->isReported = $isReported;
+        $this->is_reported = $is_reported;
     }
 
-    public function getUser(): User
+    public function getUser(): int
     {
-        return $this->user;
+        return $this->user_id;
     }
 
-    public function setUser(User $user): void
+    public function setUser(int $user_id): void
     {
-        $this->user = $user;
+        $this->user_id = $user_id;
     }
 
-    public function getComment(): Comment
+    public function getComment(): int
     {
-        return $this->comment;
+        return $this->comment_id;
     }
 
-    public function setComment(Comment $comment): void
+    public function setComment(int $comment_id): void
     {
-        $this->comment = $comment;
+        $this->comment_id = $comment_id;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): string
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTime $created_at): void
+    public function setCreatedAt(string $created_at): void
     {
         $this->created_at = $created_at;
     }
 
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt(): string
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTime $updated_at): void
+    public function setUpdatedAt(string $updated_at): void
     {
         $this->updated_at = $updated_at;
     }
