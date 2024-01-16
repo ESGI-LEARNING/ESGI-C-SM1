@@ -10,10 +10,9 @@ class AdminCommentController extends AbstractController
 {
     public function index(): View
     {
-        $comments = new Comment();
-        $comments = $comments->findAll();
+    
         return $this->render('admin/comments/index', 'back', [
-            'comments' => $comments,
+            'comments' => Comment::findAll(),
         ]);
     }
 
@@ -29,7 +28,4 @@ class AdminCommentController extends AbstractController
             $this->redirect('/admin/comments');
         }
     }
-    
-    
-    
 }
