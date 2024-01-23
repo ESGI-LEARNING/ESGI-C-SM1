@@ -9,8 +9,6 @@ class Comment extends Model
 {
     protected ?int $id = null;
 
-    protected string $content;
-
     private ?string $content = null;
 
     private bool $isReported = false;
@@ -71,20 +69,6 @@ class Comment extends Model
     public function setUser(int $user_id): void
     {
         $this->user_id = $user_id;
-    }
-
-    public function getIsDeleted(): int
-    {
-        return $this->is_deleted;
-    }
-
-    public function setIsDeleted(int $is_deleted): void
-    {
-        $this->is_deleted = $is_deleted;
-    }
-    public function getComment(): Comment
-    {
-        return $this->comment_id;
     }
 
     public function setComment(int $comment_id): void

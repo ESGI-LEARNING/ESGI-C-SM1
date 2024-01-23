@@ -1,5 +1,10 @@
-<div>
-    <h1>Comments</h1>
+
+<div class="admin-container">
+<?= $this->component('sideBarAdmin', $config = []); ?>
+<section class="table-view-container">
+		<div class="table-view-header">
+            <h2>Commentaire</h2>
+</div>
     <table>
         <thead>
             <tr>
@@ -23,13 +28,14 @@
                     <td><?= $comment->getUsername(); ?></td>
                     <td><?= $comment->getCreatedAt(); ?></td>
                     <td><?= $comment->getUpdatedAt(); ?></td>
-                    <td>
+                    <td class="tableau-action">
                         <form method="POST" action="/admin/comments/delete/<?= $comment->getId(); ?>" onsubmit="return confirm('Are you sure?')">
-                            <button type="submit">Delete</button>
+                        <button class="button button-red button-sm" type="submit"><?= icon('x'); ?></button>
                         </form>
                     </td>
                 </tr>
             <?php } ?>
         </tbody>
     </table>
+    </section>
 </div>
