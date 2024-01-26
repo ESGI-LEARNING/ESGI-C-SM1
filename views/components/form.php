@@ -24,15 +24,16 @@
 						placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
 				><?= $configInput['value']                     ?? ''; ?></textarea>
             <?php } ?>
+
             <?php if (isset($configInput['input']) && $configInput['input'] === \App\Enum\FormTypeEnum::INPUT_SELECT) { ?>
-		        <select
+				<select
 						name="<?= $name; ?>"
-						id="<?= $configInput['name']     ?? ''; ?>"
-						class="<?= $configInput['class'] ?? ''; ?>"
+						id="<?= $configInput['name']                 ?? ''; ?>"
+						class="<?= $configInput['class']             ?? ''; ?>"
+						placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
 				>
-					<option><?= $configInput['placeholder'] ?? ''; ?></option>
                     <?php foreach ($configInput['options'] as $option) { ?>
-						<option value="<?= $option->getName(); ?>"><?= $option->getName(); ?></option>
+						<option value="<?= $option['value']; ?>"><?= $option['name']; ?></option>
                     <?php } ?>
 				</select>
             <?php } ?>
@@ -49,17 +50,17 @@
 
             <?php if (!empty($configInput['errors'])) { ?>
                 <?php foreach ($configInput['errors'] as $fieldErrors) { ?>
-					<ul class="alert-list alert alert-error">
+			        <ul class="alert-list alert alert-error">
                         <?php foreach ((array) $fieldErrors as $error) { ?>
-							<li><?= $error; ?></li>
+					        <li><?= $error; ?></li>
                         <?php } ?>
-					</ul>
+			        </ul>
                 <?php } ?>
             <?php } ?>
-        <?php } ?>
 
-		<input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
+    <?php } ?>
 
-		<input type="submit" name="submit" value="<?= $config['config']['submit']; ?>">
-	</fieldset>
+    <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
+
+    <input type="submit" name="submit" value="<?= $config['config']['submit']; ?>">
 </form>

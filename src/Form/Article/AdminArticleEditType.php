@@ -50,4 +50,14 @@ class AdminArticleEditType extends FormType
             ],
         ];
     }
+
+    public function rules(): array
+    {
+        return [
+            'name'        => ['required', 'min:3'],
+            'category'    => ['required', 'min:3'],
+            'image'       => ['required'],
+            'description' => ['required', 'min:3'],
+        ];
+    }
 }

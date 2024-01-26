@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\Admin\AdminArticleController;
 use App\Controllers\AboutUsController;
 use App\Controllers\Admin\AdminArticleController;
 use App\Controllers\Admin\AdminCategoryController;
