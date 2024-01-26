@@ -13,7 +13,7 @@ class AdminArticleEditType extends FormType
             'config' => [
                 'method' => 'POST',
                 'action' => '',
-                'submit' => 'Créer',
+                'submit' => 'Modifier l\'article',
                 'class'  => 'form',
             ],
             'inputs' => [
@@ -46,16 +46,6 @@ class AdminArticleEditType extends FormType
                     'input'       => FormTypeEnum::INPUT_TEXTAREA,
                 ],
             ],
-        ];
-    }
-
-    public function rules(): array
-    {
-        return [
-            'name'        => ['required', 'min:3'],
-            'category'    => ['required', 'min:3'],
-            'image'       => ['required'],
-            'description' => ['required', 'min:3'],
         ];
     }
 }

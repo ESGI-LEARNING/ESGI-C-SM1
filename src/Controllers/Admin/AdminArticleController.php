@@ -51,10 +51,9 @@ class AdminArticleController extends AbstractController
             $data = $form->getData();
 
             $article->setName($data['name']);
-            $article->setSlug($data['slug']);
             $article->setDescription($data['description']);
             $article->setImage($data['image']);
-            $article->setUserId($data['user_id']);
+            $article->setUserId($this->getUser()->getId());
             $article->setUpdatedAt(date('Y-m-d H:i:s'));
             $article->save();
 
