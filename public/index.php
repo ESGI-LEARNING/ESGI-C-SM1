@@ -116,6 +116,7 @@ $router->get('/admin/comments', [AdminCommentController::class, 'index']);
 // $router->post('/admin/comments/create', [AdminCommentController::class, 'create']);
 // $router->get('/admin/comments/edit/{id}', [AdminCommentController::class, 'edit']);
 // $router->post('/admin/comments/edit/{id}', [AdminCommentController::class, 'edit']);
+$router->post('/admin/comments/report/{id}', [AdminCommentController::class, 'report']);
 $router->post('/admin/comments/delete/{id}', [AdminCommentController::class, 'delete']);
 
 $router->run();

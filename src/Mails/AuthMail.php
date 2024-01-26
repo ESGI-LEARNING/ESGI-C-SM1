@@ -29,4 +29,6 @@ class AuthMail
             $data
         );
     }
+
+
 }
