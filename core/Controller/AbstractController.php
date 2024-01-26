@@ -2,8 +2,6 @@
 
 namespace Core\Controller;
 
-use App\Models\User;
-use Core\Auth\Authenticator;
 use Core\Session\FlashService;
 use Core\Views\View;
 

@@ -2,6 +2,8 @@
 	<nav>
 		<ul>
 			<li><a href="/admin/dashboard"><?= icon('layout-dashboard'); ?>Tableau de bord</a></li>
+			<li><a href="/admin/pages"><?= icon('panels-top-left'); ?>Pages</a></li>
+			<li><a href="/admin/comments"><?= icon('message-square-text'); ?>Commentaires</a></li>
 			<li><a href="/admin/users/"><?= icon('users'); ?>Utilisateurs</a></li>
 			<li><a href="/admin/pages/"><?= icon('panels-top-left'); ?>Pages</a></li>
 			<li><a href="/admin/articles/"><?= icon('images'); ?>Articles</a></li>
