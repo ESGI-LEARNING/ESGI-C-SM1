@@ -14,6 +14,8 @@ class Comment extends Model
 
     protected int $user_id;
 
+    protected int $is_deleted = 0;
+
     protected ?int $comment_id = null;
 
     protected string $created_at;
@@ -96,5 +98,15 @@ class Comment extends Model
     public function setUpdatedAt(string $updated_at): void
     {
         $this->updated_at = $updated_at;
+    }
+
+    public function getIsDeleted(): int
+    {
+        return $this->is_deleted;
+    }
+
+    public function setIsDeleted(int $is_deleted): void
+    {
+        $this->is_deleted = $is_deleted;
     }
 }

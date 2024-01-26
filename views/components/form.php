@@ -3,29 +3,64 @@
       class="<?= $config['config']['class']; ?>">
 	<fieldset>
         <?php foreach ($config['inputs'] as $name => $configInput) { ?>
-	        <legend><h2><?= $name; ?></h2></legend>
-	        <input
-					name="<?= $name; ?>"
-					type="<?= $configInput['type']               ?? 'text'; ?>"
-					id="<?= $configInput['id']                   ?? ''; ?>"
-					class="<?= $configInput['class']             ?? ''; ?>"
-					placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
-					value="<?= $configInput['value']             ?? ''; ?>"
-			><br>
+			<label for="<?= $configInput['name'] ?? ''; ?>"><?= $name; ?></label>
+
+            <?php if (!isset($configInput['input'])) { ?>
+				<input
+						name="<?= $name; ?>"
+						type="<?= $configInput['type']               ?? 'text'; ?>"
+						id="<?= $configInput['id']                   ?? ''; ?>"
+						class="<?= $configInput['class']             ?? ''; ?>"
+						placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
+						value="<?= $configInput['value']             ?? ''; ?>"
+				><br>
+            <?php } ?>
+
+            <?php if (isset($configInput['input']) && $configInput['input'] === \App\Enum\FormTypeEnum::INPUT_TEXTAREA) { ?>
+				<textarea
+						name="<?= $name; ?>"
+						id="<?= $configInput['name']                 ?? ''; ?>"
+						class="<?= $configInput['class']             ?? ''; ?>"
+						placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
+				><?= $configInput['value']                     ?? ''; ?></textarea>
+            <?php } ?>
+
+            <?php if (isset($configInput['input']) && $configInput['input'] === \App\Enum\FormTypeEnum::INPUT_SELECT) { ?>
+				<select
+						name="<?= $name; ?>"
+						id="<?= $configInput['name']                 ?? ''; ?>"
+						class="<?= $configInput['class']             ?? ''; ?>"
+						placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
+				>
+                    <?php foreach ($configInput['options'] as $option) { ?>
+						<option value="<?= $option['value']; ?>"><?= $option['name']; ?></option>
+                    <?php } ?>
+				</select>
+            <?php } ?>
+
+            <?php if (isset($configInput['input']) && $configInput['input'] === \App\Enum\FormTypeEnum::INPUT_SWITCH) { ?>
+				<input type="checkbox"
+				       name="<?= $name; ?>"
+				       id="<?= $configInput['name']                 ?? ''; ?>"
+				       class="<?= $configInput['class']             ?? ''; ?>"
+				       placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
+				       value="<?= $configInput['value']             ?? ''; ?>"
+				>
+            <?php } ?>
 
             <?php if (!empty($configInput['errors'])) { ?>
                 <?php foreach ($configInput['errors'] as $fieldErrors) { ?>
-			        <ul class="alert-list alert alert-error">
+					<ul class="alert-list alert alert-error">
                         <?php foreach ((array) $fieldErrors as $error) { ?>
-					        <li><?= $error; ?></li>
+							<li><?= $error; ?></li>
                         <?php } ?>
-			        </ul>
+					</ul>
                 <?php } ?>
             <?php } ?>
+        <?php } ?>
 
-    <?php } ?>
+		<input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
 
-    <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
-
-    <input type="submit" name="submit" value="<?= $config['config']['submit']; ?>">
+		<input type="submit" name="submit" value="<?= $config['config']['submit']; ?>">
+	</fieldset>
 </form>

@@ -9,7 +9,7 @@ class Authenticator extends PHPSession
 {
     private const SESSION_KEY_USER = 'auth.user';
 
-    private User $user;
+    private ?User $user = null;
 
     public function login(User $user): void
     {
