@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Page;
 use App\Form\FormContactType;
 use App\Mails\ContactMail;
 use App\Models\User;
@@ -12,7 +13,16 @@ class MainController extends AbstractController
 {
     public function home(): View
     {
-        return $this->render('main/home', 'front');
+        $page = new Page();
+        $page = $page::query()
+            ->where('slug', '=', $_SERVER['REQUEST_URI'])
+            ->get()[0];
+        if($page->slug){
+            return $this->render('main/home', 'front', [
+                'page' => $page
+            ]);
+        }
+        return $this->render('main/404', 'front');
     }
 
     public function aboutUs(): View
