@@ -143,6 +143,17 @@ CREATE TABLE esgi_setting
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE esgi_page(
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    name       VARCHAR(40) NOT NULL,
+    slug       VARCHAR(40) NOT NULL,
+    metadescription TEXT NOT NULL,
+    content    TEXT        NOT NULL,
+    is_deleted TINYINT(1) DEFAULT 0,
+    created_at DATETIME   DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME   DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE esgi_log
 (
     id         INT AUTO_INCREMENT PRIMARY KEY,

@@ -37,8 +37,4 @@ class AdminController extends AbstractController
         return $this->render('admin/roles', 'back');
     }
 
-    public function pages(): View
-    {
-        return $this->render('admin/pages', 'back');
-    }
 }

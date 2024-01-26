@@ -2,8 +2,8 @@
 
 use App\Controllers\Admin\AdminArticleController;
 use App\Controllers\Admin\AdminCategoryController;
-use App\Controllers\Admin\AdminCommentController;
 use App\Controllers\Admin\AdminController;
+use App\Controllers\Admin\AdminPageController;
 use App\Controllers\Admin\AdminLogController;
 use App\Controllers\Admin\AdminUserController;
 use App\Controllers\ArticleController;
@@ -97,6 +97,16 @@ $router->middleware(['installed'])->group(function (Router $router) {
                 $router->post('/edit/{id}', 'edit');
                 $router->post('/delete/{id}', 'delete');
             });
+
+            $router->controller(AdminPageController::class)->prefix('/pages')->group(function (Router $router) {
+                $router->get('/', 'index');
+                $router->get('/create', 'create');
+                $router->post('/create', 'create');
+                $router->get('/edit/{id}', 'edit');
+                $router->post('/edit/{id}', 'edit');
+                $router->post('/delete/{id}', 'delete');
+            });
+
 
             $router->controller(AdminArticleController::class)->prefix('/articles')->group(function (Router $router) {
                 $router->get('/', 'index');
