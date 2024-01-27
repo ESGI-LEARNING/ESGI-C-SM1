@@ -14,7 +14,7 @@ class FormType
 
     public function __construct(object $data = null)
     {
-        $this->data = $data;
+        $this->data             = $data;
         $this->csrfTokenService = new CsrfTokenService();
         $this->setConfig();
     }
@@ -31,7 +31,7 @@ class FormType
 
     public function handleRequest(): void
     {
-        $request = new Request();
+        $request                          = new Request();
         $this->config['config']['action'] = $request->getUrl();
     }
 
@@ -61,9 +61,9 @@ class FormType
         if (!$this->csrfTokenService->isValidCsrfToken($_REQUEST['csrf_token'])) {
             return false;
         }
+
         // on verifie les regles de validation
         $validator = new Validator($_REQUEST);
-
         $validator->validate($this->rules());
 
         if (count($validator->getErrors()) === 0) {

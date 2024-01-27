@@ -6,7 +6,6 @@ use Core\Form\FormType;
 
 class AdminCategoryType extends FormType
 {
-
     public function setConfig(): void
     {
         $this->config =  [
@@ -23,7 +22,7 @@ class AdminCategoryType extends FormType
                     'placeholder' => 'nom',
                     'value'       => $this->data->getName(),
                     'errors'      => [],
-                ]
+                ],
             ],
         ];
     }

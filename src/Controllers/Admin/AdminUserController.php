@@ -40,7 +40,7 @@ class AdminUserController extends AbstractController
 
     public function edit(int $id): View
     {
-        $user = User::find($id);
+        $user  = User::find($id);
         $form  = new AdminUserEditType($user);
         $form->handleRequest();
 

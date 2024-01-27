@@ -25,7 +25,7 @@ class AdminArticleCreateType extends FormType
                     'errors'      => [],
                 ],
                 'category' => [
-                    'type'        => 'text',
+                    'input'       => FormTypeEnum::INPUT_SELECT,
                     'class'       => 'input-form',
                     'placeholder' => 'catégorie',
                     'value'       => '',

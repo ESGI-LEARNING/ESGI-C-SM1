@@ -1,7 +1,7 @@
 <?php
 
-use App\Controllers\Admin\AdminArticleController;
 use App\Controllers\AboutUsController;
+use App\Controllers\Admin\AdminArticleController;
 use App\Controllers\Admin\AdminCategoryController;
 use App\Controllers\Admin\AdminController;
 use App\Controllers\Admin\AdminUserController;
