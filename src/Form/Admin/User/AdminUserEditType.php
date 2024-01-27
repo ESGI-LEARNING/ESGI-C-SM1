@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Form\Admin;
+namespace App\Form\Admin\User;
 
 use Core\Form\FormType;
 
-class AdminUserCreateType extends FormType
+class AdminUserEditType extends FormType
 {
     public function setConfig(): void
     {
@@ -12,7 +12,7 @@ class AdminUserCreateType extends FormType
             'config' => [
                 'method' => 'POST',
                 'action' => '',
-                'submit' => 'Créer',
+                'submit' => "Modifier l'utilisateur",
                 'class'  => 'form',
             ],
             'inputs' => [
@@ -20,27 +20,15 @@ class AdminUserCreateType extends FormType
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'prénom',
-                    'value'       => '',
+                    'value'       => $this->data->getUsername() ?? '',
                     'errors'      => [],
                 ],
                 'email' => [
                     'type'        => 'email',
                     'class'       => 'input-form',
                     'placeholder' => 'email',
-                    'value'       => '',
+                    'value'       => $this->data->getEmail() ?? '',
                     'errors'      => [],
-                ],
-                'password' => [
-                    'type'        => 'password',
-                    'class'       => 'input-form',
-                    'placeholder' => 'mot de passe',
-                    'errors'      => [],
-                ],
-                'password_confirm' => [
-                    'type'        => 'password',
-                    'class'       => 'input-form',
-                    'confirm'     => 'password',
-                    'placeholder' => 'confirmation',
                 ],
             ],
         ];
@@ -51,7 +39,6 @@ class AdminUserCreateType extends FormType
         return [
             'username' => ['required', 'min:3'],
             'email'    => ['email', 'required'],
-            'password' => ['required', 'min:8', 'confirm'],
         ];
     }
 }

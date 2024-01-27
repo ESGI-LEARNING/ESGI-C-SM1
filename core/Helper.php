@@ -22,6 +22,12 @@ function url(string $url, ?array $params = []): string
     return config('app.url').$url.'/'.implode('/', $params);
 }
 
+function slug(string $text): array|string|null
+{
+    $slug = str_replace(" ", "-", strtolower($text));
+    return preg_replace('/[^\w\s-]/', '', $slug);
+}
+
 function assetLoader(): string
 {
     $manifest = json_decode(file_get_contents(__DIR__.'/../public/build/.vite/manifest.json'), true);

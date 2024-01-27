@@ -15,13 +15,12 @@ class SecurityController extends AbstractController
     public function login(): View
     {
         $form = new LoginType();
+        $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+            $user = User::findBy(['email' => $form->get('email')]);
 
-            $user = User::findBy(['email' => $data['email']]);
-
-            if ($user && password_verify($data['password'], $user->getPassword())) {
+            if ($user && password_verify($form->get('password'), $user->getPassword())) {
                 $authenticator = new Authenticator();
                 $authenticator->login($user);
 
@@ -32,6 +31,7 @@ class SecurityController extends AbstractController
                 $this->redirect('/login');
             }
         }
+
         $config = $form->getConfig();
 
         return $this->render('security/login', 'front', [
@@ -42,20 +42,19 @@ class SecurityController extends AbstractController
     public function register(): View
     {
         $form = new RegisterType();
+        $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-
             $user = new User();
-            $user->setUsername($data['username']);
-            $user->setEmail($data['email']);
-            $user->setPassword($data['password']);
+            $user->setUsername($form->get('username'));
+            $user->setEmail($form->get('email'));
+            $user->setPassword($form->get('password'));
             $user->save();
 
             // Send mails for verify email
             $mailer = new AuthMail();
-            $mailer->sendVerifyEmail($data['email'], [
-                'username' => $data['username'],
+            $mailer->sendVerifyEmail($form->get('email'), [
+                'username' => $form->get('username'),
             ]);
 
             $this->addFlash('success', 'Votre compte a bien été créé');

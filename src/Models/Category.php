@@ -8,7 +8,7 @@ class Category extends Model
 {
     protected ?int $id = null;
 
-    protected string $name;
+    protected ?string $name = null;
 
     protected string $slug;
 
@@ -46,7 +46,7 @@ class Category extends Model
         $this->slug = $slug;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

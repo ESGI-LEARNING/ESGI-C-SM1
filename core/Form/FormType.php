@@ -2,6 +2,7 @@
 
 namespace Core\Form;
 
+use Core\Router\Request;
 use Core\Session\CsrfTokenService;
 
 class FormType
@@ -13,7 +14,7 @@ class FormType
 
     public function __construct(object $data = null)
     {
-        $this->data             = $data;
+        $this->data = $data;
         $this->csrfTokenService = new CsrfTokenService();
         $this->setConfig();
     }
@@ -28,23 +29,41 @@ class FormType
         return [];
     }
 
-    public function isSubmitted(): bool
+    public function handleRequest(): void
     {
-        return $_SERVER['REQUEST_METHOD'] === 'POST';
+        $request = new Request();
+        $this->config['config']['action'] = $request->getUrl();
     }
 
-    public function getData(): bool|array
+    public function isSubmitted(): bool
     {
-        if (!$this->csrfTokenService->isValidCsrfToken($_POST['csrf_token'])) {
-            return false;
-        }
+        return $_SERVER['REQUEST_METHOD'] === $this->config['config']['method'] && !empty($_POST);
+    }
 
-        return $_POST;
+    public function get(string $key): string
+    {
+        return $_REQUEST[$key] ?? '';
+    }
+
+    public function file(string $key): array
+    {
+        return $_FILES[$key] ?? '';
     }
 
     public function isValid(): bool
     {
-        $validator = new Validator($this->getData());
+        // on verifie que tous les champs sont remplis
+        if (count($this->config['inputs']) != count($_REQUEST) - 3) {
+            return false;
+        }
+
+        // on verifie le token csrf
+        if (!$this->csrfTokenService->isValidCsrfToken($_REQUEST['csrf_token'])) {
+            return false;
+        }
+
+        // on verifie les regles de validation
+        $validator = new Validator($_REQUEST);
         $validator->validate($this->rules());
 
         if (count($validator->getErrors()) === 0) {
@@ -57,7 +76,7 @@ class FormType
             }
 
             if ($key !== 'password' && $key !== 'password_confirm') {
-                $this->config['inputs'][$key]['value'] = $this->getData()[$key] ?? '';
+                $this->config['inputs'][$key]['value'] = $_REQUEST[$key] ?? '';
             }
         }
 
