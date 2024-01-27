@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\AboutUsController;
+use App\Controllers\Admin\AdminCategoryController;
 use App\Controllers\Admin\AdminController;
 use App\Controllers\Admin\AdminUserController;
 use App\Controllers\Auth\ForgotPasswordController;
@@ -8,9 +9,13 @@ use App\Controllers\Auth\SecurityController;
 use App\Controllers\ContactController;
 use App\Controllers\GalleryController;
 use App\Controllers\MainController;
+use Core\Config\ConfigLoader;
 use Core\Router\Router;
 
 require __DIR__.'/../vendor/autoload.php';
+
+$config = new ConfigLoader();
+$config->load();
 
 $router = new Router();
 
@@ -42,5 +47,12 @@ $router->post('/admin/users/create', [AdminUserController::class, 'create']);
 $router->get('/admin/users/edit/{id}', [AdminUserController::class, 'edit']);
 $router->post('/admin/users/edit/{id}', [AdminUserController::class, 'edit']);
 $router->post('/admin/users/delete/{id}', [AdminUserController::class, 'delete']);
+
+$router->get('/admin/categories', [AdminCategoryController::class, 'index']);
+$router->get('/admin/categories/create', [AdminCategoryController::class, 'create']);
+$router->post('/admin/categories/create', [AdminCategoryController::class, 'create']);
+$router->get('/admin/categories/edit/{id}', [AdminCategoryController::class, 'edit']);
+$router->post('/admin/categories/edit/{id}', [AdminCategoryController::class, 'edit']);
+$router->post('/admin/categories/delete/{id}', [AdminCategoryController::class, 'delete']);
 
 $router->run();

@@ -5,7 +5,10 @@
 </header>
 <main class="main-admin">
     <?= $this->component('darkMode', $config = []); ?>
-    <?= include $this->viewName; ?>
+    <div class="admin-container">
+        <?= $this->component('sideBarAdmin', $config = []); ?>
+        <?php include $this->viewName; ?>
+    </div>
 </main>
 </body>
 </html>

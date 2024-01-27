@@ -15,15 +15,14 @@ class ForgotPasswordController extends AbstractController
     public function forgotPassword(): View
     {
         $form = new ForgottenPasswordType();
+        $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-
-            $user  = User::findBy(['email' => $data['email']]);
+            $user  = User::findBy(['email' => $form->get('email')]);
             $token = $this->setToken($user->getId());
 
             $mailer = new AuthMail();
-            $mailer->sendResetPassword($data['email'], [
+            $mailer->sendResetPassword($form->get('email'), [
                 'username' => $user->getUsername(),
                 'token'    => $token,
             ]);
@@ -39,8 +38,10 @@ class ForgotPasswordController extends AbstractController
 
     public function resetPassword(string $token): View
     {
-        $form          = new ResetPasswordType();
+
         $resetPassword = ResetPassword::findBy(['token' => $token]);
+        $form          = new ResetPasswordType();
+        $form->handleRequest();
 
         if ($resetPassword->getExpiredAt() < date('Y-m-d H:i:s')) {
             $this->addFlash('error', 'Token expiré');
@@ -48,11 +49,9 @@ class ForgotPasswordController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-
             $user = new User();
             $user = $user->find($resetPassword->getUserId());
-            $user->setPassword($data['password']);
+            $user->setPassword($form->get('password'));
             $user->save();
 
             $resetPassword->delete();
