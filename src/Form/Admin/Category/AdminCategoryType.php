@@ -13,7 +13,7 @@ class AdminCategoryType extends FormType
             'config' => [
                 'method' => 'POST',
                 'action' => '',
-                'submit' => 'Enregistrer',
+                'submit' => 'Créer la catégorie',
                 'class'  => 'form',
             ],
             'inputs' => [

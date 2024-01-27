@@ -23,7 +23,6 @@ class AdminCategoryController extends AbstractController
     {
         $category = new Category();
         $form = new AdminCategoryType($category);
-        $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $category->setName($form->get('name'));

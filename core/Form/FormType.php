@@ -61,9 +61,9 @@ class FormType
         if (!$this->csrfTokenService->isValidCsrfToken($_REQUEST['csrf_token'])) {
             return false;
         }
-
         // on verifie les regles de validation
         $validator = new Validator($_REQUEST);
+
         $validator->validate($this->rules());
 
         if (count($validator->getErrors()) === 0) {
