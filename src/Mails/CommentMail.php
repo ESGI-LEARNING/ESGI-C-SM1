@@ -12,8 +12,8 @@ class CommentMail
         $mail->send(
             $email,
             'Signalement d\'un commentaire',
-            'admin/report-comment',
-            'admin/report-comment',
+            'comment/report-comment',
+            'comment/report-comment',
             $data
         );
     }

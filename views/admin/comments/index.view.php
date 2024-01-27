@@ -20,18 +20,30 @@
                 <?php foreach ($comments as $comment) { ?>
                     <tr>
                         <td><?= $comment->getId(); ?></td>
-                        <td><?= $comment->getContent(); ?></td>
-                        <td><?= $comment->isReported() ? 'Oui' : 'Non'; ?></td>
+                        <td><?= $comment->getContent(); ?>
+                        <td>
+                        <p class="<?= $comment->isReported() ? 'pill pill-danger' : 'pill pill-success'; ?>">
+                        <?= $comment->isReported() ? 'Oui' : 'Non'; ?>
+                    </p>
+                    </td>
+                    </td>
+
                         <td><?= $comment->getUsername(); ?></td>
                         <td><?= $comment->getCreatedAt(); ?></td>
                         <td><?= $comment->getUpdatedAt(); ?></td>
                         <td class="tableau-action">
-                            <form method="POST" action="/admin/comments/delete/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) ?')">
+                            <form method="POST" action="/admin/comments/delete/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de supprimer ce commentaire ?')">
                                 <button class="button button-red button-sm" type="submit"><?= icon('x'); ?></button>
                             </form>
-                            <form method="POST" action="/admin/comments/report/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
-                                <button class="button button-orange button-sm" type="submit"><?= icon('exclamation-triangle'); ?></button>
-                            </form>
+                            <?php if ($comment->isReported()) { ?>
+                                <form method="POST" action="/admin/comments/keep/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de garder ce commentaire ?')">
+                                    <button class="button button-red button-sm" type="submit"><?= icon('flag'); ?></button>
+                                </form>
+                            <?php } else { ?>
+                                <form method="POST" action="/admin/comments/report/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
+                                    <button class="button button-green button-sm" type="submit"><?= icon('flag'); ?></button>
+                                </form>
+                            <?php } ?>
                         </td>
                     </tr>
                 <?php } ?>
