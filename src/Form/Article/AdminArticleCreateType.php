@@ -3,6 +3,7 @@
 namespace App\Form\Article;
 
 use App\Enum\FormTypeEnum;
+use App\Models\Category;
 use Core\Form\FormType;
 
 class AdminArticleCreateType extends FormType
@@ -29,6 +30,7 @@ class AdminArticleCreateType extends FormType
                     'class'       => 'input-form',
                     'placeholder' => 'catégorie',
                     'value'       => '',
+                    'options'     => Category::findAll(),
                     'errors'      => [],
                 ],
                 'image' => [

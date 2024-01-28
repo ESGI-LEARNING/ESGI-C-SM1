@@ -34,13 +34,12 @@
             <?php } ?>
 
             <?php if (isset($configInput['input']) && $configInput['input'] === \App\Enum\FormTypeEnum::INPUT_TEXTAREA) { ?>
-                <textarea
-                        name="<?= $name; ?>"
-                        id="<?= $configInput['name'] ?? ''; ?>"
-                        class="<?= $configInput['class'] ?? ''; ?>"
-                        placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
-                        rows="10"
-                ><?= $configInput['value'] ?? ''; ?></textarea>
+				<textarea
+						name="<?= $name; ?>"
+						id="<?= $configInput['name']                 ?? ''; ?>"
+						class="<?= $configInput['class']             ?? ''; ?>"
+						placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
+				><?= $configInput['value']                     ?? ''; ?></textarea>
             <?php } ?>
 
             <?php if (isset($configInput['input']) && $configInput['input'] === \App\Enum\FormTypeEnum::INPUT_SELECT) { ?>

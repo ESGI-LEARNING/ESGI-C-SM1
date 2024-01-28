@@ -3,6 +3,7 @@
 namespace App\Form\Article;
 
 use App\Enum\FormTypeEnum;
+use App\Models\Category;
 use Core\Form\FormType;
 
 class AdminArticleEditType extends FormType
@@ -21,7 +22,7 @@ class AdminArticleEditType extends FormType
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'nom de l\'article',
-                    'value'       => '',
+                    'value'       => $this->data->getName(),
                     'errors'      => [],
                 ],
                 'category' => [
@@ -29,6 +30,7 @@ class AdminArticleEditType extends FormType
                     'class'       => 'input-form',
                     'placeholder' => 'catégorie',
                     'value'       => '',
+                    'options'     => Category::findAll(),
                     'errors'      => [],
                 ],
                 'image' => [
@@ -41,7 +43,7 @@ class AdminArticleEditType extends FormType
                 'description' => [
                     'class'       => 'input-form',
                     'placeholder' => 'description',
-                    'value'       => '',
+                    'value'       => $this->data->getDescription(),
                     'errors'      => [],
                     'input'       => FormTypeEnum::INPUT_TEXTAREA,
                 ],

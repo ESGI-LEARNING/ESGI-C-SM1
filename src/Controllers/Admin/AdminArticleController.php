@@ -82,6 +82,7 @@ class AdminArticleController extends AbstractController
         return $this->render('admin/articles/edit', 'back', [
             'form'    => $form->getConfig(),
             'article' => $article,
+            'options' => $categories,
         ]);
     }
 
