@@ -28,12 +28,12 @@
             <?php if (isset($configInput['input']) && $configInput['input'] === \App\Enum\FormTypeEnum::INPUT_SELECT) { ?>
 				<select
 						name="<?= $name; ?>"
-						id="<?= $configInput['name']                 ?? ''; ?>"
-						class="<?= $configInput['class']             ?? ''; ?>"
-						placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
+						id="<?= $configInput['name']     ?? ''; ?>"
+						class="<?= $configInput['class'] ?? ''; ?>"
 				>
+					<option><?= $configInput['placeholder'] ?? ''; ?></option>
                     <?php foreach ($configInput['options'] as $option) { ?>
-						<option value="<?= $option['value']; ?>"><?= $option['name']; ?></option>
+						<option value="<?= $option->getName(); ?>"><?= $option->getName(); ?></option>
                     <?php } ?>
 				</select>
             <?php } ?>
