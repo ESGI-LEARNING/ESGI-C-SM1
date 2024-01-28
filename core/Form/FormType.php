@@ -53,7 +53,7 @@ class FormType
     public function isValid(): bool
     {
         // on verifie que tous les champs sont remplis
-        if (count($this->config['inputs']) != count($_REQUEST) - 3) {
+        if (count($this->config['inputs']) != (count($_POST) - 2)) {
             return false;
         }
 

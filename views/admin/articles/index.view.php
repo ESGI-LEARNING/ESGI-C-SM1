@@ -12,8 +12,6 @@
 			<th>Nom</th>
 			<th>Slug</th>
 			<th>Description</th>
-			<th>Image</th>
-			<th>Utilisateur</th>
 			<th>Supprimé</th>
 			<th>Créé le</th>
 			<th>Modifié le</th>
@@ -27,8 +25,6 @@
 				<td><?= $article->getName(); ?></td>
 				<td><?= $article->getSlug(); ?></td>
 				<td><?= $article->getDescription(); ?></td>
-				<td><?= $article->getImage(); ?></td>
-				<td><?= $article->getUserid(); ?></td>
 				<td><?= $article->getIsDeleted(); ?></td>
 				<td><?= $article->getCreatedAt(); ?></td>
 				<td><?= $article->getUpdatedAt(); ?></td>

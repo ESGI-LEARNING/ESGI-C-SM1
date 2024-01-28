@@ -78,9 +78,6 @@ form {
     border-radius: .25rem;
     text-transform: capitalize;
     background: var(--white);
-    &.half {
-      width: 50%;
-    }
   }
   option{
     color: var(--black);

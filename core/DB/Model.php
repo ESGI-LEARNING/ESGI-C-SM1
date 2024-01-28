@@ -206,4 +206,16 @@ class Model extends DB
 
         return config('database.prefix').'_'.strtolower($table);
     }
+
+    public function sync($pivotTable, $firstId, $secondId)
+    {
+        $pivotTable = config('database.prefix').'_'.strtolower($pivotTable);
+        $sql        = "INSERT INTO $pivotTable ($firstId, $secondId) VALUES (:first_id, :second_id)";
+
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute([
+            'first_id'  => $firstId,
+            'second_id' => $secondId,
+        ]);
+    }
 }

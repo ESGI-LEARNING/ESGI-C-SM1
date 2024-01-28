@@ -22,17 +22,24 @@ class AdminArticleController extends AbstractController
 
     public function create(): View
     {
-        $form = new AdminArticleCreateType();
+        $article = new Picture();
+        $form    = new AdminArticleCreateType();
+        $form->handleRequest();
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $form->handleRequest();
-            $article = new Picture();
             $article->setName($form->get('name'));
-            $article->setSlug(trim($form->get('name')));
+            $article->setSlug(slug($form->get('name')));
             $article->setDescription($form->get('description'));
             $article->setUserId($this->getUser()->getId());
             $article->setImage($form->get('image'));
-            $article->setCreatedAt(date('Y-m-d H:i:s'));
             $article->save();
+            /*
+            $article->sync(
+                'picture_category',
+                $article->getId(),
+                Category::find($article->getId())->getId()
+            );
+            */
 
             $this->addFlash('success', 'L\'article a bien été créé');
             $this->redirect('/admin/articles');
@@ -43,20 +50,28 @@ class AdminArticleController extends AbstractController
         ]);
     }
 
-    public function edit($id)
+    public function edit($id): View
     {
         $article    = Picture::find($id);
         $form       = new AdminArticleEditType($article);
-        $categories = Category::findAll();
         $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $article->setName($form->get('name'));
+            $article->setSlug(slug($form->get('name')));
             $article->setDescription($form->get('description'));
             $article->setImage($form->get('image'));
             $article->setUserId($this->getUser()->getId());
             $article->setUpdatedAt(date('Y-m-d H:i:s'));
             $article->save();
+            /*
+            $article->sync(
+                'picture_category',
+                $article->getId(),
+                Category::find($article->getId())->getId()
+
+            );
+            */
 
             $this->addFlash('success', 'L\'article a bien été modifié');
             $this->redirect('/admin/articles');
@@ -65,11 +80,10 @@ class AdminArticleController extends AbstractController
         return $this->render('admin/articles/edit', 'back', [
             'form'    => $form->getConfig(),
             'article' => $article,
-            'options' => $categories,
         ]);
     }
 
-    public function delete($id)
+    public function delete($id): void
     {
         $article = Picture::find($id);
 

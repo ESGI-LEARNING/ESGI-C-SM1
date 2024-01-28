@@ -31,7 +31,7 @@
 						class="<?= $configInput['class'] ?? ''; ?>"
 				>
 					<option><?= $configInput['placeholder'] ?? ''; ?></option>
-                    <?php foreach ($data['options'] as $option) { ?>
+                    <?php foreach ($configInput['options'] as $option) { ?>
 						<option value="<?= $option->getName(); ?>"><?= $option->getName(); ?></option>
                     <?php } ?>
 				</select>
