@@ -160,3 +160,8 @@ CREATE TABLE esgi_log
 
     CONSTRAINT FK_users_logs FOREIGN KEY (user_id) REFERENCES esgi_user (id) ON DELETE CASCADE
 );
+
+-- INSERTS ROLES
+INSERT INTO `esgi_role` (name) VALUES ('ROLE_ADMIN');
+INSERT INTO `esgi_role` (name) VALUES ('ROLE_USER');
+INSERT INTO `esgi_role` (name) VALUES ('ROLE_AUTHOR');

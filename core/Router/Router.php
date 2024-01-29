@@ -8,48 +8,94 @@ class Router
 {
     private array $routes = [];
 
-    private static ?Router $instance = null;
+    private array $middleware = [];
 
-    public static function getInstance(): Router
-    {
-        if (!self::$instance) {
-            self::$instance = new self();
-            self::$instance->run();
-        }
+    private ?string $prefix = null;
 
-        return self::$instance;
-    }
+    private ?string $controller = null;
 
-    public function get(string $uri, array $callable): void
-    {
-        $this->addRoute('GET', $uri, $callable);
-    }
-
-    public function addRoute(string $method, string $uri, array $callable): void
+    public function addRoute(string $method, string $uri, array|string $callable, array $middleware = []): void
     {
         $this->routes[] = [
-            'method'   => $method,
-            'uri'      => $uri,
+            'method' => $method,
+            'uri' => $uri,
             'callable' => $callable,
+            'middlewares' => $middleware,
         ];
     }
 
-    public function post(string $uri, array $callable): void
+    public function middleware(array $middleware): Router
     {
-        $this->addRoute('POST', $uri, $callable);
+        $this->middleware = $middleware;
+        return $this;
     }
 
-    public function delete(string $uri, array $callable): void
+    public function controller(string $name): Router
     {
-        $this->addRoute('DELETE', $uri, $callable);
+        $this->controller = $name;
+        return $this;
+    }
+
+    public function prefix(string $name): Router
+    {
+        $this->prefix = $name;
+        return $this;
+    }
+
+    public function group(\Closure $callback): void
+    {
+        $router = new self();
+        $callback($router);
+
+        foreach ($router->routes as $route) {
+            if (count($this->middleware) > 0) {
+                $route['middlewares'][] = $this->middleware;
+            }
+
+            if ($this->prefix !== null) {
+                if ($route['uri'] === '/')
+                    $route['uri'] = $this->prefix;
+                else {
+                    $route['uri'] = rtrim($this->prefix, '/') . $route['uri'];
+                }
+            }
+
+            if ($this->controller !== null) {
+                $route['callable'] = [$this->controller, $route['callable']];
+            }
+
+            $this->routes[] = $route;
+        }
+
+        $this->middleware = [];
+        $this->prefix = null;
+        $this->controller = null;
+    }
+
+    public function get(string $uri, array|string $callable): Router
+    {
+        $this->addRoute('GET', $uri, $callable, $this->middleware);
+        return $this;
+    }
+
+    public function post(string $uri, array|string $callable): Router
+    {
+        $this->addRoute('POST', $uri, $callable, $this->middleware);
+        return $this;
+    }
+
+    public function delete(string $uri, array|string $callable): Router
+    {
+        $this->addRoute('DELETE', $uri, $callable, $this->middleware);
+        return $this;
     }
 
     public function run(): void
     {
         $method = $_SERVER['REQUEST_METHOD'];
-        $uri    = strtolower($_SERVER['REQUEST_URI']);
-        $uri    = strtok($uri, '?');
-        $uri    = strlen($uri) > 1 ? rtrim($uri, '/') : $uri;
+        $uri = strtolower($_SERVER['REQUEST_URI']);
+        $uri = strtok($uri, '?');
+        $uri = strlen($uri) > 1 ? rtrim($uri, '/') : $uri;
 
         foreach ($this->routes as $route) {
             $pattern = $this->getRoutePattern($route['uri']);
@@ -57,12 +103,20 @@ class Router
             if (preg_match($pattern, $uri, $matches) && $route['method'] === $method) {
                 array_shift($matches);
 
+                // On verifie les accès de l'utilisateurs
+                foreach ($route['middlewares'] as $middleware) {
+                    $middleware = ucfirst($middleware[0]);
+                    $middleware = 'App\\Middlewares\\' . ucfirst($middleware) . 'Middleware';
+                    $middleware = new $middleware();
+                    $middleware();
+                }
+
                 $callable = $route['callable'];
 
                 if (is_array($callable) && 2 === count($callable)) {
-                    include '../src/'.str_replace(['App\\', '\\'], ['', '/'], $callable[0]).'.php';
+                    include '../src/' . str_replace(['App\\', '\\'], ['', '/'], $callable[0]) . '.php';
                     $controllerName = $callable[0];
-                    $methodName     = $callable[1];
+                    $methodName = $callable[1];
 
                     if (class_exists($controllerName)) {
                         $controller = new $controllerName();
@@ -87,15 +141,15 @@ class Router
             }
         }
 
-        include '../src/Controllers/ErrorController.php';
-        $errorController = new ErrorController();
-        $errorController->page404();
+        // Return 404
+        http_response_code(404);
+
     }
 
     private function getRoutePattern(string $uri): string
     {
         $routePattern = preg_replace('/\/{([a-zA-Z0-9_]+)}/', '/([^\/]+)', $uri);
 
-        return '#^'.$routePattern.'$#';
+        return '#^' . $routePattern . '$#';
     }
 }
