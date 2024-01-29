@@ -7,8 +7,9 @@ use Core\Views\View;
 
 class ErrorController extends AbstractController
 {
-    public function page404(): View
+    public function error(string $status): View
     {
-        return $this->render('error/404', 'front');
+        $template = 'errors/' . $status;
+        return $this->render($template, 'front');
     }
 }

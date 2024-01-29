@@ -8,107 +8,132 @@ class Model extends DB
     private mixed $entity;
 
     private array $whereCondition = [];
-    private array $joins          = [];
-    private array $orderBy        = [];
-    private array $columns        = [];
-    private array $limit          = [];
+    private array $joins = [];
+    private array $orderBy = [];
+    private array $columns = [];
+    private array $limit = [];
 
     public function __construct(mixed $entity)
     {
         parent::__construct();
         $this->entity = $entity;
-        $this->table  = $this->getTableName();
+        $this->table = $this->getTableName();
     }
 
     public static function instance(): object
     {
-        $class  = get_called_class();
+        $class = get_called_class();
 
         return new $class();
     }
 
-    public function select(array $columns): object
+    public static function query(): Model
     {
-        $this->columns[] = $columns;
+        return self::instance();
+    }
+
+    public function select(array $columns): Model
+    {
+        $this->columns = array_map(function ($value) {
+            return $this->setPrefixIfDot($value);
+        }, $columns);
 
         return $this;
     }
 
-    public function limit(int $limit): object
+    public function limit(int $limit): Model
     {
         $this->limit[] = $limit;
 
         return $this;
     }
 
-    public function where(array $data): object
+    public function where(string $column, string $operator, mixed $parameter): Model
     {
-        $this->whereCondition = $data;
+        $this->whereCondition[] = [
+            $this->setPrefixIfDot($column), $operator, $parameter
+        ];
 
         return $this;
     }
 
-    public function join(string $table, string $on): self
+    public function andWhere(string $column, string $operator, mixed $parameter): Model
     {
-        $this->joins[] = "JOIN $table ON $on";
+        $this->whereCondition[] = [
+            $this->setPrefixIfDot($column), $operator, $parameter
+        ];
 
         return $this;
     }
 
-    public function orderBy(string $column, string $order = 'ASC'): self
+    public function join(string $table, string $pk, string $operator, string $fk): Model
+    {
+        $table = $this->getPrefix() . $table;
+        $fk = $this->getPrefix() . $fk;
+        $pk = $this->getPrefix() . $pk;
+
+        $this->joins[] = "LEFT JOIN $table ON $pk $operator $fk";
+
+        return $this;
+    }
+
+    public function orderBy(string $column, string $order = 'ASC'): Model
     {
         $this->orderBy[] = "ORDER BY $column $order";
 
         return $this;
     }
 
-    public static function get(): false|array
+    public function get(): false|array
     {
-        $object = self::instance();
+        $where = [];
 
         $sql = 'SELECT ';
 
-        if (!empty($object->columns)) {
-            $sql .= implode(',', $object->columns);
+        if (!empty($this->columns)) {
+            $sql .= implode(',', $this->columns);
         } else {
             $sql .= '*';
         }
 
-        $sql = ' FROM '.$object->table;
+        $sql .= ' FROM ' . $this->table;
 
-        if (!empty($object->joins)) {
-            $sql .= ' '.implode(' ', $object->joins);
+        if (!empty($this->joins)) {
+            $sql .= ' ' . implode(' ', $this->joins);
         }
 
-        if (!empty($object->whereCondition)) {
-            $sql .= ' WHERE ';
+        if (!empty($this->whereCondition)) {
+            $sql .= ' WHERE';
 
-            foreach ($object->whereCondition as $column => $value) {
-                $sql .= ' '.$column.'=:'.$column.' AND';
+            foreach ($this->whereCondition as $condition) {
+                $p = str_replace('.', '_', $condition[0]);
+
+                $sql .= ' ' . $condition[0] . $condition[1] . ':' . $p . ' AND';
+                $where[$p] = $condition[2];
             }
 
             $sql = substr($sql, 0, -3);
         }
 
-        if (!empty($object->orderBy)) {
-            $sql .= ' '.implode(' ', $object->orderBy);
+        if (!empty($this->orderBy)) {
+            $sql .= ' ' . implode(' ', $this->orderBy);
         }
 
-        if (!empty($object->limit)) {
-            $sql .= ' LIMIT '.implode(',', $object->limit);
+        if (!empty($this->limit)) {
+            $sql .= ' LIMIT ' . implode(',', $this->limit);
         }
 
-        $queryPrepared = $object->pdo->prepare($sql);
-        $queryPrepared->execute($object->whereCondition);
+        $query = $this->pdo->prepare($sql);
+        $query->execute($where);
 
-        return $queryPrepared->fetchAll(\PDO::FETCH_CLASS, get_called_class());
+        return $query->fetch();
     }
 
     public static function count(): int
     {
         $object = self::instance();
 
-        $sql           = 'SELECT COUNT(*) FROM '.$object->table;
+        $sql = 'SELECT COUNT(*) FROM ' . $object->table;
         $queryPrepared = $object->pdo->prepare($sql);
         $queryPrepared->execute();
 
@@ -133,7 +158,7 @@ class Model extends DB
     {
         $object = self::instance();
 
-        $sql = 'SELECT * FROM '.$object->table.' WHERE is_deleted = 0';
+        $sql = 'SELECT * FROM ' . $object->table . ' WHERE is_deleted = 0';
 
         $queryPrepared = $object->pdo->prepare($sql);
         $queryPrepared->execute();
@@ -143,10 +168,10 @@ class Model extends DB
 
     public function getOneBy(array $data, string $return = 'array')
     {
-        $sql = 'SELECT * FROM '.$this->table.' WHERE ';
+        $sql = 'SELECT * FROM ' . $this->table . ' WHERE ';
 
         foreach ($data as $column => $value) {
-            $sql .= ' '.$column.'=:'.$column.' AND';
+            $sql .= ' ' . $column . '=:' . $column . ' AND';
         }
 
         $sql = substr($sql, 0, -3);
@@ -166,13 +191,13 @@ class Model extends DB
         $data = $this->getDataObject();
 
         if (empty($this->entity->getId())) {
-            $sql = 'INSERT INTO '.$this->table.'('.implode(',', array_keys($data)).') 
-            VALUES (:'.implode(',:', array_keys($data)).')';
+            $sql = 'INSERT INTO ' . $this->table . '(' . implode(',', array_keys($data)) . ') 
+            VALUES (:' . implode(',:', array_keys($data)) . ')';
         } else {
-            $sql = 'UPDATE '.$this->table.' SET ';
+            $sql = 'UPDATE ' . $this->table . ' SET ';
 
             foreach ($data as $column => $value) {
-                $sql .= $column.'=:'.$column.',';
+                $sql .= $column . '=:' . $column . ',';
             }
 
             $sql = rtrim($sql, ',');
@@ -186,7 +211,7 @@ class Model extends DB
 
     public function delete(): void
     {
-        $sql           = 'DELETE FROM '.$this->table.' WHERE id = :id';
+        $sql = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute(['id' => $this->entity->getId()]);
     }
@@ -204,6 +229,20 @@ class Model extends DB
 
         $table = preg_replace('/(?<!^)([A-Z])/', '_$1', $table);
 
-        return config('database.prefix').'_'.strtolower($table);
+        return $this->getPrefix() . strtolower($table);
+    }
+
+    private function getPrefix(): string
+    {
+        return config('database.prefix') . '_';
+    }
+
+    private function setPrefixIfDot(string $column): string
+    {
+        if (str_contains($column, '.')) {
+            return $this->getPrefix() . $column;
+        }
+
+        return $column;
     }
 }
