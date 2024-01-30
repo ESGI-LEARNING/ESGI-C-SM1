@@ -11,7 +11,7 @@ class AdminMiddleware extends BaseMiddleware
     public function __invoke(): void
     {
         $role = User::query()
-            ->select(['user.id', 'user.email', 'role.name'])
+            ->select(['user.id'])
             ->join('user_role', 'user.id','=', 'user_role.user_id')
             ->join('role', 'role.id', '=', 'user_role.role_id')
             ->where('role.name','=', 'ROLE_ADMIN')

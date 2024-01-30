@@ -27,14 +27,16 @@ class AdminArticleCreateType extends FormType
                 ],
                 'category' => [
                     'input'       => FormTypeEnum::INPUT_SELECT,
+                    'multiple'    => true,
                     'class'       => 'input-form',
                     'placeholder' => 'catégorie',
                     'value'       => '',
                     'options'     => Category::findAll(),
                     'errors'      => [],
                 ],
-                'image' => [
+                'images' => [
                     'type'        => 'file',
+                    'multiple'    => true,
                     'class'       => 'input-form',
                     'placeholder' => 'image',
                     'value'       => '',
@@ -56,7 +58,6 @@ class AdminArticleCreateType extends FormType
         return [
             'name'        => ['required', 'min:3'],
             'category'    => ['required', 'min:3'],
-            'image'       => ['required'],
             'description' => ['required', 'min:3'],
         ];
     }

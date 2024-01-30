@@ -4,16 +4,19 @@ namespace App\Controllers\Admin;
 
 use App\Form\Article\AdminArticleCreateType;
 use App\Form\Article\AdminArticleEditType;
-use App\Models\Category;
 use App\Models\Picture;
+use Core\Auth\Auth;
 use Core\Controller\AbstractController;
+use Core\FileStorage\Storage;
 use Core\Views\View;
 
 class AdminArticleController extends AbstractController
 {
     public function index(): View
     {
-        $articles = Picture::findAll();
+        $articles = Picture::query()
+            ->with(['user', 'images'])
+            ->findAll();
 
         return $this->render('admin/articles/index', 'back', [
             'articles' => $articles,
@@ -23,16 +26,21 @@ class AdminArticleController extends AbstractController
     public function create(): View
     {
         $article = new Picture();
-        $form    = new AdminArticleCreateType();
+        $form    = new AdminArticleType($article);
         $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //upload image
+
+            $pathFile = Storage::upload($form->file('images'), 'media');
+
             $article->setName($form->get('name'));
             $article->setSlug(slug($form->get('name')));
             $article->setDescription($form->get('description'));
-            $article->setUserId($this->getUser()->getId());
-            $article->setImage($form->get('image'));
+            $article->setUserId(Auth::id());
             $article->save();
+
             /*
             $article->sync(
                 'picture_category',
@@ -50,9 +58,12 @@ class AdminArticleController extends AbstractController
         ]);
     }
 
-    public function edit($id): View
+    public function edit(int $id): View
     {
-        $article    = Picture::find($id);
+        $article = Picture::query()
+            ->with(['user', 'images'])
+            ->getOneBy(['id' => $id]);
+
         $form       = new AdminArticleEditType($article);
         $form->handleRequest();
 
@@ -60,8 +71,7 @@ class AdminArticleController extends AbstractController
             $article->setName($form->get('name'));
             $article->setSlug(slug($form->get('name')));
             $article->setDescription($form->get('description'));
-            $article->setImage($form->get('image'));
-            $article->setUserId($this->getUser()->getId());
+            $article->setUserId(Auth::id());
             $article->setUpdatedAt(date('Y-m-d H:i:s'));
             $article->save();
             /*
@@ -83,7 +93,7 @@ class AdminArticleController extends AbstractController
         ]);
     }
 
-    public function delete($id): void
+    public function delete(int $id): void
     {
         $article = Picture::find($id);
 

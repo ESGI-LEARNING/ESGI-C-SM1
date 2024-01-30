@@ -1,6 +1,8 @@
 <form method="<?= $config['config']['method']; ?>"
       action="<?= $config['config']['action']; ?>"
-      class="<?= $config['config']['class']; ?>">
+      class="<?= $config['config']['class']; ?>"
+      enctype="multipart/form-data"
+>
 	<fieldset>
         <?php foreach ($config['inputs'] as $name => $configInput) { ?>
 			<label for="<?= $configInput['name'] ?? ''; ?>"><?= $name; ?></label>
@@ -9,7 +11,7 @@
 				<input
 						name="<?= $name; ?>"
 						type="<?= $configInput['type']               ?? 'text'; ?>"
-						id="<?= $configInput['id']                   ?? ''; ?>"
+						id="<?= $configInput['name']                   ?? ''; ?>"
 						class="<?= $configInput['class']             ?? ''; ?>"
 						placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
 						value="<?= $configInput['value']             ?? ''; ?>"
@@ -22,6 +24,7 @@
 						id="<?= $configInput['name']                 ?? ''; ?>"
 						class="<?= $configInput['class']             ?? ''; ?>"
 						placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
+                        rows="10"
 				><?= $configInput['value']                     ?? ''; ?></textarea>
             <?php } ?>
 
@@ -30,10 +33,11 @@
 						name="<?= $name; ?>"
 						id="<?= $configInput['name']     ?? ''; ?>"
 						class="<?= $configInput['class'] ?? ''; ?>"
+                        <?php echo isset($configInput['multiple']) && $configInput['multiple'] === true ? 'multiple' : ''; ?>
 				>
 					<option><?= $configInput['placeholder'] ?? ''; ?></option>
                     <?php foreach ($configInput['options'] as $option) { ?>
-						<option value="<?= $option->getName(); ?>"><?= $option->getName(); ?></option>
+						<option value="<?= $option->getId(); ?>"><?= $option->getName(); ?></option>
                     <?php } ?>
 				</select>
             <?php } ?>

@@ -2,7 +2,6 @@
 
 use App\Controllers\Admin\AdminArticleController;
 use App\Controllers\AboutUsController;
-use App\Controllers\Admin\AdminArticleController;
 use App\Controllers\Admin\AdminCategoryController;
 use App\Controllers\Admin\AdminController;
 use App\Controllers\Admin\AdminUserController;
@@ -71,14 +70,16 @@ $router->middleware(['auth'])->group(function (Router $router) {
             $router->post('/edit/{id}', 'edit');
             $router->post('/delete/{id}', 'delete');
         });
+
+        $router->controller(AdminArticleController::class)->prefix('/articles')->group(function (Router $router) {
+            $router->get('/', 'index');
+            $router->get('/create', 'create');
+            $router->post('/create', 'create');
+            $router->get('/edit/{id}', 'edit');
+            $router->post('/edit/{id}', 'edit');
+            $router->post('/delete/{id}', 'delete');
+        });
     });
 });
-
-$router->get('/admin/articles', [AdminArticleController::class, 'index']);
-$router->get('/admin/articles/create', [AdminArticleController::class, 'create']);
-$router->post('/admin/articles/create', [AdminArticleController::class, 'create']);
-$router->get('/admin/articles/edit/{id}', [AdminArticleController::class, 'edit']);
-$router->post('/admin/articles/edit/{id}', [AdminArticleController::class, 'edit']);
-$router->post('/admin/articles/delete/{id}', [AdminArticleController::class, 'delete']);
 
 $router->run();

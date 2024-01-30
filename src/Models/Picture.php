@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Core\DB\Model;
+use Core\DB\Relation\HasMany;
+use Core\DB\Relation\HasOne;
 
 class Picture extends Model
 {
@@ -13,8 +15,6 @@ class Picture extends Model
     protected string $slug;
 
     protected string $description;
-
-    protected ?string $image = null;
 
     protected int $user_id;
 
@@ -72,16 +72,6 @@ class Picture extends Model
         $this->description = $description;
     }
 
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): void
-    {
-        $this->image = $image;
-    }
-
     public function getUserId(): int
     {
         return $this->user_id;
@@ -120,5 +110,15 @@ class Picture extends Model
     public function setUpdatedAt(string $updated_at): void
     {
         $this->updated_at = $updated_at;
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(Image::class, 'picture_id', 'id');
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'user_id', 'id');
     }
 }

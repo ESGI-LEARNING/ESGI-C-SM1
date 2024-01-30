@@ -47,13 +47,16 @@ class FormType
 
     public function file(string $key): array
     {
-        return $_FILES[$key] ?? '';
+        return $_FILES[$key];
     }
 
     public function isValid(): bool
     {
+
+        $count = (count($_POST) - 2) + count($_FILES);
+
         // on verifie que tous les champs sont remplis
-        if (count($this->config['inputs']) != (count($_POST) - 2)) {
+        if (count($this->config['inputs']) != $count) {
             return false;
         }
 
