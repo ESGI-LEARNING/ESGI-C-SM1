@@ -5,11 +5,14 @@
 </header>
 <main class="main-admin">
     <?= $this->component('darkMode', $config = []); ?>
-    <?= $this->component('flash', $config = []); ?>
 	<div class="admin-container">
         <?= $this->component('sideBarAdmin', $config = []); ?>
-        <?php include $this->viewName; ?>
-	</div>
+        <section class="table-view-container">
+            <?= $this->component('flash', $config = []); ?>
+            <?php include $this->viewName; ?>
+        </section>
+
+    </div>
 </main>
 </body>
 </html>
