@@ -55,7 +55,7 @@
 	<?= icon(iconName: 'square-pen'); ?>
 	<?= icon(iconName: 'panels-top-left'); ?>
 	<?= icon(iconName: 'layout-dashboard'); ?>
-	<?= icon(iconName: 'image'); ?>
+	<?= icon(iconName: 'images'); ?>
 </section>
 <section>
 	<h2>Bouton</h2>

@@ -11,7 +11,12 @@ class AbstractController
 {
     public function redirect(string $name): void
     {
-        header('Location: '.$name);
+        header('Location: ' . $name);
+    }
+
+    public function previous(): void
+    {
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
     public function render(string $view, string $template, array $params = []): View
@@ -31,10 +36,5 @@ class AbstractController
                 $flash->error($message);
                 break;
         }
-    }
-
-    public function getUser(): ?User
-    {
-        return (new Authenticator())->getUser();
     }
 }

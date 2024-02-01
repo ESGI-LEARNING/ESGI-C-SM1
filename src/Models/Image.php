@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Service\GlideService;
 use Core\DB\Model;
 use Core\DB\Relation\HasOne;
 
@@ -38,6 +39,11 @@ class Image extends Model
     public function getImage(): string
     {
         return $this->image;
+    }
+
+    public function image(?int $width, ?int $height): string
+    {
+        return GlideService::getLinkImage($this->image, 300, 300);
     }
 
     public function setImage(string $image): void

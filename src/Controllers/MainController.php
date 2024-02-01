@@ -12,13 +12,13 @@ class MainController extends AbstractController
         return $this->render('main/home', 'front');
     }
 
-    public function artist(): View
+    public function about(): View
     {
         return $this->render('main/artist', 'front');
     }
 
-    public function template(): View
+    public function contact(): View
     {
-        return $this->render('main/template', 'front');
+        return $this->render('main/contact', 'front');
     }
 }

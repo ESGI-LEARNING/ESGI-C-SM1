@@ -4,22 +4,36 @@ namespace Core\FileStorage;
 
 class Storage
 {
-    private const DOWNLOAD_PATH = "/var/www/storage/";
+    private const DOWNLOAD_PATH = "/var/www/public";
 
-    public static function upload(array $file, string $path): string
+    public static function upload(array &$files, string $path): array
     {
-        $name = basename(uniqid() . '-' . str_replace(' ', '-', $file['name']));
-        $tmp = $file['tmp_name'];
+        $paths = [];
+        $images = [];
+        $file_keys = array_keys($files);
 
-        if (!is_dir(self::DOWNLOAD_PATH . $path)) {
-            (new Storage)->make($path);
+        for ($i=0; $i< count($files['name']); $i++) {
+            foreach ($file_keys as $key) {
+                $images[$i][$key] = $files[$key][$i];
+            }
         }
 
-        $uploadFile = self::DOWNLOAD_PATH . $path . '/' . $name;
+        foreach ($images as $image) {
+            $name = self::getName($image['name']);
+            $tmp = $image['tmp_name'];
 
-        move_uploaded_file($tmp, $uploadFile);
+            if (!is_dir(self::DOWNLOAD_PATH . $path)) {
+                (new Storage)->make($path);
+            }
 
-        return $path . '/' . $name;
+            $uploadFile = self::DOWNLOAD_PATH . $path . '/' . $name;
+
+            move_uploaded_file($tmp, $uploadFile);
+
+            $paths[] =  $name;
+        }
+
+        return $paths;
     }
 
     public function make(string $path): void
@@ -27,14 +41,9 @@ class Storage
         mkdir(self::DOWNLOAD_PATH . $path);
     }
 
-    public static function delete(string $file, string $path): void
+    public static function delete(string $path): void
     {
-        $file = $_FILES[$file];
-
-        $name = $file['name'];
-        $tmp  = $file['tmp_name'];
-
-        unlink($path . $name);
+        unlink(self::DOWNLOAD_PATH . '/media/' . $path);
     }
 
     public static function update(string $file, string $path, string $oldFile): void
@@ -68,5 +77,13 @@ class Storage
         $name = $file['name'];
 
         return pathinfo($name, PATHINFO_DIRNAME);
+    }
+
+    private static function getName(string $name): string
+    {
+        $name = iconv('UTF-8', 'ASCII//TRANSLIT', $name);
+        $name = preg_replace('/[^A-Za-z0-9.]/', '', $name);
+
+        return basename(uniqid() . '_' . strtolower($name));
     }
 }

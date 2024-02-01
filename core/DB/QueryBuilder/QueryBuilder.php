@@ -18,7 +18,8 @@ class QueryBuilder extends DB
 
     public function __construct(
         private readonly string $table,
-        private readonly string $model)
+        private readonly string $model
+    )
     {
         parent::__construct();
     }
@@ -208,6 +209,37 @@ class QueryBuilder extends DB
         }
 
         return $result;
+    }
+
+    public function save(array $data, mixed $entity)
+    {
+        if (empty($entity->getId())) {
+            $sql = 'INSERT INTO `' . $this->table . '`(' . implode(',', array_keys($data)) . ') 
+            VALUES (:' . implode(',:', array_keys($data)) . ')';
+
+            $query = $this->pdo->prepare($sql);
+            $query->execute($data);
+            $entity->setId($this->pdo->lastInsertId());
+        } else {
+            $sql = 'UPDATE ' . $this->table . ' SET ';
+
+            foreach ($data as $column => $value) {
+                $sql .= $column . '=:' . $column . ',';
+            }
+
+            $sql = rtrim($sql, ',');
+            $sql .= ' WHERE id = :id';
+            $data['id'] = $entity->getId();
+
+            $query = $this->pdo->prepare($sql);
+            $query->execute($data);
+        }
+
+        return $entity;
+    }
+
+    public function async()
+    {
     }
 
     private function setPrefixIfDot(string $column): string

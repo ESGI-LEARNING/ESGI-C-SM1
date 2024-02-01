@@ -3,6 +3,7 @@
 namespace Core\DB;
 
 use Core\DB\QueryBuilder\QueryBuilder;
+use Core\DB\Relation\BelongToMany;
 use Core\DB\Relation\HasMany;
 use Core\DB\Relation\HasOne;
 
@@ -25,6 +26,11 @@ abstract class Model
         if (method_exists(static::class, $method)) {
             return call_user_func_array([static::class, $method], $arguments);
         }
+    }
+
+    public function belongsToMany(string $model, string $pivot, string $foreignKey = null, string $otherKey = null): BelongToMany
+    {
+        return new BelongToMany($model, $pivot, $foreignKey, $otherKey, $this->entity->getId());
     }
 
     public function hasOne(string $model, string $foreignKey = null, string $localKey = null): HasOne
@@ -65,23 +71,7 @@ abstract class Model
     public function save(): void
     {
         $data = $this->getDataObject();
-
-        if (empty($this->entity->getId())) {
-            $sql = 'INSERT INTO `' . $this->getTableName() . '`(' . implode(',', array_keys($data)) . ') 
-            VALUES (:' . implode(',:', array_keys($data)) . ')';
-        } else {
-            $sql = 'UPDATE ' . $this->getTableName() . ' SET ';
-
-            foreach ($data as $column => $value) {
-                $sql .= $column . '=:' . $column . ',';
-            }
-
-            $sql = rtrim($sql, ',');
-            $sql .= ' WHERE id = :id';
-            $data['id'] = $this->entity->getId();
-        }
-
-        $this->queryBuilder->execute($sql, $data);
+        $this->entity = $this->queryBuilder->save($data, $this->entity);
     }
 
     public function delete(): \PDOStatement|false
@@ -94,7 +84,7 @@ abstract class Model
         return array_diff_key(get_object_vars($this), get_class_vars(get_class()));
     }
 
-    private function getTableName(): string
+    public function getTableName(): string
     {
         $table = get_called_class();
         $table = explode('\\', $table);
@@ -111,6 +101,6 @@ abstract class Model
             return $this->relations[$name];
         }
 
-        return $this->entity->$name;
+        return $this->entity->$name ?? null;
     }
 }

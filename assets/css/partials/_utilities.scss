@@ -21,6 +21,9 @@
   .ml-#{$i} {
     margin-left: $i * 1rem;
   }
+  .mx-#{$i} {
+    margin: 0 $i * 1rem;
+  }
 
   .pt-#{$i} {
     padding-top: $i * 1rem;
@@ -33,6 +36,10 @@
   }
   .pl-#{$i} {
     padding-left: $i * 1rem;
+  }
+
+  .gap-#{$i} {
+    gap: $i * 1rem;
   }
 }
 
@@ -57,5 +64,8 @@
   &-end {
     justify-content: flex-end;
     align-items: center;
+  }
+  &-col {
+    flex-direction: column;
   }
 }

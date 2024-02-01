@@ -22,7 +22,12 @@ class Relation
         }
 
         $model = $relation->getModel();
-        $primaryKey = $this->getPrimaryKey($relation->getLocalKey());
+
+        if($relation instanceof BelongToMany) {
+            $primaryKey = $this->getPrimaryKey();
+        } else {
+            $primaryKey = $this->getPrimaryKey($relation->getLocalKey());
+        }
 
         if ($this->result instanceof Model) {
             if ($relation instanceof HasOne) {
@@ -32,6 +37,14 @@ class Relation
             if ($relation instanceof HasMany) {
                 $this->result->relations[$this->relationName] = $model::query()
                     ->where($relation->getForeignKey(), '=', $this->result->$primaryKey())
+                    ->get();
+            }
+
+            if ($relation instanceof BelongToMany) {
+                $this->result->relations[$this->relationName] = $model::query()
+                    ->select([$this->getTableName($model) . '.*'])
+                    ->join($relation->getPivot(), $relation->getPivot() . '.' . $relation->getOtherKey(), '=', $this->getTableName($model) . '.id' )
+                    ->where($relation->getPivot() . '.' . $relation->getForeignKey(), '=', $this->result->$primaryKey())
                     ->get();
             }
 
@@ -49,14 +62,30 @@ class Relation
                     ->where($relation->getForeignKey(), '=', $result->$primaryKey())
                     ->get();
             }
+
+            if ($relation instanceof BelongToMany) {
+                $this->result[$key]->relations[$this->relationName] = $model::query()
+                    ->select([$this->getTableName($model) . '.*'])
+                    ->join($relation->getPivot(), $relation->getPivot() . '.' . $relation->getOtherKey(), '=', $this->getTableName($model) . '.id' )
+                    ->where($relation->getPivot() . '.' . $relation->getForeignKey(), '=', $this->result->$primaryKey())
+                    ->get();
+            }
         }
 
         return $this->result;
     }
 
-    private function getPrimaryKey(string $key): string
+    public function getTableName(mixed $model): string
     {
-        return 'get' . ucfirst($key);
+        $tableName = (new $model)->getTableName();
+        return str_replace(config('database.prefix') . '_', '', $tableName);
     }
 
+    private function getPrimaryKey(?string $key = null): string
+    {
+        if ($key) {
+            return 'get' . ucfirst($key);
+        }
+        return 'getId';
+    }
 }

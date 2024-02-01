@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Form\Article;
+namespace App\Form\Admin\Article;
 
 use App\Enum\FormTypeEnum;
 use App\Models\Category;
 use Core\Form\FormType;
 
-class AdminArticleCreateType extends FormType
+class AdminArticleType extends FormType
 {
     public function setConfig(): void
     {
@@ -14,38 +14,42 @@ class AdminArticleCreateType extends FormType
             'config' => [
                 'method' => 'POST',
                 'action' => '',
-                'submit' => 'Créer',
+                'submit' => 'Enregistrer',
                 'class'  => 'form',
             ],
             'inputs' => [
                 'name' => [
+                    'label'       => 'Nom',
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'nom de l\'article',
-                    'value'       => '',
+                    'value'       => $this->data->getName(),
                     'errors'      => [],
                 ],
-                'category' => [
+                'categories[]' => [
+                    'label'       => 'Categories',
                     'input'       => FormTypeEnum::INPUT_SELECT,
                     'multiple'    => true,
                     'class'       => 'input-form',
-                    'placeholder' => 'catégorie',
-                    'value'       => '',
+                    'value'       => $this->pluck($this->data->categories) ?? [],
                     'options'     => Category::findAll(),
                     'errors'      => [],
                 ],
-                'images' => [
+                'images[]' => [
+                    'label'       => 'Images',
                     'type'        => 'file',
                     'multiple'    => true,
                     'class'       => 'input-form',
-                    'placeholder' => 'image',
+                    'placeholder' => 'images',
+                    'images'      => $this->data->images ?? [],
                     'value'       => '',
                     'errors'      => [],
                 ],
                 'description' => [
+                    'label' => 'Description',
                     'class'       => 'input-form',
                     'placeholder' => 'description',
-                    'value'       => '',
+                    'value'       => $this->data->getDescription(),
                     'errors'      => [],
                     'input'       => FormTypeEnum::INPUT_TEXTAREA,
                 ],
@@ -57,7 +61,6 @@ class AdminArticleCreateType extends FormType
     {
         return [
             'name'        => ['required', 'min:3'],
-            'category'    => ['required', 'min:3'],
             'description' => ['required', 'min:3'],
         ];
     }

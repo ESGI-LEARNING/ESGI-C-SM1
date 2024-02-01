@@ -2,9 +2,10 @@
 
 namespace App\Controllers\Admin;
 
-use App\Form\Article\AdminArticleCreateType;
-use App\Form\Article\AdminArticleEditType;
+use App\Form\Admin\Article\AdminArticleType;
+use App\Models\Image;
 use App\Models\Picture;
+use App\Service\UploadFile;
 use Core\Auth\Auth;
 use Core\Controller\AbstractController;
 use Core\FileStorage\Storage;
@@ -30,24 +31,16 @@ class AdminArticleController extends AbstractController
         $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            //upload image
-
-            $pathFile = Storage::upload($form->file('images'), 'media');
-
             $article->setName($form->get('name'));
             $article->setSlug(slug($form->get('name')));
             $article->setDescription($form->get('description'));
             $article->setUserId(Auth::id());
             $article->save();
 
-            /*
-            $article->sync(
-                'picture_category',
-                $article->getId(),
-                Category::find($article->getId())->getId()
-            );
-            */
+            UploadFile::uploadImageArticles($form->file('images'), $article->getId());
+
+            //Save categories
+            $article->categories()->sync($form->get('categories'));
 
             $this->addFlash('success', 'L\'article a bien été créé');
             $this->redirect('/admin/articles');
@@ -61,10 +54,10 @@ class AdminArticleController extends AbstractController
     public function edit(int $id): View
     {
         $article = Picture::query()
-            ->with(['user', 'images'])
+            ->with(['images' , 'categories'])
             ->getOneBy(['id' => $id]);
 
-        $form       = new AdminArticleEditType($article);
+        $form       = new AdminArticleType($article);
         $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -74,14 +67,13 @@ class AdminArticleController extends AbstractController
             $article->setUserId(Auth::id());
             $article->setUpdatedAt(date('Y-m-d H:i:s'));
             $article->save();
-            /*
-            $article->sync(
-                'picture_category',
-                $article->getId(),
-                Category::find($article->getId())->getId()
 
-            );
-            */
+            if ($form->file('images')) {
+                UploadFile::uploadImageArticles($form->file('images'), $article->getId());
+            }
+
+            //Save categories
+            $article->categories()->sync($form->get('categories'));
 
             $this->addFlash('success', 'L\'article a bien été modifié');
             $this->redirect('/admin/articles');
@@ -104,5 +96,19 @@ class AdminArticleController extends AbstractController
             $this->addFlash('success', 'L\'article a bien été supprimé');
             $this->redirect('/admin/articles');
         }
+    }
+    public function deleteImage(int $id): void
+    {
+        $image = Image::find($id);
+
+        if ($image) {
+            Storage::delete($image->getImage());
+
+            $image->delete();
+            $this->addFlash('success', 'L\'images à bien été supprimé');
+            $this->previous();
+        }
+
+        $this->addFlash('danger', "Une error c'est produite lors de la suppréssion");
     }
 }

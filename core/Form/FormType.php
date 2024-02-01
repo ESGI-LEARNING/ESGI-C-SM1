@@ -40,7 +40,7 @@ class FormType
         return $_SERVER['REQUEST_METHOD'] === $this->config['config']['method'] && !empty($_POST);
     }
 
-    public function get(string $key): string
+    public function get(string $key): string|array
     {
         return $_REQUEST[$key] ?? '';
     }
@@ -84,5 +84,14 @@ class FormType
         }
 
         return false;
+    }
+
+    public function pluck(?array $data = null): ?array
+    {
+        if (empty($data)) {
+            return null;
+        }
+
+        return array_map(fn($v) => $v->getId(), $data);
     }
 }
