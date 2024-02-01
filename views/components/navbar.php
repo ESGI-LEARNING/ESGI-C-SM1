@@ -9,7 +9,17 @@
 <nav>
     <ul>
         <li><a href="/contact">contact</a></li>
-        <li><a href="/aboutUs">a-propos</a></li>
-	    <li><a href="/login"><?= icon('user-round'); ?></a></li>
+        <li><a href="/a-propos">a-propos</a></li>
+	    <?php
+            if (Core\Auth\Auth::check()) {
+                echo '<li><a href="/profile">'.icon('user-round').'</a></li>';
+                if ($this->isAdministrator()) {
+                    echo '<li><a href="/admin">'.icon('settings').'</a></li>';
+                }
+                echo '<li><a href="/logout">'.icon('log-out').'</a></li>';
+            } else {
+                echo '<li><a href="/login">'.icon('log-in').'</a></li>';
+            }
+	    ?>
     </ul>
 </nav>

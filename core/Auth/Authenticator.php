@@ -28,7 +28,6 @@ class Authenticator extends PHPSession
         }
 
         $userId = $this->get(self::SESSION_KEY_USER);
-
         if ($userId) {
             try {
                 $user       = new User();

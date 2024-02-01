@@ -36,7 +36,9 @@ img {
   object-fit: cover;
 }
 svg{
-  color: var(--black)
+  color: var(--black);
+  display: inline-block;
+  vertical-align: middle;
 }
 * {
   box-sizing: border-box;

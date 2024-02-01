@@ -39,6 +39,7 @@
 						id="<?= $configInput['name']                 ?? ''; ?>"
 						class="<?= $configInput['class']             ?? ''; ?>"
 						placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
+						rows="<?= $configInput['rows']               ?? ''; ?>"
 				><?= $configInput['value']                     ?? ''; ?></textarea>
             <?php } ?>
 

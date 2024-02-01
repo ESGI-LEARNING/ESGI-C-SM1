@@ -2,15 +2,16 @@
 
 namespace Core\Views;
 
+use Core\Auth\Auth;
+use Core\Enum\Role;
 use Core\Session\CsrfTokenService;
 use Core\Session\FlashService;
 
-class View
+class View extends HelperView
 {
     private string $templateName;
     private string $viewName;
     private array $params = [];
-
     protected string $csrfToken;
 
     public function __construct(string $viewName, string $templateName = 'back', array $params = [])
@@ -27,6 +28,28 @@ class View
             exit('Le template views/templates/' . $templateName . ".tpl.php n'existe pas");
         }
         $this->templateName = '../views/templates/' . $templateName . '.tpl.php';
+    }
+
+    public function isAdministrator(): bool
+    {
+        if (Auth::check()) {
+            if ($this->getRole(roleCheck: ROLE::ROLE_ADMIN) === ROLE::ROLE_ADMIN) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function isAuthor(): bool
+    {
+        if (Auth::check()) {
+            if ($this->getRole(roleCheck: ROLE::ROLE_AUTHOR) === ROLE::ROLE_AUTHOR) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function setViewName(string $viewName): void

@@ -16,7 +16,7 @@ class InstallController extends AbstractController
 {
     public function index(): View
     {
-        return $this->render('install/index', 'front');
+        return $this->render('install/index', 'install');
     }
 
     public function db(): View
@@ -44,7 +44,7 @@ class InstallController extends AbstractController
             }
         }
 
-        return $this->render('install/db_installation', 'front', [
+        return $this->render('install/db_installation', 'install', [
             'form' => $form->getConfig(),
         ]);
     }
@@ -84,7 +84,7 @@ class InstallController extends AbstractController
             $this->addFlash('success', 'SMTP configuré avec success');
         }
 
-        return $this->render('install/smtp_installation', 'front', [
+        return $this->render('install/smtp_installation', 'install', [
             'form' => $form->getConfig(),
         ]);
     }
@@ -111,7 +111,7 @@ class InstallController extends AbstractController
             $this->redirect('/login');
         }
 
-        return $this->render('install/create_admin_user', 'front', [
+        return $this->render('install/create_admin_user', 'install', [
             'form' => $form->getConfig(),
         ]);
     }

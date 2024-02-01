@@ -6,6 +6,9 @@
 @import "partials/grid";
 @import "partials/utilities";
 
+@import 'avatar';
+@import 'profile';
+
 @import "components/main";
 @import 'components/error';
 @import "components/dark-mode";
@@ -26,4 +29,5 @@
 @import "components/pagination";
 @import "components/pill";
 @import "components/paginator";
+
 
