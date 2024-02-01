@@ -104,7 +104,9 @@ class Router
                 array_shift($matches);
 
                 // On verifie les accès de l'utilisateurs
+
                 foreach (array_reverse($route['middlewares']) as $middleware) {
+
                     $middleware = ucfirst($middleware[0]);
                     $middleware = 'App\\Middlewares\\' . ucfirst($middleware) . 'Middleware';
                     $middleware = new $middleware();

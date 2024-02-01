@@ -161,6 +161,7 @@ CREATE TABLE esgi_log
     CONSTRAINT FK_users_logs FOREIGN KEY (user_id) REFERENCES esgi_user (id) ON DELETE CASCADE
 );
 
+
 CREATE TABLE esgi_images
 (
     id         INT AUTO_INCREMENT PRIMARY KEY,
@@ -179,3 +180,4 @@ INSERT INTO `esgi_role` (name)
 VALUES ('ROLE_USER');
 INSERT INTO `esgi_role` (name)
 VALUES ('ROLE_AUTHOR');
+

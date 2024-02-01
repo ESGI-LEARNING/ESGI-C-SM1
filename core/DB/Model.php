@@ -15,6 +15,7 @@ abstract class Model
 
     private QueryBuilder $queryBuilder;
 
+
     public function __construct(mixed $entity)
     {
         $this->entity = $entity;
@@ -42,6 +43,7 @@ abstract class Model
     {
         return new HasMany($model, $foreignKey, $localKey);
     }
+
 
     public static function query(): QueryBuilder
     {
