@@ -19,4 +19,9 @@ class DB
     {
         return $this->pdo;
     }
+
+    protected function getPrefix(): string
+    {
+        return config('database.prefix') . '_';
+    }
 }

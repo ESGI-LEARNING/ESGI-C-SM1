@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Core\DB\Model;
+use Core\DB\Relation\BelongToMany;
 
 class Category extends Model
 {
@@ -84,5 +85,10 @@ class Category extends Model
     public function setUpdatedAt(string $updated_at): void
     {
         $this->updated_at = $updated_at;
+    }
+
+    public function pictures(): BelongToMany
+    {
+        return $this->belongsToMany(Picture::class, 'picture_category', 'category_id', 'picture_id');
     }
 }

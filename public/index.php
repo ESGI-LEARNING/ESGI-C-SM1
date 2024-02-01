@@ -1,14 +1,17 @@
 <?php
 
+use App\Controllers\Admin\AdminArticleController;
 use App\Controllers\AboutUsController;
 use App\Controllers\Admin\AdminCategoryController;
 use App\Controllers\Admin\AdminController;
 use App\Controllers\Admin\AdminUserController;
+use App\Controllers\ArticleController;
 use App\Controllers\Auth\ForgotPasswordController;
 use App\Controllers\Auth\SecurityController;
 use App\Controllers\ContactController;
 use App\Controllers\ErrorController;
 use App\Controllers\GalleryController;
+use App\Controllers\ImageController;
 use App\Controllers\MainController;
 use App\Controllers\ProfileController;
 use Core\Config\ConfigLoader;
@@ -25,11 +28,12 @@ $router = new Router();
 $router->get('/errors/{status}', [ErrorController::class, 'error']);
 
 $router->get('/', [MainController::class, 'home']);
-$router->get('/contact', [ContactController::class, 'contact']);
-$router->get('/about', [AboutUsController::class, 'aboutUs']);
-$router->get('/gallery', [GalleryController::class, 'gallery']);
+$router->get('/contact', [MainController::class, 'contact']);
+$router->get('/about', [MainController::class, 'aboutUs']);
+$router->get('/gallery', [MainController::class, 'gallery']);
 $router->get('/template', [MainController::class, 'template']);
-$router->get('/artist', [MainController::class, 'artist']);
+$router->get('/article', [ArticleController::class, 'article']);
+$router->get('/images/{path}', [ImageController::class, 'index']);
 
 $router->get('/login', [SecurityController::class, 'login']);
 $router->post('/login', [SecurityController::class, 'login']);
@@ -66,6 +70,16 @@ $router->middleware(['auth'])->group(function (Router $router) {
             $router->get('/edit/{id}', 'edit');
             $router->post('/edit/{id}', 'edit');
             $router->post('/delete/{id}', 'delete');
+        });
+
+        $router->controller(AdminArticleController::class)->prefix('/articles')->group(function (Router $router) {
+            $router->get('/', 'index');
+            $router->get('/create', 'create');
+            $router->post('/create', 'create');
+            $router->get('/edit/{id}', 'edit');
+            $router->post('/edit/{id}', 'edit');
+            $router->post('/delete/{id}', 'delete');
+            $router->post('/delete/images/{id}', 'deleteImage');
         });
     });
 });

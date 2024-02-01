@@ -32,7 +32,7 @@ class Authenticator extends PHPSession
         if ($userId) {
             try {
                 $user       = new User();
-                $this->user = $user->getOneBy(['id' => $userId], 'object');
+                $this->user = $user->findBy(['id' => $userId]);
 
                 return $this->user;
             } catch (\Exception $e) {

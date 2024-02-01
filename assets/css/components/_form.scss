@@ -19,6 +19,7 @@ form {
       font-weight: bold;
       display: flex;
       justify-content: start;
+      color: var(--black);
     }
 
     input {
@@ -33,6 +34,7 @@ form {
         box-shadow: .25rem .25rem 0 var(--gray);
         color: var(--white);
         font-weight: bold;
+        cursor: pointer;
       }
 
       &[type="reset"] {
@@ -53,6 +55,9 @@ form {
         color: var(--black);
         font-weight: bold;
       }
+      &[placeholder] {
+        color: var(--black);
+      }
     }
   }
   textarea {
@@ -60,17 +65,22 @@ form {
     margin: 1rem 0;
     width: 100%;
     border: solid .2rem var(--black);
+    color: var(--black);
+    background: var(--white);
     border-radius: .25rem;
     text-transform: capitalize;
   }
   select {
-    padding: 1rem 3rem;
+    padding: 1rem 2rem;
     margin: 1rem 0;
-    width: 50%;
-    border: solid .2rem #000;
+    width: 100%;
+    border: solid .2rem var(--black);
     border-radius: .25rem;
     text-transform: capitalize;
     background: var(--white);
+  }
+  option{
+    color: var(--black);
   }
 }
 

@@ -1,7 +1,7 @@
 <form>
 	<fieldset class="filter">
 		<label for="filter">Filter by category</label>
-		<select id="filter">
+		<select id="filter" class="half">
 			<option value="all">All</option>
 			<option value="nature">Nature</option>
 			<option value="animals">Animals</option>

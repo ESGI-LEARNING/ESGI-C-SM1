@@ -43,7 +43,6 @@
           display: inline-flex;
           align-items: start;
           justify-content: space-between;
-          padding: 2rem;
           width: 100%;
           border-radius: .25rem;
           cursor: pointer;
@@ -59,8 +58,10 @@
           a {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: start;
             gap: 1rem;
+            padding: 1.5rem;
+            width: 100%;
             color: var(--black);
 
             font-size: 1.6rem;

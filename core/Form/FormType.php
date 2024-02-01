@@ -14,7 +14,7 @@ class FormType
 
     public function __construct(object $data = null)
     {
-        $this->data = $data;
+        $this->data             = $data;
         $this->csrfTokenService = new CsrfTokenService();
         $this->setConfig();
     }
@@ -31,7 +31,7 @@ class FormType
 
     public function handleRequest(): void
     {
-        $request = new Request();
+        $request                          = new Request();
         $this->config['config']['action'] = $request->getUrl();
     }
 
@@ -40,20 +40,23 @@ class FormType
         return $_SERVER['REQUEST_METHOD'] === $this->config['config']['method'] && !empty($_POST);
     }
 
-    public function get(string $key): string
+    public function get(string $key): string|array
     {
         return $_REQUEST[$key] ?? '';
     }
 
     public function file(string $key): array
     {
-        return $_FILES[$key] ?? '';
+        return $_FILES[$key];
     }
 
     public function isValid(): bool
     {
+
+        $count = (count($_POST) - 2) + count($_FILES);
+
         // on verifie que tous les champs sont remplis
-        if (count($this->config['inputs']) != count($_REQUEST) - 3) {
+        if (count($this->config['inputs']) != $count) {
             return false;
         }
 
@@ -81,5 +84,14 @@ class FormType
         }
 
         return false;
+    }
+
+    public function pluck(?array $data = null): ?array
+    {
+        if (empty($data)) {
+            return null;
+        }
+
+        return array_map(fn($v) => $v->getId(), $data);
     }
 }

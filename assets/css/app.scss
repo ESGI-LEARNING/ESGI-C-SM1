@@ -4,8 +4,10 @@
 @import "partials/mixins";
 @import "partials/functions";
 @import "partials/grid";
+@import "partials/utilities";
 
 @import "components/main";
+@import 'components/error';
 @import "components/dark-mode";
 @import "components/header";
 @import "components/footer";

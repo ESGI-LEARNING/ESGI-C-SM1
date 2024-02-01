@@ -4,17 +4,22 @@ namespace Core\Router;
 
 class Request
 {
-    static public function getMethod(): string
+    public static function getMethod(): string
     {
         return $_SERVER['REQUEST_METHOD'];
     }
 
-    static public function getUrlParams(string $key): string
+    public static function get(string $key): string
     {
         return $_GET[$key] ?? '';
     }
 
-    static public function getUrl(): string
+    public static function all(): array
+    {
+        return $_GET;
+    }
+
+    public static function getUrl(): string
     {
         return $_SERVER['REQUEST_URI'];
     }

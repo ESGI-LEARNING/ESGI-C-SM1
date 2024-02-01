@@ -38,7 +38,6 @@ class ForgotPasswordController extends AbstractController
 
     public function resetPassword(string $token): View
     {
-
         $resetPassword = ResetPassword::findBy(['token' => $token]);
         $form          = new ResetPasswordType();
         $form->handleRequest();

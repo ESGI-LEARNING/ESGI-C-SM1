@@ -3,18 +3,19 @@
 namespace App\Models;
 
 use Core\DB\Model;
+use Core\DB\Relation\BelongToMany;
+use Core\DB\Relation\HasMany;
+use Core\DB\Relation\HasOne;
 
 class Picture extends Model
 {
     protected ?int $id = null;
 
-    protected string $name;
+    protected ?string $name = null;
 
     protected string $slug;
 
-    protected string $description;
-
-    protected ?string $image = null;
+    protected ?string $description = null;
 
     protected int $user_id;
 
@@ -42,7 +43,7 @@ class Picture extends Model
         $this->id = $id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -62,7 +63,7 @@ class Picture extends Model
         $this->slug = $slug;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -70,16 +71,6 @@ class Picture extends Model
     public function setDescription(string $description): void
     {
         $this->description = $description;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): void
-    {
-        $this->image = $image;
     }
 
     public function getUserId(): int
@@ -120,5 +111,20 @@ class Picture extends Model
     public function setUpdatedAt(string $updated_at): void
     {
         $this->updated_at = $updated_at;
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(Image::class, 'picture_id', 'id');
+    }
+
+    public function categories(): BelongToMany
+    {
+        return $this->belongsToMany(Category::class, 'picture_category', 'picture_id', 'category_id');
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'user_id', 'id');
     }
 }

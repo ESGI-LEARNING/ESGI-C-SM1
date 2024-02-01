@@ -1,8 +1,8 @@
 <section class="table-view-container">
     <div class="table-view-header">
-        <h2>CategoriesS</h2>
+        <h2>Categories</h2>
         <a class="button button-white button-md" href="/admin/categories/create">
-            Créer une category
+            Créer une categorie
         </a>
     </div>
     <table>

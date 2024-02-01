@@ -24,7 +24,8 @@ function url(string $url, ?array $params = []): string
 
 function slug(string $text): array|string|null
 {
-    $slug = str_replace(" ", "-", strtolower($text));
+    $slug = str_replace(' ', '-', strtolower($text));
+
     return preg_replace('/[^\w\s-]/', '', $slug);
 }
 

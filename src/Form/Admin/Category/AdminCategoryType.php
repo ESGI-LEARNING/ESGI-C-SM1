@@ -6,14 +6,13 @@ use Core\Form\FormType;
 
 class AdminCategoryType extends FormType
 {
-
     public function setConfig(): void
     {
         $this->config =  [
             'config' => [
                 'method' => 'POST',
                 'action' => '',
-                'submit' => 'Enregistrer',
+                'submit' => 'Créer la catégorie',
                 'class'  => 'form',
             ],
             'inputs' => [
@@ -23,7 +22,7 @@ class AdminCategoryType extends FormType
                     'placeholder' => 'nom',
                     'value'       => $this->data->getName(),
                     'errors'      => [],
-                ]
+                ],
             ],
         ];
     }
