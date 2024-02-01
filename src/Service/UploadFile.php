@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Models\Image;
+use App\Models\User;
 use Core\FileStorage\Storage;
 
 class UploadFile
@@ -17,5 +18,17 @@ class UploadFile
             $i->setPictureId($article_id);
             $i->save();
         }
+    }
+
+    public static function uploadImageProfile(array $files, string $userId): void
+    {
+        $paths = Storage::upload($files, '/media');
+        foreach ($paths as $path) {
+            $user = new User();
+            $user->setId($userId);
+            $user->setAvatar($path);
+            $user->save();
+        }
+
     }
 }

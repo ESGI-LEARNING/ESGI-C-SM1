@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Service\GlideService;
 use Core\DB\Model;
 use Core\DB\Relation\BelongToMany;
 
@@ -10,10 +11,13 @@ class User extends Model
     protected ?int $id = null;
 
     protected ?string $username = null;
+    protected string $name;
+
+    protected string $username;
 
     protected ?string $email = null;
 
-    protected ?string $password = null;
+    protected string $password;
 
     protected ?string $avatar = null;
 
@@ -75,7 +79,12 @@ class User extends Model
 
     public function getAvatar(): ?string
     {
-        return $this->avatar;
+        if($this->avatar === null)
+        {
+            return null;
+        }
+        return GlideService::getLinkImage($this->avatar, 150, 150);
+
     }
 
     public function setAvatar(?string $avatar): void
