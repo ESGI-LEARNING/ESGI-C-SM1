@@ -93,6 +93,7 @@ CREATE TABLE esgi_material
     is_deleted  TINYINT(1) DEFAULT 0,
     created_at  DATETIME   DEFAULT CURRENT_TIMESTAMP,
     updated_at  DATETIME   DEFAULT CURRENT_TIMESTAMP,
+
     CONSTRAINT FK_users_materials FOREIGN KEY (user_id) REFERENCES esgi_user (id)
 );
 

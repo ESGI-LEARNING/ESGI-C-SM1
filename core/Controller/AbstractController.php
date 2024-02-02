@@ -2,6 +2,7 @@
 
 namespace Core\Controller;
 
+use Core\Config\ConfigLoader;
 use Core\Session\FlashService;
 use Core\Views\View;
 
@@ -34,5 +35,10 @@ class AbstractController
                 $flash->error($message);
                 break;
         }
+    }
+
+    public function setEnv(string $key, string $value): void
+    {
+        ConfigLoader::getInstance()->setEnv($key, $value);
     }
 }

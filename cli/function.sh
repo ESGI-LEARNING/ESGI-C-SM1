@@ -34,3 +34,7 @@ checkIfFolderExists()
       mkdir -p "$directory"
     fi
 }
+
+to_snake_case() {
+  echo "$1" | sed -r 's/([a-z])([A-Z])/\1_\L\2/g' | tr '[:upper:]' '[:lower:]'
+}

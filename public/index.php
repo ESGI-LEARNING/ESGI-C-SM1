@@ -1,17 +1,15 @@
 <?php
 
 use App\Controllers\Admin\AdminArticleController;
-use App\Controllers\AboutUsController;
 use App\Controllers\Admin\AdminCategoryController;
 use App\Controllers\Admin\AdminController;
 use App\Controllers\Admin\AdminUserController;
 use App\Controllers\ArticleController;
 use App\Controllers\Auth\ForgotPasswordController;
 use App\Controllers\Auth\SecurityController;
-use App\Controllers\ContactController;
 use App\Controllers\ErrorController;
-use App\Controllers\GalleryController;
 use App\Controllers\ImageController;
+use App\Controllers\Install\InstallController;
 use App\Controllers\MainController;
 use App\Controllers\ProfileController;
 use Core\Config\ConfigLoader;
@@ -26,6 +24,14 @@ $router = new Router();
 
 //Error page
 $router->get('/errors/{status}', [ErrorController::class, 'error']);
+
+$router->middleware(['install'])->prefix('/install')->group(function (Router $router) {
+    $router->get('/', [InstallController::class, 'index']);
+    $router->get('/db', [InstallController::class, 'db']);
+    $router->post('/db', [InstallController::class, 'db']);
+    $router->get('/smtp', [InstallController::class, 'smtp']);
+    $router->post('/smtp', [InstallController::class, 'smtp']);
+});
 
 $router->get('/', [MainController::class, 'home']);
 $router->get('/contact', [MainController::class, 'contact']);

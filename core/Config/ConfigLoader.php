@@ -52,4 +52,13 @@ class ConfigLoader
 
         return $this->config[$file][$configKey] ?? null;
     }
+
+    public function setEnv(string $key, string $value): void
+    {
+        putenv("$key=$value");
+
+        $env = file_get_contents('../.env');
+        $env = preg_replace("/$key=(.*)/", "$key=$value", $env);
+        file_put_contents('../.env', $env);
+    }
 }

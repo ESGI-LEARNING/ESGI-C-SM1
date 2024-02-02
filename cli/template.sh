@@ -93,3 +93,32 @@ templateForm()
 
   message "Form" $formType
 }
+
+# Migration
+migration()
+{
+  local migrationName=$1
+  checkIfFolderExists "database/migrations"
+  checkIfFileExists "database/migrations/$(date +%Y%m%d%H%M%S)_$(to_snake_case $migrationName).php" "$migrationName"
+
+  echo "<?php
+
+use Core\DB\BaseMigration;
+
+class $migrationName extends BaseMigration
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function up(): void
+    {
+        \$sql = '';
+
+        \$this->execute(\$sql);
+    }
+}" > "migrations/$(date +%Y%m%d%H%M%S)_$(to_snake_case $migrationName).php"
+
+  message "success" "Migration" "$(to_snake_case $migrationName)"
+}

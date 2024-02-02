@@ -19,6 +19,8 @@ elif [ "$command" = "make:repository" ]; then
     templateRepository "$className"
 elif [ "$command" = "make:form" ]; then
     templateForm "$className"
+elif [ "$command" = "make:migration" ]; then
+    migration "$className"
 else
     echo "Commande non supportée : $command"
     exit 1
