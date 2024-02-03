@@ -2,6 +2,8 @@
 
 namespace App\Form\Admin\User;
 
+use App\Enum\FormTypeEnum;
+use App\Models\Role;
 use Core\Form\FormType;
 
 class AdminUserEditType extends FormType
@@ -28,6 +30,15 @@ class AdminUserEditType extends FormType
                     'class'       => 'input-form',
                     'placeholder' => 'email',
                     'value'       => $this->data->getEmail() ?? '',
+                    'errors'      => [],
+                ],
+                'roles[]' => [
+                    'label'       => 'Roles',
+                    'input'       => FormTypeEnum::INPUT_SELECT,
+                    'multiple'    => true,
+                    'class'       => 'input-form',
+                    'value'       => $this->pluck($this->data->roles) ?? [],
+                    'options'     => Role::findAll(),
                     'errors'      => [],
                 ],
             ],

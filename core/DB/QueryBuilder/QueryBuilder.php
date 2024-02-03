@@ -156,13 +156,17 @@ class QueryBuilder extends DB
         return $query->fetchColumn();
     }
 
-    public function findAll(): array
+    public function findAll(mixed $model): array
     {
-        $sql = 'SELECT * FROM `' . $this->table . '` WHERE is_deleted =:is_deleted';
+        if (method_exists($model, 'getIsDeleted')) {
+            $sql = 'SELECT * FROM `' . $this->table . '` WHERE is_deleted =:is_deleted';
+            $parameters = ['is_deleted' => 0,];
+        } else {
+            $sql = 'SELECT * FROM `' . $this->table . '`';
+            $parameters = [];
+        }
 
-        $result = $this->execute($sql, [
-            'is_deleted' => 0,
-        ])->fetchAll(\PDO::FETCH_CLASS, $this->model);
+        $result = $this->execute($sql, $parameters)->fetchAll(\PDO::FETCH_CLASS, $this->model);
 
 
         if (!empty($result) && !empty($this->with)) {
