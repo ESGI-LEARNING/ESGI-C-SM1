@@ -51,6 +51,9 @@ class SecurityController extends AbstractController
             $user->setPassword($form->get('password'));
             $user->save();
 
+            // Set role user for default user
+            $user->roles()->sync([2]);
+
             // Send mails for verify email
             $mailer = new AuthMail();
             $mailer->sendVerifyEmail($form->get('email'), [
