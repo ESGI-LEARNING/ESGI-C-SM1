@@ -63,11 +63,14 @@ class AdminCategoryController extends AbstractController
         $category = Category::find($id);
 
         if ($category) {
-            $category->setIsdeleted(1);
-            $category->save();
+            if ($this->verifyCsrfToken()) {
+                $category->setIsdeleted(1);
+                $category->save();
+
+                $this->addFlash('success', 'la catégory à bien été supprimer');
+                $this->redirect('/admin/categories');
+            }
         }
 
-        $this->addFlash('success', 'la catégory à bien été supprimer');
-        $this->redirect('/admin/categories');
     }
 }

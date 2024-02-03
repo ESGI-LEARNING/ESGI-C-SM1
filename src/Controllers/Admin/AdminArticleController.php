@@ -27,7 +27,7 @@ class AdminArticleController extends AbstractController
     public function create(): View
     {
         $article = new Picture();
-        $form    = new AdminArticleType($article);
+        $form = new AdminArticleType($article);
         $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -54,10 +54,10 @@ class AdminArticleController extends AbstractController
     public function edit(int $id): View
     {
         $article = Picture::query()
-            ->with(['images' , 'categories'])
+            ->with(['images', 'categories'])
             ->getOneBy(['id' => $id]);
 
-        $form       = new AdminArticleType($article);
+        $form = new AdminArticleType($article);
         $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -80,7 +80,7 @@ class AdminArticleController extends AbstractController
         }
 
         return $this->render('admin/articles/edit', 'back', [
-            'form'    => $form->getConfig(),
+            'form' => $form->getConfig(),
             'article' => $article,
         ]);
     }
@@ -90,13 +90,16 @@ class AdminArticleController extends AbstractController
         $article = Picture::find($id);
 
         if ($article) {
-            $article->setIsDeleted(1);
-            $article->save();
+            if ($this->verifyCsrfToken()) {
+                $article->setIsDeleted(1);
+                $article->save();
 
-            $this->addFlash('success', 'L\'article a bien été supprimé');
-            $this->redirect('/admin/articles');
+                $this->addFlash('success', 'L\'article a bien été supprimé');
+                $this->redirect('/admin/articles');
+            }
         }
     }
+
     public function deleteImage(int $id): void
     {
         $image = Image::find($id);

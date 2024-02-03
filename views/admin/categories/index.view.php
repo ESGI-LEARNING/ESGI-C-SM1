@@ -28,6 +28,7 @@
                     </a>
                     <form method="POST" action="/admin/categories/delete/<?= $category->getId(); ?>"
                           onsubmit="return confirm('Etes vous vraiment sur ?')">
+                        <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
                         <button class="button button-red button-sm" type="submit"><?= icon('x'); ?></button>
                     </form>
                 </td>
