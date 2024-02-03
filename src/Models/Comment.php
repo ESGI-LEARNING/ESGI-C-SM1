@@ -11,7 +11,6 @@ class Comment extends Model
 
     private ?string $content = null;
 
-    private bool $isReported = false;
     protected int $is_reported = 0;
 
     protected int $user_id;
@@ -24,7 +23,6 @@ class Comment extends Model
 
     protected string $updated_at;
 
-    protected int $is_deleted = 0;
 
     public function __construct()
     {
@@ -106,15 +104,6 @@ class Comment extends Model
         $this->is_deleted = $is_deleted;
     }
 
-    public function getIsDeleted(): int
-    {
-        return $this->is_deleted;
-    }
-
-    public function setIsDeleted(int $is_deleted): void
-    {
-        $this->is_deleted = $is_deleted;
-    }
     public function getUsername(): string
     {
         $userModel = new User();
