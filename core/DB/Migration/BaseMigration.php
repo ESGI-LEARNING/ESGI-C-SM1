@@ -6,7 +6,7 @@ use Core\DB\DB;
 
 class BaseMigration
 {
-    private string $table;
+    private ?string $table = null;
 
     public function __construct(
         ?string $model = null

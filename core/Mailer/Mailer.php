@@ -4,9 +4,13 @@ namespace Core\Mailer;
 
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
 class Mailer
 {
+
+    private string $message;
+
     public function send(string $to, string $subject, string $templateHtml, string $templateText, array $data = []): void
     {
         $mailer = new PHPMailer(true);
@@ -18,16 +22,19 @@ class Mailer
             // config for prod environment
             if (config('app.env') === 'prod') {
                 $mailer->Host       = config('mail.host');
+                $mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mailer->Port       = intval(config('mail.port'), 10) ?? 587;
                 $mailer->SMTPAuth   = true;
                 $mailer->Username   = config('mail.username');
                 $mailer->Password   = config('mail.password');
-                $mailer->SMTPSecure = config('mail.encryption') ?? PHPMailer::ENCRYPTION_SMTPS;
-                $mailer->Port       = config('mail.port');
             }
 
-            $mailer->SMTPAuth = false;
-            $mailer->Host     = config('mail.host');
-            $mailer->Port     = config('mail.port');
+            // config for dev environment
+            if (config('app.env') === 'dev') {
+                $mailer->SMTPAuth = false;
+                $mailer->Host     = config('mail.host');
+                $mailer->Port     = intval(config('mail.port'), 10);
+            }
 
             // recipes
             $mailer->setFrom(config('mail.from-address'), config('mail.from-name'));
@@ -42,8 +49,13 @@ class Mailer
             // Send mails
             $mailer->send();
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mailer->ErrorInfo}";
+            $this->message =  $mailer->ErrorInfo;
         }
+    }
+
+    public function getMessage(): string
+    {
+        return $this->message;
     }
 
     private function getTemplateHtml(string $template, array $data): string

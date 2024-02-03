@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Core\DB\Model;
+use Core\DB\Relation\BelongToMany;
 
 class User extends Model
 {
@@ -120,5 +121,10 @@ class User extends Model
     public function setVerify(int $verify): void
     {
         $this->verify = $verify;
+    }
+
+    public function roles(): BelongToMany
+    {
+        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
     }
 }
