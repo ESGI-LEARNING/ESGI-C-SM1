@@ -20,14 +20,12 @@
                 <?php foreach ($comments as $comment) { ?>
                     <tr>
                         <td><?= $comment->getId(); ?></td>
-                        <td><?= $comment->getContent(); ?>
+                        <td><?= $comment->getContent(); ?></td>
                         <td>
-                        <p class="<?= $comment->isReported() ? 'pill pill-danger' : 'pill pill-success'; ?>">
-                        <?= $comment->isReported() ? 'Oui' : 'Non'; ?>
-                    </p>
-                    </td>
-                    </td>
-
+                            <p class="<?= $comment->isReported() ? 'pill pill-danger' : 'pill pill-success'; ?>">
+                                <?= $comment->isReported() ? 'Oui' : 'Non'; ?>
+                            </p>
+                        </td>
                         <td><?= $comment->getUsername(); ?></td>
                         <td><?= $comment->getCreatedAt(); ?></td>
                         <td><?= $comment->getUpdatedAt(); ?></td>
@@ -49,5 +47,8 @@
                 <?php } ?>
             </tbody>
         </table>
+
+        <!-- Ajout de la pagination -->
+        <?= $paginator->render(); ?>
     </section>
 </div>
