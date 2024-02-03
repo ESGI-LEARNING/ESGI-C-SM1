@@ -44,8 +44,10 @@ abstract class Model
     public static function count(array $conditions = []): int
     {
         return (new static())->queryBuilder->count($conditions);
+        return (new static())->queryBuilder->count($conditions);
     }
     
+
     public static function find(int $id): static|null
     {
         return (new static())->queryBuilder->getOneBy(['id' => $id]);
