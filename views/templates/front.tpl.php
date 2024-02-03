@@ -5,7 +5,7 @@
 </header>
 <main>
     <?= $this->component('darkMode', $config = []); ?>
-    <?= $this->component('flash', $config = []); ?>
+    <?= $this->component('flash', $this->flash()); ?>
 	<?php include $this->viewName; ?>
 </main>
 	<?= $this->component('footer', $config = []); ?>
