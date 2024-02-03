@@ -101,4 +101,13 @@ abstract class Model
 
         return $this->entity->$name ?? null;
     }
+    public function findWithPagination(int $limit, int $offset): array
+    {
+        $comments = $this->findAll(); // Utilise la méthode findAll pour récupérer tous les commentaires non supprimés
+    
+        // Applique la pagination en utilisant array_slice pour obtenir la partie appropriée des commentaires
+        $paginatedComments = array_slice($comments, $offset, $limit);
+    
+        return $paginatedComments;
+    }
 }

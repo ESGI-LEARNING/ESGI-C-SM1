@@ -1,5 +1,4 @@
 <div class="admin-container">
-    <?= $this->component('sideBarAdmin', $config = []); ?>
     <section class="table-view-container">
         <div class="table-view-header">
             <h2>Commentaires</h2>
@@ -31,7 +30,7 @@
                         <td><?= $comment->getUpdatedAt(); ?></td>
                         <td class="tableau-action">
                             <form method="POST" action="/admin/comments/delete/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de supprimer ce commentaire ?')">
-                                <button class="button button-red button-sm" type="submit"><?= icon('x'); ?></button>
+                                <button class="button button-red button-sm" type="submit"><?= icon('trash'); ?></button>
                             </form>
                             <?php if ($comment->isReported()) { ?>
                                 <form method="POST" action="/admin/comments/keep/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de garder ce commentaire ?')">
