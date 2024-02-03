@@ -24,7 +24,6 @@ class FlashService extends PHPSession
 
     public function getMessage(): array|null
     {
-        var_dump($this->message);
         return $this->message;
     }
 

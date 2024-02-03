@@ -23,26 +23,26 @@ class View
 
     public function setTemplateName(string $templateName): void
     {
-        if (!file_exists('../views/templates/'.$templateName.'.tpl.php')) {
-            exit('Le template views/templates/'.$templateName.".tpl.php n'existe pas");
+        if (!file_exists('../views/templates/' . $templateName . '.tpl.php')) {
+            exit('Le template views/templates/' . $templateName . ".tpl.php n'existe pas");
         }
-        $this->templateName = '../views/templates/'.$templateName.'.tpl.php';
+        $this->templateName = '../views/templates/' . $templateName . '.tpl.php';
     }
 
     public function setViewName(string $viewName): void
     {
-        if (!file_exists('../views/'.$viewName.'.view.php')) {
-            exit('La vue views/'.$viewName.".view.php n'existe pas");
+        if (!file_exists('../views/' . $viewName . '.view.php')) {
+            exit('La vue views/' . $viewName . ".view.php n'existe pas");
         }
-        $this->viewName = '../views/'.$viewName.'.view.php';
+        $this->viewName = '../views/' . $viewName . '.view.php';
     }
 
     public function component(string $component, array $config, array $data = []): void
     {
-        if (!file_exists('../views/components/'.$component.'.php')) {
-            exit('Le composant views/components/'.$component.".php n'existe pas");
+        if (!file_exists('../views/components/' . $component . '.php')) {
+            exit('Le composant views/components/' . $component . ".php n'existe pas");
         }
-        include '../views/components/'.$component.'.php';
+        include '../views/components/' . $component . '.php';
     }
 
     public function setVariables(array $params): void
@@ -60,11 +60,13 @@ class View
     public function flash(): array
     {
         $service = new FlashService();
-        var_dump($service->getFlash('success'));
-        return [
-            'type' => $service->getFlash('success'),
-            'messages' => $service->getMessage()
-        ];
+        $service->getFlash('success');
+
+        if (!empty($service->getMessage())) {
+            return $service->getMessage();
+        }
+
+        return [];
     }
 
     public function __destruct()

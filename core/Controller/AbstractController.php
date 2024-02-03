@@ -13,11 +13,13 @@ class AbstractController
     public function redirect(string $name): void
     {
         header('Location: '.$name);
+        exit();
     }
 
     public function previous(): void
     {
         header('Location: '.$_SERVER['HTTP_REFERER']);
+        exit();
     }
 
     public function verifyCsrfToken(): bool
