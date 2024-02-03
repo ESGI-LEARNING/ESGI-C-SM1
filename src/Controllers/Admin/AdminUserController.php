@@ -72,11 +72,13 @@ class AdminUserController extends AbstractController
         $user = User::find($id);
 
         if ($user) {
-            $user->setIsDeleted(1);
-            $user->save();
+            if ($this->verifyCsrfToken()) {
+                $user->setIsDeleted(1);
+                $user->save();
 
-            $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
-            $this->redirect('/admin/users');
+                $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
+                $this->redirect('/admin/users');
+            }
         }
     }
 }

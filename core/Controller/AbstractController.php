@@ -3,6 +3,7 @@
 namespace Core\Controller;
 
 use Core\Config\ConfigLoader;
+use Core\Session\CsrfTokenService;
 use Core\Session\FlashService;
 use Core\Views\View;
 
@@ -16,6 +17,12 @@ class AbstractController
     public function previous(): void
     {
         header('Location: ' . $_SERVER['HTTP_REFERER']);
+    }
+
+    function verifyCsrfToken(): bool
+    {
+        $service = new CsrfTokenService();
+        return $service->isValidCsrfToken($_REQUEST['csrf_token']);
     }
 
     public function render(string $view, string $template, array $params = []): View
