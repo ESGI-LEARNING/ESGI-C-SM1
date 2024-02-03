@@ -60,7 +60,7 @@ docker-compose exec php composer install
 
 ## 📃 Modèle conceptuel de données
 
-![MCD](https://raw.githubusercontent.com/TheoMeunier/ESGI-C-SM1/main/documentation/mcd.png)
+![MCD](https://raw.githubusercontent.com/TheoMeunier/ESGI-C-SM1/main/documentation/mcd/MCD.png)
 
 ## 📌 Lien utiles
 
@@ -104,4 +104,3 @@ docker-compose exec php composer install
 - Théo MEUNIER - [Github](https://github.com/TheoMeunier)
 - Philippe DELENTE - [Github](https://github.com/PhilDaiguille)
 - Quentin ANDRIEU - [Github](https://github.com/Tinou95)
-- Issam DJAIL - [Github](https://github.com/djouleissoum)
