@@ -5,7 +5,9 @@ namespace App\Controllers\Admin;
 use App\Mails\CommentMail;
 use App\Models\Comment;
 use Core\Controller\AbstractController;
+use Core\Pagination\Paginator;
 use Core\Views\View;
+use Core\Pagination\HttpRequest;
 
 class AdminCommentController extends AbstractController
 {
