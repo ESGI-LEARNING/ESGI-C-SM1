@@ -18,7 +18,8 @@ class QueryBuilder extends DB
 
     public function __construct(
         private readonly string $table,
-        private readonly string $model
+        private readonly string $model,
+        private readonly mixed $entity
     )
     {
         parent::__construct();
@@ -156,9 +157,9 @@ class QueryBuilder extends DB
         return $query->fetchColumn();
     }
 
-    public function findAll(mixed $model): array
+    public function findAll(): array
     {
-        if (method_exists($model, 'getIsDeleted')) {
+        if (method_exists($this->entity, 'getIsDeleted')) {
             $sql = 'SELECT * FROM `' . $this->table . '` WHERE is_deleted =:is_deleted';
             $parameters = ['is_deleted' => 0,];
         } else {

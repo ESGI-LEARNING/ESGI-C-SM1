@@ -19,7 +19,7 @@ abstract class Model
     public function __construct(mixed $entity)
     {
         $this->entity = $entity;
-        $this->queryBuilder = new QueryBuilder($this->getTableName(), get_called_class());
+        $this->queryBuilder = new QueryBuilder($this->getTableName(), get_called_class(), $entity);
     }
 
     public function belongsToMany(string $model, string $pivot, string $foreignKey = null, string $otherKey = null): BelongToMany
@@ -60,7 +60,7 @@ abstract class Model
 
     public static function findAll(): array
     {
-        return (new static())->queryBuilder->findAll((new static())->entity);
+        return (new static())->queryBuilder->findAll();
     }
 
     public function save(): void
