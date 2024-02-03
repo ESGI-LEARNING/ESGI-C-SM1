@@ -33,7 +33,7 @@ class Mailer
             if (config('app.env') === 'dev') {
                 $mailer->SMTPAuth = false;
                 $mailer->Host     = config('mail.host');
-                $mailer->Port     = intval(config('mail.port'), 10);
+                $mailer->Port     =  1025;
             }
 
             // recipes
@@ -44,7 +44,7 @@ class Mailer
             $mailer->isHTML(true);
             $mailer->Subject = $subject;
             $mailer->Body    = $this->getTemplateHtml($templateHtml, $data);
-            $mailer->AltBody = 'toto';
+            $mailer->AltBody = $this->getTemplateTxt($templateText, $data);
 
             // Send mails
             $mailer->send();
@@ -81,5 +81,21 @@ class Mailer
         $content = ob_get_clean();
 
         return str_replace('{{ content }}', $templateHtml, $content);
+    }
+
+    private function getTemplateTxt(string $template, array $data): string
+    {
+        extract($data);
+
+        $templatePath = '../views/mails/'.$template.'.txt.php';
+        if (!file_exists($templatePath)) {
+            exit('Le template '.$template.' n\'existe pas');
+        }
+
+        ob_start();
+        include $templatePath;
+        $templateTxt = ob_get_clean();
+
+        return $templateTxt;
     }
 }
