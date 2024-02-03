@@ -32,10 +32,8 @@ class SecurityController extends AbstractController
             }
         }
 
-        $config = $form->getConfig();
-
         return $this->render('security/login', 'front', [
-            'form' => $config,
+            'form' => $form->getConfig(),
         ]);
     }
 
