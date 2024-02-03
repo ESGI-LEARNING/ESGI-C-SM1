@@ -161,6 +161,7 @@ class QueryBuilder extends DB
     }
 
     public function count(array $conditions = []): int
+    public function count(array $conditions = []): int
     {
         $where = [];
     
@@ -184,6 +185,8 @@ class QueryBuilder extends DB
     
         return $query->fetchColumn();
     }
+    
+    
     
     public function findAll(): array
     {
