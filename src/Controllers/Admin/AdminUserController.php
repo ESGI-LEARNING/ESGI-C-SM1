@@ -29,6 +29,8 @@ class AdminUserController extends AbstractController
             $user->setPassword($form->get('password'));
             $user->save();
 
+            $user->roles()->sync($form->get('roles'));
+
             $this->addFlash('success', 'L\'utilisateur a bien été créé');
             $this->redirect('/admin/users');
         }
@@ -40,7 +42,10 @@ class AdminUserController extends AbstractController
 
     public function edit(int $id): View
     {
-        $user  = User::find($id);
+        $user  = User::query()
+            ->with(['roles'])
+            ->getOneBy(['id' => $id]);
+
         $form  = new AdminUserEditType($user);
         $form->handleRequest();
 
@@ -49,6 +54,8 @@ class AdminUserController extends AbstractController
             $user->setEmail($form->get('email'));
             $user->setUpdatedAt(date('Y-m-d H:i:s'));
             $user->save();
+
+            $user->roles()->sync($form->get('roles'));
 
             $this->addFlash('success', 'L\'utilisateur a bien été modifié');
             $this->redirect('/admin/users');

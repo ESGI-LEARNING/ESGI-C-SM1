@@ -60,7 +60,7 @@ abstract class Model
 
     public static function findAll(): array
     {
-        return (new static())->queryBuilder->findAll();
+        return (new static())->queryBuilder->findAll((new static())->entity);
     }
 
     public function save(): void

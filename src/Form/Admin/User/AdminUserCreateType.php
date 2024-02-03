@@ -2,6 +2,8 @@
 
 namespace App\Form\Admin\User;
 
+use App\Enum\FormTypeEnum;
+use App\Models\Role;
 use Core\Form\FormType;
 
 class AdminUserCreateType extends FormType
@@ -17,6 +19,7 @@ class AdminUserCreateType extends FormType
             ],
             'inputs' => [
                 'username' => [
+                    'label'       => 'Nom',
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'prénom',
@@ -24,19 +27,31 @@ class AdminUserCreateType extends FormType
                     'errors'      => [],
                 ],
                 'email' => [
+                    'label'       => 'Email',
                     'type'        => 'email',
                     'class'       => 'input-form',
                     'placeholder' => 'email',
                     'value'       => '',
                     'errors'      => [],
                 ],
+                'roles[]' => [
+                    'label'       => 'Roles',
+                    'input'       => FormTypeEnum::INPUT_SELECT,
+                    'multiple'    => true,
+                    'class'       => 'input-form',
+                    'value'       => [],
+                    'options'     => Role::findAll(),
+                    'errors'      => [],
+                ],
                 'password' => [
+                    'label'       => 'Password',
                     'type'        => 'password',
                     'class'       => 'input-form',
                     'placeholder' => 'mot de passe',
                     'errors'      => [],
                 ],
                 'password_confirm' => [
+                    'label'       => 'Confirm Password',
                     'type'        => 'password',
                     'class'       => 'input-form',
                     'confirm'     => 'password',
