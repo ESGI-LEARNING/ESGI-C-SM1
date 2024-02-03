@@ -25,67 +25,73 @@ $router = new Router();
 //Error page
 $router->get('/errors/{status}', [ErrorController::class, 'error']);
 
-$router->middleware(['install'])->prefix('/install')->group(function (Router $router) {
-    $router->get('/', [InstallController::class, 'index']);
-    $router->get('/db', [InstallController::class, 'db']);
-    $router->post('/db', [InstallController::class, 'db']);
-    $router->get('/smtp', [InstallController::class, 'smtp']);
-    $router->post('/smtp', [InstallController::class, 'smtp']);
+$router->middleware(['install'])->group(function (Router $router) {
+   $router->controller(InstallController::class)->prefix('/install')->group(function (Router $router) {
+       $router->get('/', 'index');
+       $router->get('/db', 'db');
+       $router->post('/db', 'db');
+       $router->get('/smtp', 'smtp');
+       $router->post('/smtp', 'smtp');
+       $router->get('/admin-user', 'adminUser');
+       $router->post('/admin-user', 'adminUser');
+   });
 });
 
-$router->get('/', [MainController::class, 'home']);
-$router->get('/contact', [MainController::class, 'contact']);
-$router->get('/about', [MainController::class, 'aboutUs']);
-$router->get('/gallery', [MainController::class, 'gallery']);
-$router->get('/template', [MainController::class, 'template']);
-$router->get('/article', [ArticleController::class, 'article']);
-$router->get('/images/{path}', [ImageController::class, 'index']);
+$router->middleware(['installed'])->group(function (Router $router) {
+    $router->get('/', [MainController::class, 'home']);
+    $router->get('/contact', [MainController::class, 'contact']);
+    $router->get('/about', [MainController::class, 'aboutUs']);
+    $router->get('/gallery', [MainController::class, 'gallery']);
+    $router->get('/template', [MainController::class, 'template']);
+    $router->get('/article', [ArticleController::class, 'article']);
+    $router->get('/images/{path}', [ImageController::class, 'index']);
 
-$router->get('/login', [SecurityController::class, 'login']);
-$router->post('/login', [SecurityController::class, 'login']);
-$router->get('/register', [SecurityController::class, 'register']);
-$router->post('/register', [SecurityController::class, 'register']);
-$router->get('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
-$router->post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
-$router->get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword']);
-$router->post('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword']);
+    $router->get('/login', [SecurityController::class, 'login']);
+    $router->post('/login', [SecurityController::class, 'login']);
+    $router->get('/register', [SecurityController::class, 'register']);
+    $router->post('/register', [SecurityController::class, 'register']);
+    $router->get('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+    $router->post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+    $router->get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword']);
+    $router->post('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword']);
 
-$router->middleware(['auth'])->group(function (Router $router) {
-    $router->get('/logout', [SecurityController::class, 'logout']);
-    $router->get('/profile', [ProfileController::class, 'index']);
+    $router->middleware(['auth'])->group(function (Router $router) {
+        $router->get('/logout', [SecurityController::class, 'logout']);
+        $router->get('/profile', [ProfileController::class, 'index']);
 
-    $router->middleware(['admin'])->prefix('/admin')->group(function (Router $router) {
-        $router->get('/', [AdminController::class, 'dashboard']);
-        $router->get('/comments', [AdminController::class, 'comments']);
-        $router->get('/roles', [AdminController::class, 'roles']);
-        $router->get('/pages', [AdminController::class, 'pages']);
+        $router->middleware(['admin'])->prefix('/admin')->group(function (Router $router) {
+            $router->get('/', [AdminController::class, 'dashboard']);
+            $router->get('/comments', [AdminController::class, 'comments']);
+            $router->get('/roles', [AdminController::class, 'roles']);
+            $router->get('/pages', [AdminController::class, 'pages']);
 
-        $router->controller(AdminUserController::class)->prefix('/users')->group(function (Router $router) {
-            $router->get('/', 'index');
-            $router->get('/create', 'create');
-            $router->post('/create', 'create');
-            $router->get('/edit/{id}', 'edit');
-            $router->post('/edit/{id}', 'edit');
-            $router->post('/delete/{id}', 'delete');
-        });
+            $router->controller(AdminUserController::class)->prefix('/users')->group(function (Router $router) {
+                $router->get('/', 'index');
+                $router->get('/create', 'create');
+                $router->post('/create', 'create');
+                $router->get('/edit/{id}', 'edit');
+                $router->post('/edit/{id}', 'edit');
+                $router->post('/delete/{id}', 'delete');
+            });
 
-        $router->controller(AdminCategoryController::class)->prefix('/categories')->group(function (Router $router) {
-            $router->get('/', 'index');
-            $router->get('/create', 'create');
-            $router->post('/create', 'create');
-            $router->get('/edit/{id}', 'edit');
-            $router->post('/edit/{id}', 'edit');
-            $router->post('/delete/{id}', 'delete');
-        });
+            $router->controller(AdminCategoryController::class)->prefix('/categories')->group(function (Router $router) {
+                $router->get('/', 'index');
+                $router->get('/create', 'create');
+                $router->post('/create', 'create');
+                $router->get('/edit/{id}', 'edit');
+                $router->post('/edit/{id}', 'edit');
+                $router->post('/delete/{id}', 'delete');
+            });
 
-        $router->controller(AdminArticleController::class)->prefix('/articles')->group(function (Router $router) {
-            $router->get('/', 'index');
-            $router->get('/create', 'create');
-            $router->post('/create', 'create');
-            $router->get('/edit/{id}', 'edit');
-            $router->post('/edit/{id}', 'edit');
-            $router->post('/delete/{id}', 'delete');
-            $router->post('/delete/images/{id}', 'deleteImage');
+            $router->controller(AdminArticleController::class)->prefix('/articles')->group(function (Router $router) {
+                $router->get('/', 'index');
+                $router->get('/create', 'create');
+                $router->post('/create', 'create');
+                $router->get('/edit/{id}', 'edit');
+                $router->post('/edit/{id}', 'edit');
+                $router->post('/delete/{id}', 'delete');
+                $router->post('/delete/images/{id}', 'deleteImage');
+            });
         });
     });
 });

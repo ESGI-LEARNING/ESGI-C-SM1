@@ -164,7 +164,8 @@ class QueryBuilder extends DB
             'is_deleted' => 0,
         ])->fetchAll(\PDO::FETCH_CLASS, $this->model);
 
-        if (!empty($this->with)) {
+
+        if (!empty($result) && !empty($this->with)) {
             foreach ($this->with as $relation) {
                 if (method_exists($this->model, $relation)) {
                     $result = (new Relation($result, $relation))->getDatas();
@@ -200,7 +201,7 @@ class QueryBuilder extends DB
 
         $result = $query->fetch();
 
-        if (!empty($this->with)) {
+        if (!empty($result) && !empty($this->with)) {
             foreach ($this->with as $relation) {
                 if (method_exists($this->model, $relation)) {
                     $result = (new Relation($result, $relation))->getDatas();
@@ -238,10 +239,6 @@ class QueryBuilder extends DB
         return $entity;
     }
 
-    public function async()
-    {
-    }
-
     private function setPrefixIfDot(string $column): string
     {
         if (str_contains($column, '.')) {
@@ -249,18 +246,5 @@ class QueryBuilder extends DB
         }
 
         return $column;
-    }
-
-    private function relationWith($result): array|Model
-    {
-        if (!empty($this->with)) {
-            foreach ($this->with as $relation) {
-                if (method_exists($this->model, $relation)) {
-                    return (new Relation($result, $relation))->getDatas();
-                }
-            }
-        }
-
-        return [];
     }
 }

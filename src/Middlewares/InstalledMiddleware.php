@@ -3,12 +3,12 @@
 namespace App\Middlewares;
 
 
-class InstallMiddleware
+class InstalledMiddleware
 {
     public function __invoke(): void
     {
-        if(config('app.install') === '1') {
-            $url = config('app.url') . '/login';
+        if(config('app.install') === 'false') {
+            $url = config('app.url') . '/install';
             header('Location: '. $url);
         }
     }

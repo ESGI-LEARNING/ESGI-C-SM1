@@ -8,42 +8,54 @@ class SmtpType extends FormType
 {
     public function setConfig(): void
     {
-        $this->config =  [
+        $this->config = [
             'config' => [
                 'method' => 'POST',
                 'action' => '',
                 'submit' => 'Valider',
-                'class'  => 'form',
+                'class' => 'form',
             ],
             'inputs' => [
                 'host' => [
-                    'label'      => 'Host',
-                    'type'        => 'text',
-                    'class'       => 'input-form',
-                    'placeholder' => 'localhost',
+                    'label' => 'Host',
+                    'type' => 'text',
+                    'class' => 'input-form',
+                    'placeholder' => 'smtp.exemple.fr',
                 ],
-                'name' => [
-                    'label'      => 'Name',
-                    'type'        => 'text',
-                    'class'       => 'input-form',
-                    'placeholder' => 'db_name',
+                'port' => [
+                    'label' => 'Port',
+                    'type' => 'text',
+                    'class' => 'input-form',
+                    'placeholder' => '587',
                 ],
                 'username' => [
-                    'label'      => 'Username',
-                    'type'        => 'text',
-                    'class'       => 'input-form',
-                    'placeholder' => 'db_user',
+                    'label' => 'Username',
+                    'type' => 'text',
+                    'class' => 'input-form',
+                    'placeholder' => 'smtp user',
                 ],
                 'password' => [
-                    'label'      => 'Password',
-                    'type'        => 'password',
-                    'class'       => 'input-form',
+                    'label' => 'Password',
+                    'type' => 'password',
+                    'class' => 'input-form',
                 ],
-                'prefix' => [
-                    'label'      => 'Prefix',
-                    'type'        => 'text',
-                    'class'       => 'input-form',
-                    'placeholder'       => 'prefix',
+                'from' => [
+                    'label' => 'From email',
+                    'type' => 'text',
+                    'class' => 'input-form',
+                    'placeholder' => 'no-reply@exemple.fr',
+                ],
+                'name' => [
+                    'label' => 'Name email',
+                    'type' => 'text',
+                    'class' => 'input-form',
+                    'placeholder' => 'No reply',
+                ],
+                'email' => [
+                    'label' => 'Votre Email',
+                    'type' => 'text',
+                    'class' => 'input-form',
+                    'placeholder' => 'votre@exemple.fr',
                 ],
             ],
         ];
@@ -53,10 +65,12 @@ class SmtpType extends FormType
     {
         return [
             'host' => ['required'],
-            'name' => ['required'],
+            'port' => ['required'],
             'username' => ['required'],
             'password' => ['required'],
-            'prefix' => ['required'],
+            'from' => ['required'],
+            'name' => ['required'],
+            'email' => ['required'],
         ];
     }
 }

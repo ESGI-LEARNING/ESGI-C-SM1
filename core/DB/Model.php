@@ -22,13 +22,6 @@ abstract class Model
         $this->queryBuilder = new QueryBuilder($this->getTableName(), get_called_class());
     }
 
-    public static function __callStatic(string $method, array $arguments)
-    {
-        if (method_exists(static::class, $method)) {
-            return call_user_func_array([static::class, $method], $arguments);
-        }
-    }
-
     public function belongsToMany(string $model, string $pivot, string $foreignKey = null, string $otherKey = null): BelongToMany
     {
         return new BelongToMany($model, $pivot, $foreignKey, $otherKey, $this->entity->getId());

@@ -16,7 +16,7 @@ class AdminArticleController extends AbstractController
     public function index(): View
     {
         $articles = Picture::query()
-            ->with(['user', 'images'])
+            ->with(['user'])
             ->findAll();
 
         return $this->render('admin/articles/index', 'back', [

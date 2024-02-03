@@ -114,11 +114,11 @@ class $migrationName extends BaseMigration
 
     public function up(): void
     {
-        \$sql = '';
+        \$sql = \"\";
 
         \$this->execute(\$sql);
     }
-}" > "migrations/$(date +%Y%m%d%H%M%S)_$(to_snake_case $migrationName).php"
+}" > "src/Migrations/$(date +%Y%m%d%H%M%S)_$(to_snake_case $migrationName).php"
 
   message "success" "Migration" "$(to_snake_case $migrationName)"
 }

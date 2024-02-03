@@ -52,7 +52,6 @@ class FormType
 
     public function isValid(): bool
     {
-
         $count = (count($_POST) - 2) + count($_FILES);
 
         // on verifie que tous les champs sont remplis

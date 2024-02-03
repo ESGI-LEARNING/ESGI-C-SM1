@@ -34,7 +34,7 @@ class ConfigLoader
         $filepath = '../.env';
 
         if (file_exists($filepath)) {
-            $envConfig = parse_ini_file($filepath, false, INI_SCANNER_TYPED);
+            $envConfig = parse_ini_file($filepath, false, INI_SCANNER_RAW);
 
             foreach ($envConfig as $key => $value) {
                 putenv("$key=$value");
