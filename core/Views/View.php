@@ -3,6 +3,7 @@
 namespace Core\Views;
 
 use Core\Session\CsrfTokenService;
+use Core\Session\FlashService;
 
 class View
 {
@@ -54,6 +55,16 @@ class View
         $csrfTokenService = new CsrfTokenService();
 
         return $csrfTokenService->generateToken();
+    }
+
+    public function flash(): array
+    {
+        $service = new FlashService();
+        var_dump($service->getFlash('success'));
+        return [
+            'type' => $service->getFlash('success'),
+            'messages' => $service->getMessage()
+        ];
     }
 
     public function __destruct()

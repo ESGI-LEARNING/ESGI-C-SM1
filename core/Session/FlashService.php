@@ -22,6 +22,12 @@ class FlashService extends PHPSession
         $this->set(self::SESSION_KEY, $flash);
     }
 
+    public function getMessage(): array|null
+    {
+        var_dump($this->message);
+        return $this->message;
+    }
+
     public function getFlash(string $type): ?string
     {
         if ($this->message === null) {
