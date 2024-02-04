@@ -63,6 +63,11 @@ abstract class Model
         return (new static())->queryBuilder->findAll();
     }
 
+    public function paginate(int $perPage = 15, int $page = 1): array
+    {
+        return $this->queryBuilder->paginate($perPage, $page);
+    }
+
     public function save(): void
     {
         $data = $this->getDataObject();

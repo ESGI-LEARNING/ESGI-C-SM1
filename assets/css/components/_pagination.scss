@@ -1,0 +1,40 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.pagination .page-item {
+  padding: 0.5rem 1rem;
+  margin: 0 0.2rem;
+  border: 0.1rem solid var(--gray);
+  color: var(--primary-color);
+  text-decoration: none;
+  border-radius: 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: inherit;
+  }
+
+  &.active,
+  &:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+
+    .page-link {
+      color: var(--white);
+    }
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}

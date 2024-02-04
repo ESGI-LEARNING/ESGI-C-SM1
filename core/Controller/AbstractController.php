@@ -3,6 +3,7 @@
 namespace Core\Controller;
 
 use Core\Config\ConfigLoader;
+use Core\Router\Request;
 use Core\Session\CsrfTokenService;
 use Core\Session\FlashService;
 use Core\Views\View;
@@ -28,6 +29,11 @@ class AbstractController
     public function render(string $view, string $template, array $params = []): View
     {
         return new View($view, $template, $params);
+    }
+
+    public function request(): Request
+    {
+        return new Request();
     }
 
     public function addFlash(string $type, string $message): void

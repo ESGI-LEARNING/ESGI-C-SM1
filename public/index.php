@@ -3,6 +3,7 @@
 use App\Controllers\Admin\AdminArticleController;
 use App\Controllers\Admin\AdminCategoryController;
 use App\Controllers\Admin\AdminController;
+use App\Controllers\Admin\AdminLogController;
 use App\Controllers\Admin\AdminUserController;
 use App\Controllers\ArticleController;
 use App\Controllers\Auth\ForgotPasswordController;
@@ -91,6 +92,10 @@ $router->middleware(['installed'])->group(function (Router $router) {
                 $router->post('/edit/{id}', 'edit');
                 $router->post('/delete/{id}', 'delete');
                 $router->post('/delete/images/{id}', 'deleteImage');
+            });
+
+            $router->controller(AdminLogController::class)->prefix('/logs')->group(function (Router $router) {
+                $router->get('/', 'index');
             });
         });
     });

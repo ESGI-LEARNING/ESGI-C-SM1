@@ -2,9 +2,12 @@
 
 namespace Core\DB\QueryBuilder;
 
+use Core\Auth\Auth;
 use Core\DB\DB;
 use Core\DB\Model;
+use Core\DB\Pagination\Pagination;
 use Core\DB\Relation\Relation;
+use Decimal\Decimal;
 
 class QueryBuilder extends DB
 {
@@ -19,7 +22,7 @@ class QueryBuilder extends DB
     public function __construct(
         private readonly string $table,
         private readonly string $model,
-        private readonly mixed $entity
+        private readonly mixed  $entity
     )
     {
         parent::__construct();
@@ -53,9 +56,9 @@ class QueryBuilder extends DB
         return $this;
     }
 
-    public function limit(int $limit): QueryBuilder
+    public function limit(int $limit, int $offset): QueryBuilder
     {
-        $this->limit[] = $limit;
+        $this->limit = [$limit, $offset];
 
         return $this;
     }
@@ -185,6 +188,8 @@ class QueryBuilder extends DB
     {
         $sql = 'DELETE FROM `' . $this->table . '` WHERE id = :id';
 
+        $this->addLogs('delete');
+
         return $this->execute($sql, [
             'id' => $id,
         ]);
@@ -217,6 +222,30 @@ class QueryBuilder extends DB
         return $result;
     }
 
+    public function paginate(int $perPage = 10, int $page = 1): Pagination
+    {
+        if ($page === 0) {
+            $page = 1;
+        }
+
+        $total = $this->count();
+        $pages = ceil($total / $perPage);
+
+        $offset = $page === 0 ? 1 : ($page - 1) * $perPage;
+
+        $this->limit($offset, $perPage);
+        $result = $this->get();
+
+        $links = [
+            'total' => $total,
+            'perPage' => $perPage,
+            'total_pages' => $pages,
+            'current_page' => $page,
+        ];
+
+        return new Pagination($result, $links);
+    }
+
     public function save(array $data, mixed $entity)
     {
         if (empty($entity->getId())) {
@@ -226,6 +255,8 @@ class QueryBuilder extends DB
             $query = $this->pdo->prepare($sql);
             $query->execute($data);
             $entity->setId($this->pdo->lastInsertId());
+
+            $this->addLogs('create');
         } else {
             $sql = 'UPDATE ' . $this->table . ' SET ';
 
@@ -239,6 +270,8 @@ class QueryBuilder extends DB
 
             $query = $this->pdo->prepare($sql);
             $query->execute($data);
+
+            $this->addLogs('update');
         }
 
         return $entity;
@@ -251,5 +284,20 @@ class QueryBuilder extends DB
         }
 
         return $column;
+    }
+
+    private function addLogs(string $action): void
+    {
+        $prefix = config('database.prefix') . '_';
+        $sql = "INSERT INTO `{$prefix}log` (user_id, action, subject, created_at) VALUES (:user_id, :action, :subject, :created_at)";
+
+        $query = $this->pdo->prepare($sql);
+
+        $query->execute([
+            'user_id' => Auth::id() ?? null,
+            'action' => $action,
+            'subject' => $this->table . ' ' . $this->entity->getId(),
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
     }
 }
