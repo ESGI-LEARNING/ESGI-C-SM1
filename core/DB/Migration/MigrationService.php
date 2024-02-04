@@ -11,8 +11,8 @@ class MigrationService
         foreach ($files as $file) {
             require_once $file;
 
-            $filename = $this->filename($file);
-            $class = 'App\\Migrations\\' . ucfirst($filename);
+            $filename  = $this->filename($file);
+            $class     = 'App\\Migrations\\'.ucfirst($filename);
             $migration = new $class();
 
             if (class_exists($class)) {

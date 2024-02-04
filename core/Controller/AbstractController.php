@@ -12,17 +12,18 @@ class AbstractController
 {
     public function redirect(string $name): void
     {
-        header('Location: ' . $name);
+        header('Location: '.$name);
     }
 
     public function previous(): void
     {
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        header('Location: '.$_SERVER['HTTP_REFERER']);
     }
 
-    function verifyCsrfToken(): bool
+    public function verifyCsrfToken(): bool
     {
         $service = new CsrfTokenService();
+
         return $service->isValidCsrfToken($_REQUEST['csrf_token']);
     }
 

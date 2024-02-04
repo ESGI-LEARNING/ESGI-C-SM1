@@ -2,16 +2,12 @@
 
 namespace Core\DB\Pagination;
 
-use ArrayAccess;
-use Iterator;
-
-class Pagination implements ArrayAccess, Iterator
+class Pagination implements \ArrayAccess, \Iterator
 {
     public function __construct(
         private array $results,
         private readonly array $links,
-    )
-    {
+    ) {
     }
 
     public function getDatas(): array
@@ -62,7 +58,8 @@ class Pagination implements ArrayAccess, Iterator
     public function valid(): bool
     {
         $key = key($this->results);
-        return ($key !== null && $key !== false);
+
+        return $key !== null && $key !== false;
     }
 
     public function rewind(): void

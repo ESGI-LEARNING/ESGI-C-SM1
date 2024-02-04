@@ -11,5 +11,4 @@ class ProfileController extends AbstractController
     {
         return $this->render('profile/index', 'front');
     }
-
 }

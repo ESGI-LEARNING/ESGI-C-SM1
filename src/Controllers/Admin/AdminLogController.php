@@ -15,7 +15,7 @@ class AdminLogController extends AbstractController
             ->paginate(10, intval($this->request()->get('page')));
 
         return $this->render('admin/logs/index', 'back', [
-            'logs' => $logs
+            'logs' => $logs,
         ]);
     }
 }

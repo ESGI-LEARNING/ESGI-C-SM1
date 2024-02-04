@@ -14,31 +14,29 @@ class BelongToMany
         protected string $foreignKey,
         protected string $otherKey,
         protected int $idCurrentModel
-    )
-    {
+    ) {
         $this->pdo = (new DB())->getPdo();
     }
 
     public function sync(array $ids): void
     {
-        $tableName = config('database.prefix') . '_' . $this->pivot;
+        $tableName = config('database.prefix').'_'.$this->pivot;
 
-        $sql = "DELETE FROM `{$tableName}` WHERE `{$this->foreignKey}` =:id";
+        $sql   = "DELETE FROM `{$tableName}` WHERE `{$this->foreignKey}` =:id";
         $query = $this->pdo->prepare($sql);
         $query->execute([
-            'id' => $this->idCurrentModel
+            'id' => $this->idCurrentModel,
         ]);
-
 
         $sql = "INSERT INTO `{$tableName}` (`{$this->foreignKey}`, `{$this->otherKey}`) VALUES ";
 
         $placeholders = [];
-        $values = [];
+        $values       = [];
 
         foreach ($ids as $id) {
-            $placeholders[] = "(:foreign_key{$id}, :other_id{$id})";
+            $placeholders[]              = "(:foreign_key{$id}, :other_id{$id})";
             $values[":foreign_key{$id}"] = $this->idCurrentModel;
-            $values[":other_id{$id}"] = $id;
+            $values[":other_id{$id}"]    = $id;
         }
 
         $sql .= implode(', ', $placeholders);

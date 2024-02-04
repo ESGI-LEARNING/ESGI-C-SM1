@@ -30,7 +30,6 @@ class CreateInformationPhotographTable extends BaseMigration
                 FOREIGN KEY (user_id) REFERENCES `{$this->getPrefix()}user` (id) ON DELETE CASCADE
         )";
 
-
         $this->execute($sql);
     }
 }

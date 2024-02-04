@@ -4,5 +4,4 @@ namespace App\Form\Install;
 
 class InformationType
 {
-
 }

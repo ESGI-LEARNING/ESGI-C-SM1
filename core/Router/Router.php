@@ -2,8 +2,6 @@
 
 namespace Core\Router;
 
-use App\Controllers\ErrorController;
-
 class Router
 {
     private array $routes = [];
@@ -17,9 +15,9 @@ class Router
     public function addRoute(string $method, string $uri, array|string $callable, array $middleware = []): void
     {
         $this->routes[] = [
-            'method' => $method,
-            'uri' => $uri,
-            'callable' => $callable,
+            'method'      => $method,
+            'uri'         => $uri,
+            'callable'    => $callable,
             'middlewares' => $middleware,
         ];
     }
@@ -27,18 +25,21 @@ class Router
     public function middleware(array $middleware): Router
     {
         $this->middleware = $middleware;
+
         return $this;
     }
 
     public function controller(string $name): Router
     {
         $this->controller = $name;
+
         return $this;
     }
 
     public function prefix(string $name): Router
     {
         $this->prefix = $name;
+
         return $this;
     }
 
@@ -53,10 +54,10 @@ class Router
             }
 
             if ($this->prefix !== null) {
-                if ($route['uri'] === '/')
+                if ($route['uri'] === '/') {
                     $route['uri'] = $this->prefix;
-                else {
-                    $route['uri'] = rtrim($this->prefix, '/') . $route['uri'];
+                } else {
+                    $route['uri'] = rtrim($this->prefix, '/').$route['uri'];
                 }
             }
 
@@ -68,34 +69,37 @@ class Router
         }
 
         $this->middleware = [];
-        $this->prefix = null;
+        $this->prefix     = null;
         $this->controller = null;
     }
 
     public function get(string $uri, array|string $callable): Router
     {
         $this->addRoute('GET', $uri, $callable, $this->middleware);
+
         return $this;
     }
 
     public function post(string $uri, array|string $callable): Router
     {
         $this->addRoute('POST', $uri, $callable, $this->middleware);
+
         return $this;
     }
 
     public function delete(string $uri, array|string $callable): Router
     {
         $this->addRoute('DELETE', $uri, $callable, $this->middleware);
+
         return $this;
     }
 
     public function run(): void
     {
         $method = $_SERVER['REQUEST_METHOD'];
-        $uri = strtolower($_SERVER['REQUEST_URI']);
-        $uri = strtok($uri, '?');
-        $uri = strlen($uri) > 1 ? rtrim($uri, '/') : $uri;
+        $uri    = strtolower($_SERVER['REQUEST_URI']);
+        $uri    = strtok($uri, '?');
+        $uri    = strlen($uri) > 1 ? rtrim($uri, '/') : $uri;
 
         foreach ($this->routes as $route) {
             $pattern = $this->getRoutePattern($route['uri']);
@@ -106,9 +110,8 @@ class Router
                 // On verifie les accès de l'utilisateurs
 
                 foreach (array_reverse($route['middlewares']) as $middleware) {
-
                     $middleware = ucfirst($middleware[0]);
-                    $middleware = 'App\\Middlewares\\' . ucfirst($middleware) . 'Middleware';
+                    $middleware = 'App\\Middlewares\\'.ucfirst($middleware).'Middleware';
                     $middleware = new $middleware();
                     $middleware();
                 }
@@ -116,9 +119,9 @@ class Router
                 $callable = $route['callable'];
 
                 if (is_array($callable) && 2 === count($callable)) {
-                    include '../src/' . str_replace(['App\\', '\\'], ['', '/'], $callable[0]) . '.php';
+                    include '../src/'.str_replace(['App\\', '\\'], ['', '/'], $callable[0]).'.php';
                     $controllerName = $callable[0];
-                    $methodName = $callable[1];
+                    $methodName     = $callable[1];
 
                     if (class_exists($controllerName)) {
                         $controller = new $controllerName();
@@ -145,13 +148,12 @@ class Router
 
         // Return 404
         http_response_code(404);
-
     }
 
     private function getRoutePattern(string $uri): string
     {
         $routePattern = preg_replace('/\/{([a-zA-Z0-9_]+)}/', '/([^\/]+)', $uri);
 
-        return '#^' . $routePattern . '$#';
+        return '#^'.$routePattern.'$#';
     }
 }

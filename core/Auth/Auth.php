@@ -6,19 +6,19 @@ use App\Models\User;
 
 class Auth extends Authenticator
 {
-    static public function user(): User
+    public static function user(): User
     {
-        return (new Auth)->getUser();
+        return (new Auth())->getUser();
     }
 
-    static public function id(): Int
+    public static function id(): int
     {
-        return (new Auth)->getUser()->getId();
+        return (new Auth())->getUser()->getId();
     }
 
-    static public function check(): Bool
+    public static function check(): bool
     {
-        if ((new Auth)->getUser() === null) {
+        if ((new Auth())->getUser() === null) {
             return false;
         }
 

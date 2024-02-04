@@ -18,5 +18,4 @@ class UploadFile
             $i->save();
         }
     }
-
 }
