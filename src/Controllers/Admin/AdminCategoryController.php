@@ -71,6 +71,5 @@ class AdminCategoryController extends AbstractController
                 $this->redirect('/admin/categories');
             }
         }
-
     }
 }

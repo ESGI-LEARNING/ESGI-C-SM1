@@ -45,7 +45,7 @@ class InstallController extends AbstractController
         }
 
         return $this->render('install/db_installation', 'front', [
-            'form' => $form->getConfig()
+            'form' => $form->getConfig(),
         ]);
     }
 
@@ -85,7 +85,7 @@ class InstallController extends AbstractController
         }
 
         return $this->render('install/smtp_installation', 'front', [
-            'form' => $form->getConfig()
+            'form' => $form->getConfig(),
         ]);
     }
 
@@ -112,7 +112,7 @@ class InstallController extends AbstractController
         }
 
         return $this->render('install/create_admin_user', 'front', [
-            'form' => $form->getConfig()
+            'form' => $form->getConfig(),
         ]);
     }
 }

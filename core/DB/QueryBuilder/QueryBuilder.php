@@ -4,27 +4,23 @@ namespace Core\DB\QueryBuilder;
 
 use Core\Auth\Auth;
 use Core\DB\DB;
-use Core\DB\Model;
 use Core\DB\Pagination\Pagination;
 use Core\DB\Relation\Relation;
-use Decimal\Decimal;
 
 class QueryBuilder extends DB
 {
     private array $whereCondition = [];
-    private array $joins = [];
-    private array $orderBy = [];
-    private array $columns = [];
-    private array $limit = [];
-    private array $with = [];
-
+    private array $joins          = [];
+    private array $orderBy        = [];
+    private array $columns        = [];
+    private array $limit          = [];
+    private array $with           = [];
 
     public function __construct(
         private readonly string $table,
         private readonly string $model,
-        private readonly mixed  $entity
-    )
-    {
+        private readonly mixed $entity
+    ) {
         parent::__construct();
     }
 
@@ -44,6 +40,7 @@ class QueryBuilder extends DB
     public function with(array $relations): QueryBuilder
     {
         $this->with = $relations;
+
         return $this;
     }
 
@@ -66,7 +63,7 @@ class QueryBuilder extends DB
     public function where(string $column, string $operator, mixed $parameter): QueryBuilder
     {
         $this->whereCondition[] = [
-            $this->setPrefixIfDot($column), $operator, $parameter
+            $this->setPrefixIfDot($column), $operator, $parameter,
         ];
 
         return $this;
@@ -75,7 +72,7 @@ class QueryBuilder extends DB
     public function andWhere(string $column, string $operator, mixed $parameter): QueryBuilder
     {
         $this->whereCondition[] = [
-            $this->setPrefixIfDot($column), $operator, $parameter
+            $this->setPrefixIfDot($column), $operator, $parameter,
         ];
 
         return $this;
@@ -84,7 +81,7 @@ class QueryBuilder extends DB
     public function whereIn(string $column, array $values): QueryBuilder
     {
         $this->whereCondition[] = [
-            $this->setPrefixIfDot($column), 'IN', $values
+            $this->setPrefixIfDot($column), 'IN', $values,
         ];
 
         return $this;
@@ -92,9 +89,9 @@ class QueryBuilder extends DB
 
     public function join(string $table, string $pk, string $operator, string $fk): QueryBuilder
     {
-        $table = $this->getPrefix() . $table;
-        $fk = $this->getPrefix() . $fk;
-        $pk = $this->getPrefix() . $pk;
+        $table = $this->getPrefix().$table;
+        $fk    = $this->getPrefix().$fk;
+        $pk    = $this->getPrefix().$pk;
 
         $this->joins[] = "LEFT JOIN $table ON $pk $operator $fk";
 
@@ -120,10 +117,10 @@ class QueryBuilder extends DB
             $sql .= '*';
         }
 
-        $sql .= ' FROM ' . $this->table;
+        $sql .= ' FROM '.$this->table;
 
         if (!empty($this->joins)) {
-            $sql .= ' ' . implode(' ', $this->joins);
+            $sql .= ' '.implode(' ', $this->joins);
         }
 
         if (!empty($this->whereCondition)) {
@@ -132,7 +129,7 @@ class QueryBuilder extends DB
             foreach ($this->whereCondition as $condition) {
                 $p = str_replace('.', '_', $condition[0]);
 
-                $sql .= ' ' . $condition[0] . $condition[1] . ':' . $p . ' AND';
+                $sql .= ' '.$condition[0].$condition[1].':'.$p.' AND';
                 $where[$p] = $condition[2];
             }
 
@@ -140,11 +137,11 @@ class QueryBuilder extends DB
         }
 
         if (!empty($this->orderBy)) {
-            $sql .= ' ' . implode(' ', $this->orderBy);
+            $sql .= ' '.implode(' ', $this->orderBy);
         }
 
         if (!empty($this->limit)) {
-            $sql .= ' LIMIT ' . implode(',', $this->limit);
+            $sql .= ' LIMIT '.implode(',', $this->limit);
         }
 
         $query = $this->pdo->prepare($sql);
@@ -155,23 +152,23 @@ class QueryBuilder extends DB
 
     public function count(): int
     {
-        $sql = 'SELECT COUNT(*) FROM ' . $this->table;
+        $sql   = 'SELECT COUNT(*) FROM '.$this->table;
         $query = $this->execute($sql);
+
         return $query->fetchColumn();
     }
 
     public function findAll(): array
     {
         if (method_exists($this->entity, 'getIsDeleted')) {
-            $sql = 'SELECT * FROM `' . $this->table . '` WHERE is_deleted =:is_deleted';
-            $parameters = ['is_deleted' => 0,];
+            $sql        = 'SELECT * FROM `'.$this->table.'` WHERE is_deleted =:is_deleted';
+            $parameters = ['is_deleted' => 0];
         } else {
-            $sql = 'SELECT * FROM `' . $this->table . '`';
+            $sql        = 'SELECT * FROM `'.$this->table.'`';
             $parameters = [];
         }
 
         $result = $this->execute($sql, $parameters)->fetchAll(\PDO::FETCH_CLASS, $this->model);
-
 
         if (!empty($result) && !empty($this->with)) {
             foreach ($this->with as $relation) {
@@ -186,7 +183,7 @@ class QueryBuilder extends DB
 
     public function delete(int $id): false|\PDOStatement
     {
-        $sql = 'DELETE FROM `' . $this->table . '` WHERE id = :id';
+        $sql = 'DELETE FROM `'.$this->table.'` WHERE id = :id';
 
         $this->addLogs('delete');
 
@@ -197,10 +194,10 @@ class QueryBuilder extends DB
 
     public function getOneBy(array $data)
     {
-        $sql = 'SELECT * FROM `' . $this->table . '` WHERE ';
+        $sql = 'SELECT * FROM `'.$this->table.'` WHERE ';
 
         foreach ($data as $column => $value) {
-            $sql .= ' ' . $column . '=:' . $column . ' AND';
+            $sql .= ' '.$column.'=:'.$column.' AND';
         }
 
         $sql = substr($sql, 0, -3);
@@ -237,9 +234,9 @@ class QueryBuilder extends DB
         $result = $this->get();
 
         $links = [
-            'total' => $total,
-            'perPage' => $perPage,
-            'total_pages' => $pages,
+            'total'        => $total,
+            'perPage'      => $perPage,
+            'total_pages'  => $pages,
             'current_page' => $page,
         ];
 
@@ -249,8 +246,8 @@ class QueryBuilder extends DB
     public function save(array $data, mixed $entity)
     {
         if (empty($entity->getId())) {
-            $sql = 'INSERT INTO `' . $this->table . '`(' . implode(',', array_keys($data)) . ') 
-            VALUES (:' . implode(',:', array_keys($data)) . ')';
+            $sql = 'INSERT INTO `'.$this->table.'`('.implode(',', array_keys($data)).') 
+            VALUES (:'.implode(',:', array_keys($data)).')';
 
             $query = $this->pdo->prepare($sql);
             $query->execute($data);
@@ -258,10 +255,10 @@ class QueryBuilder extends DB
 
             $this->addLogs('create');
         } else {
-            $sql = 'UPDATE ' . $this->table . ' SET ';
+            $sql = 'UPDATE '.$this->table.' SET ';
 
             foreach ($data as $column => $value) {
-                $sql .= $column . '=:' . $column . ',';
+                $sql .= $column.'=:'.$column.',';
             }
 
             $sql = rtrim($sql, ',');
@@ -280,7 +277,7 @@ class QueryBuilder extends DB
     private function setPrefixIfDot(string $column): string
     {
         if (str_contains($column, '.')) {
-            return $this->getPrefix() . $column;
+            return $this->getPrefix().$column;
         }
 
         return $column;
@@ -288,15 +285,15 @@ class QueryBuilder extends DB
 
     private function addLogs(string $action): void
     {
-        $prefix = config('database.prefix') . '_';
-        $sql = "INSERT INTO `{$prefix}log` (user_id, action, subject, created_at) VALUES (:user_id, :action, :subject, :created_at)";
+        $prefix = config('database.prefix').'_';
+        $sql    = "INSERT INTO `{$prefix}log` (user_id, action, subject, created_at) VALUES (:user_id, :action, :subject, :created_at)";
 
         $query = $this->pdo->prepare($sql);
 
         $query->execute([
-            'user_id' => Auth::id() ?? null,
-            'action' => $action,
-            'subject' => $this->table . ' ' . $this->entity->getId(),
+            'user_id'    => Auth::id() ?? null,
+            'action'     => $action,
+            'subject'    => $this->table.' '.$this->entity->getId(),
             'created_at' => date('Y-m-d H:i:s'),
         ]);
     }

@@ -4,15 +4,15 @@ namespace Core\FileStorage;
 
 class Storage
 {
-    private const DOWNLOAD_PATH = "/var/www/public";
+    private const DOWNLOAD_PATH = '/var/www/public';
 
     public static function upload(array &$files, string $path): array
     {
-        $paths = [];
-        $images = [];
+        $paths     = [];
+        $images    = [];
         $file_keys = array_keys($files);
 
-        for ($i=0; $i< count($files['name']); $i++) {
+        for ($i=0; $i< count($files['name']); ++$i) {
             foreach ($file_keys as $key) {
                 $images[$i][$key] = $files[$key][$i];
             }
@@ -20,13 +20,13 @@ class Storage
 
         foreach ($images as $image) {
             $name = self::getName($image['name']);
-            $tmp = $image['tmp_name'];
+            $tmp  = $image['tmp_name'];
 
-            if (!is_dir(self::DOWNLOAD_PATH . $path)) {
-                (new Storage)->make($path);
+            if (!is_dir(self::DOWNLOAD_PATH.$path)) {
+                (new Storage())->make($path);
             }
 
-            $uploadFile = self::DOWNLOAD_PATH . $path . '/' . $name;
+            $uploadFile = self::DOWNLOAD_PATH.$path.'/'.$name;
 
             move_uploaded_file($tmp, $uploadFile);
 
@@ -38,12 +38,12 @@ class Storage
 
     public function make(string $path): void
     {
-        mkdir(self::DOWNLOAD_PATH . $path);
+        mkdir(self::DOWNLOAD_PATH.$path);
     }
 
     public static function delete(string $path): void
     {
-        unlink(self::DOWNLOAD_PATH . '/media/' . $path);
+        unlink(self::DOWNLOAD_PATH.'/media/'.$path);
     }
 
     public static function update(string $file, string $path, string $oldFile): void
@@ -84,6 +84,6 @@ class Storage
         $name = iconv('UTF-8', 'ASCII//TRANSLIT', $name);
         $name = preg_replace('/[^A-Za-z0-9.]/', '', $name);
 
-        return basename(uniqid() . '_' . strtolower($name));
+        return basename(uniqid().'_'.strtolower($name));
     }
 }

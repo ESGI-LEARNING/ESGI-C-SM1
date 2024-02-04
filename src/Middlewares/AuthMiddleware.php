@@ -9,9 +9,9 @@ class AuthMiddleware
     public function __invoke(): void
     {
         if (!Auth::check()) {
-            $url = config('app.url') . '/login';
-            header('Location: '. $url);
-            exit();
+            $url = config('app.url').'/login';
+            header('Location: '.$url);
+            exit;
         }
     }
 }

@@ -17,32 +17,32 @@ class DbType extends FormType
             ],
             'inputs' => [
                 'host' => [
-                    'label'      => 'Host',
+                    'label'       => 'Host',
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'localhost',
                 ],
                 'name' => [
-                    'label'      => 'Name',
+                    'label'       => 'Name',
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'db_name',
                 ],
                 'username' => [
-                    'label'      => 'Username',
+                    'label'       => 'Username',
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'db_user',
                 ],
                 'password' => [
-                    'label'      => 'Password',
+                    'label'       => 'Password',
                     'type'        => 'password',
                     'class'       => 'input-form',
                 ],
                 'prefix' => [
-                    'label'      => 'Prefix',
-                    'type'        => 'text',
-                    'class'       => 'input-form',
+                    'label'             => 'Prefix',
+                    'type'              => 'text',
+                    'class'             => 'input-form',
                     'placeholder'       => 'prefix',
                 ],
             ],
@@ -52,11 +52,11 @@ class DbType extends FormType
     public function rules(): array
     {
         return [
-            'host' => ['required'],
-            'name' => ['required'],
+            'host'     => ['required'],
+            'name'     => ['required'],
             'username' => ['required'],
             'password' => ['required'],
-            'prefix' => ['required'],
+            'prefix'   => ['required'],
         ];
     }
 }

@@ -13,7 +13,7 @@ class DB
             $this->pdo = new \PDO(dsn: 'mysql:host='.config('database.host').';dbname='.config('database.database').';charset=utf8', username: config('database.username'), password: config('database.password'));
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e) {
-           $this->error = $e->getMessage();
+            $this->error = $e->getMessage();
         }
     }
 
@@ -29,6 +29,6 @@ class DB
 
     protected function getPrefix(): string
     {
-        return config('database.prefix') . '_';
+        return config('database.prefix').'_';
     }
 }

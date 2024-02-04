@@ -46,7 +46,7 @@ class AdminArticleType extends FormType
                     'errors'      => [],
                 ],
                 'description' => [
-                    'label' => 'Description',
+                    'label'       => 'Description',
                     'class'       => 'input-form',
                     'placeholder' => 'description',
                     'value'       => $this->data->getDescription(),

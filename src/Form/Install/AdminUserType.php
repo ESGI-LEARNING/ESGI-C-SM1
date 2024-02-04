@@ -17,24 +17,24 @@ class AdminUserType extends FormType
             ],
             'inputs' => [
                 'username' => [
-                    'label'      => 'Username',
+                    'label'       => 'Username',
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'username',
                 ],
                 'email' => [
-                    'label'      => 'Email',
+                    'label'       => 'Email',
                     'type'        => 'email',
                     'class'       => 'input-form',
                     'placeholder' => 'exemple@gmail.fr',
                 ],
                 'password' => [
-                    'label'      => 'Password',
+                    'label'       => 'Password',
                     'type'        => 'password',
                     'class'       => 'input-form',
                 ],
                 'password_confirm' => [
-                    'label'      => 'Confirmation',
+                    'label'       => 'Confirmation',
                     'type'        => 'password',
                     'class'       => 'input-form',
                 ],

@@ -27,7 +27,7 @@ class AdminArticleController extends AbstractController
     public function create(): View
     {
         $article = new Picture();
-        $form = new AdminArticleType($article);
+        $form    = new AdminArticleType($article);
         $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -39,7 +39,7 @@ class AdminArticleController extends AbstractController
 
             UploadFile::uploadImageArticles($form->file('images'), $article->getId());
 
-            //Save categories
+            // Save categories
             $article->categories()->sync($form->get('categories'));
 
             $this->addFlash('success', 'L\'article a bien été créé');
@@ -72,7 +72,7 @@ class AdminArticleController extends AbstractController
                 UploadFile::uploadImageArticles($form->file('images'), $article->getId());
             }
 
-            //Save categories
+            // Save categories
             $article->categories()->sync($form->get('categories'));
 
             $this->addFlash('success', 'L\'article a bien été modifié');
@@ -80,7 +80,7 @@ class AdminArticleController extends AbstractController
         }
 
         return $this->render('admin/articles/edit', 'back', [
-            'form' => $form->getConfig(),
+            'form'    => $form->getConfig(),
             'article' => $article,
         ]);
     }

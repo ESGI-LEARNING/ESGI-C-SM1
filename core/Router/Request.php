@@ -14,7 +14,7 @@ class Request
         return $_GET[$key] ?? '';
     }
 
-    public  function all(): array
+    public function all(): array
     {
         return $_GET;
     }

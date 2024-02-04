@@ -85,12 +85,12 @@ class FormType
         return false;
     }
 
-    public function pluck(?array $data = null): ?array
+    public function pluck(array $data = null): ?array
     {
         if (empty($data)) {
             return null;
         }
 
-        return array_map(fn($v) => $v->getId(), $data);
+        return array_map(fn ($v) => $v->getId(), $data);
     }
 }

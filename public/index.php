@@ -16,26 +16,26 @@ use App\Controllers\ProfileController;
 use Core\Config\ConfigLoader;
 use Core\Router\Router;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 $config = new ConfigLoader();
 $config->load();
 
 $router = new Router();
 
-//Error page
+// Error page
 $router->get('/errors/{status}', [ErrorController::class, 'error']);
 
 $router->middleware(['install'])->group(function (Router $router) {
-   $router->controller(InstallController::class)->prefix('/install')->group(function (Router $router) {
-       $router->get('/', 'index');
-       $router->get('/db', 'db');
-       $router->post('/db', 'db');
-       $router->get('/smtp', 'smtp');
-       $router->post('/smtp', 'smtp');
-       $router->get('/admin-user', 'adminUser');
-       $router->post('/admin-user', 'adminUser');
-   });
+    $router->controller(InstallController::class)->prefix('/install')->group(function (Router $router) {
+        $router->get('/', 'index');
+        $router->get('/db', 'db');
+        $router->post('/db', 'db');
+        $router->get('/smtp', 'smtp');
+        $router->post('/smtp', 'smtp');
+        $router->get('/admin-user', 'adminUser');
+        $router->post('/admin-user', 'adminUser');
+    });
 });
 
 $router->middleware(['installed'])->group(function (Router $router) {

@@ -13,7 +13,7 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach($logs as $log): ?>
+        <?php foreach ($logs as $log) { ?>
             <tr>
                 <td><?= $log->getId(); ?></td>
                 <td><?= $log->getId(); ?></td>
@@ -23,7 +23,7 @@
 
                 </td>
             </tr>
-        <?php endforeach; ?>
+        <?php } ?>
         </tbody>
     </table>
 

@@ -6,12 +6,11 @@ abstract class AbstractRelation
 {
     public function __construct(
         protected string $model,
-        protected ?string  $foreignKey = null,
+        protected ?string $foreignKey = null,
         protected ?string $localKey = null
-    )
-    {
+    ) {
         if (is_null($this->foreignKey)) {
-            $this->foreignKey = strtolower($this->model) . '_id';
+            $this->foreignKey = strtolower($this->model).'_id';
         }
 
         if (is_null($this->localKey)) {

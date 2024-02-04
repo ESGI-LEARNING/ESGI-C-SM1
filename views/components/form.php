@@ -8,28 +8,28 @@
             <label for="<?= $configInput['label'] ?? ''; ?>"><?= $configInput['label'] ?? ''; ?></label>
 
             <?php if (!isset($configInput['input'])) { ?>
-                <?php if ($configInput['type'] == "file" && isset($configInput['images'])) : ?>
+                <?php if ($configInput['type'] == 'file' && isset($configInput['images'])) { ?>
                     <div class="flex gap-4">
-                        <?php foreach ($configInput['images'] as $image) : ?>
+                        <?php foreach ($configInput['images'] as $image) { ?>
                             <div class="flex flex-col">
-                                <img src="<?= $image->image(300, 100) ?>" alt="<?= $image->getImage() ?>">
-                                <form action="/admin/articles/delete/images/<?= $image->getId() ?>" method="POST"
+                                <img src="<?= $image->image(300, 100); ?>" alt="<?= $image->getImage(); ?>">
+                                <form action="/admin/articles/delete/images/<?= $image->getId(); ?>" method="POST"
                                       onsubmit="return confirm('Êtes-vous vraiment sûr ?')">
                                     <button type="submit" class="button button-red">Supprimer</button>
                                 </form>
                             </div>
-                        <?php endforeach; ?>
+                        <?php } ?>
                     </div>
-                <?php endif; ?>
+                <?php } ?>
 
                 <input
-                        name="<?= $name ?>"
-                        type="<?= $configInput['type'] ?? 'text'; ?>"
-                        id="<?= $configInput['name'] ?? ''; ?>"
-                        class="<?= $configInput['class'] ?? ''; ?>"
+                        name="<?= $name; ?>"
+                        type="<?= $configInput['type']               ?? 'text'; ?>"
+                        id="<?= $configInput['name']                 ?? ''; ?>"
+                        class="<?= $configInput['class']             ?? ''; ?>"
                         placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
-                        value="<?= $configInput['value'] ?? ''; ?>"
-                    <?php echo isset($configInput['type']) == "file" && isset($configInput['multiple']) && $configInput['multiple'] === true ? 'multiple' : ''; ?>
+                        value="<?= $configInput['value']             ?? ''; ?>"
+                    <?= isset($configInput['type']) == 'file' && isset($configInput['multiple']) && $configInput['multiple'] === true ? 'multiple' : ''; ?>
                 ><br>
             <?php } ?>
 
@@ -45,14 +45,14 @@
             <?php if (isset($configInput['input']) && $configInput['input'] === \App\Enum\FormTypeEnum::INPUT_SELECT) { ?>
                 <select
                         name="<?= $name; ?>"
-                        id="<?= $configInput['name'] ?? ''; ?>"
+                        id="<?= $configInput['name']     ?? ''; ?>"
                         class="<?= $configInput['class'] ?? ''; ?>"
-                    <?php echo isset($configInput['multiple']) && $configInput['multiple'] === true ? 'multiple' : ''; ?>
+                    <?= isset($configInput['multiple']) && $configInput['multiple'] === true ? 'multiple' : ''; ?>
                 >
                     <option><?= $configInput['placeholder'] ?? ''; ?></option>
                     <?php foreach ($configInput['options'] as $option) { ?>
                         <option value="<?= $option->getId(); ?>"
-                            <?php echo isset($configInput['value']) != null && in_array($option->getId(), $configInput['value']) ? 'selected' : ''; ?>
+                            <?= isset($configInput['value']) != null && in_array($option->getId(), $configInput['value']) ? 'selected' : ''; ?>
                         >
                             <?= $option->getName(); ?>
                         </option>
@@ -63,17 +63,17 @@
             <?php if (isset($configInput['input']) && $configInput['input'] === \App\Enum\FormTypeEnum::INPUT_SWITCH) { ?>
                 <input type="checkbox"
                        name="<?= $name; ?>"
-                       id="<?= $configInput['name'] ?? ''; ?>"
-                       class="<?= $configInput['class'] ?? ''; ?>"
+                       id="<?= $configInput['name']                 ?? ''; ?>"
+                       class="<?= $configInput['class']             ?? ''; ?>"
                        placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
-                       value="<?= $configInput['value'] ?? ''; ?>"
+                       value="<?= $configInput['value']             ?? ''; ?>"
                 >
             <?php } ?>
 
             <?php if (!empty($configInput['errors'])) { ?>
                 <?php foreach ($configInput['errors'] as $fieldErrors) { ?>
                     <ul class="alert-list alert alert-error">
-                        <?php foreach ((array)$fieldErrors as $error) { ?>
+                        <?php foreach ((array) $fieldErrors as $error) { ?>
                             <li><?= $error; ?></li>
                         <?php } ?>
                     </ul>

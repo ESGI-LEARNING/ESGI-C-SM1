@@ -4,11 +4,9 @@ namespace Core\Mailer;
 
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 
 class Mailer
 {
-
     private string $message;
 
     public function send(string $to, string $subject, string $templateHtml, string $templateText, array $data = []): void

@@ -9,7 +9,8 @@ class ErrorController extends AbstractController
 {
     public function error(string $status): View
     {
-        $template = 'errors/' . $status;
+        $template = 'errors/'.$status;
+
         return $this->render($template, 'front');
     }
 }

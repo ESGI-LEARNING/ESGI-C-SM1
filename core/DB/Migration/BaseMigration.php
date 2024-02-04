@@ -9,9 +9,8 @@ class BaseMigration
     private ?string $table = null;
 
     public function __construct(
-        ?string $model = null
-    )
-    {
+        string $model = null
+    ) {
         $this->table = $this->getTableName($model);
     }
 
@@ -27,23 +26,22 @@ class BaseMigration
 
     public function execute(string $query): void
     {
-        $pdo = (new DB())->getPdo();
+        $pdo   = (new DB())->getPdo();
         $query = $pdo->prepare($query);
         $query->execute();
     }
 
-    private function getTableName(?string $model = null): ?string
+    private function getTableName(string $model = null): ?string
     {
-        if($model) {
+        if ($model) {
             $table = explode('\\', $model);
             $table = array_pop($table);
 
             $table = preg_replace('/(?<!^)([A-Z])/', '_$1', $table);
 
-            return config('database.prefix').'_' . strtolower($table);
+            return config('database.prefix').'_'.strtolower($table);
         }
 
         return null;
     }
-
 }

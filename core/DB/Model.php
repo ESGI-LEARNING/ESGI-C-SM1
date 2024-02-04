@@ -15,10 +15,9 @@ abstract class Model
 
     private QueryBuilder $queryBuilder;
 
-
     public function __construct(mixed $entity)
     {
-        $this->entity = $entity;
+        $this->entity       = $entity;
         $this->queryBuilder = new QueryBuilder($this->getTableName(), get_called_class(), $entity);
     }
 
@@ -36,7 +35,6 @@ abstract class Model
     {
         return new HasMany($model, $foreignKey, $localKey);
     }
-
 
     public static function query(): QueryBuilder
     {
@@ -70,7 +68,7 @@ abstract class Model
 
     public function save(): void
     {
-        $data = $this->getDataObject();
+        $data         = $this->getDataObject();
         $this->entity = $this->queryBuilder->save($data, $this->entity);
     }
 
@@ -92,7 +90,7 @@ abstract class Model
 
         $table = preg_replace('/(?<!^)([A-Z])/', '_$1', $table);
 
-        return config('database.prefix').'_' . strtolower($table);
+        return config('database.prefix').'_'.strtolower($table);
     }
 
     public function __get(string $name)
