@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Core\DB\Model;
+use Core\DB\Relation\HasOne;
 
 class Log extends Model
 {
@@ -71,5 +72,10 @@ class Log extends Model
     public function setCreatedAt(string $created_at): void
     {
         $this->created_at = $created_at;
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'user_id');
     }
 }
