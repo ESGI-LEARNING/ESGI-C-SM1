@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\Picture;
 use Core\Controller\AbstractController;
 use Core\Views\View;
+use App\Models\User;
+use GuzzleHttp\Psr7\Query;
 
 class ArticleController extends AbstractController
 {
@@ -21,4 +23,5 @@ class ArticleController extends AbstractController
             'article' => $article,
         ]);
     }
+
 }
