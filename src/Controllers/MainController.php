@@ -40,6 +40,15 @@ class MainController extends AbstractController
             'form' => $form->getConfig(),
         ]);
     }
+    
+    public function template(): View
+    {
+        return $this->render('main/template', 'front');
+    }
+    public function artist(): View
+    {
+        return $this->render('main/article', 'front');
+    }
 
     public function gallery(): View
     {
