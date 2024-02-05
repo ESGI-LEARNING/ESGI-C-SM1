@@ -8,10 +8,9 @@
 	<div class="admin-container">
         <?= $this->component('sideBarAdmin', $config = []); ?>
         <section class="table-view-container">
-            <?= $this->component('flash', $config = []); ?>
+            <?= $this->component('flash', $this->flash() ?? []); ?>
             <?php include $this->viewName; ?>
         </section>
-
     </div>
 </main>
 </body>
