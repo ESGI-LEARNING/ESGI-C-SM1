@@ -12,5 +12,5 @@
 		<input type="submit" value="Filter">
 	</fieldset>
 </form>
-<?= $this->component('gallery', $config = []); ?>
+<?= $this->component('gallery', $config = $images); ?>
 <?= $this->component('modal', $config = []); ?>

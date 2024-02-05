@@ -44,6 +44,50 @@ class QueryBuilder extends DB
         return $this;
     }
 
+    public function first(): ?Model
+{
+    $where = [];
+
+    $sql = 'SELECT ';
+
+    if (!empty($this->columns)) {
+        $sql .= implode(',', $this->columns);
+    } else {
+        $sql .= '*';
+    }
+
+    $sql .= ' FROM ' . $this->table;
+
+    if (!empty($this->joins)) {
+        $sql .= ' ' . implode(' ', $this->joins);
+    }
+
+    if (!empty($this->whereCondition)) {
+        $sql .= ' WHERE';
+
+        foreach ($this->whereCondition as $condition) {
+            $p = str_replace('.', '_', $condition[0]);
+
+            $sql .= ' ' . $condition[0] . $condition[1] . ':' . $p . ' AND';
+            $where[$p] = $condition[2];
+        }
+
+        $sql = substr($sql, 0, -3);
+    }
+
+    if (!empty($this->orderBy)) {
+        $sql .= ' ' . implode(' ', $this->orderBy);
+    }
+
+    $sql .= ' LIMIT 1';
+
+    $query = $this->pdo->prepare($sql);
+    $query->execute($where);
+
+    return $query->fetchObject($this->model) ?: null;
+}
+
+
     public function select(array $columns): QueryBuilder
     {
         $this->columns = array_map(function ($value) {
