@@ -21,14 +21,18 @@ class MainController extends AbstractController
     {
         return $this->render('main/contact', 'front');
     }
+    
+    public function template(): View
+    {
+        return $this->render('main/template', 'front');
+    }
+    public function artist(): View
+    {
+        return $this->render('main/article', 'front');
+    }
 
     public function gallery(): View
     {
         return $this->render('main/gallery', 'front');
-    }
-
-    public function artist(): View
-    {
-        return $this->render('main/artist', 'front');
     }
 }

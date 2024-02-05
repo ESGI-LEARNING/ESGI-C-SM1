@@ -163,7 +163,7 @@ CREATE TABLE esgi_log
 );
 
 
-CREATE TABLE esgi_images
+CREATE TABLE esgi_image
 (
     id         INT AUTO_INCREMENT PRIMARY KEY,
     image      VARCHAR(255) NOT NULL,
