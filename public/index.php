@@ -12,6 +12,7 @@ use App\Controllers\Auth\ForgotPasswordController;
 use App\Controllers\Auth\SecurityController;
 use App\Controllers\Auth\VerifyEmailController;
 use App\Controllers\ErrorController;
+use App\Controllers\GalleryController;
 use App\Controllers\ImageController;
 use App\Controllers\Install\InstallController;
 use App\Controllers\MainController;
@@ -46,9 +47,9 @@ $router->middleware(['installed'])->group(function (Router $router) {
     $router->get('/contact', [MainController::class, 'contact']);
     $router->post('/contact', [MainController::class, 'contact']);
     $router->get('/about', [MainController::class, 'aboutUs']);
-    $router->get('/gallery', [MainController::class, 'gallery']);
+    $router->get('/gallery', [GalleryController::class, 'gallery']);
     $router->get('/template', [MainController::class, 'template']);
-    $router->get('/article', [ArticleController::class, 'article']);
+    $router->get('/article/{name}', [ArticleController::class, 'article']);
     $router->get('/images/{path}', [ImageController::class, 'index']);
 
     $router->get('/login', [SecurityController::class, 'login']);

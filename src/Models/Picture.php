@@ -23,7 +23,11 @@ class Picture extends Model
 
     protected string $created_at;
 
+    protected ?string $image; 
+
     protected string $updated_at;
+
+    protected ?string $username;
 
     public function __construct()
     {
