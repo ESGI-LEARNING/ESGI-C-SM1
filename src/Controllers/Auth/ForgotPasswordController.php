@@ -25,7 +25,6 @@ class ForgotPasswordController extends AbstractController
             $mailer->sendResetPassword($form->get('email'), [
                 'username' => $user->getUsername(),
                 'token'    => $token,
-                'token'    => $token,
             ]);
 
             $this->addFlash('success', 'Un email vous a été envoyé pour réinitialiser votre mot de passe');

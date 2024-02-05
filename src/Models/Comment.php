@@ -9,7 +9,7 @@ class Comment extends Model
 {
     protected ?int $id = null;
 
-    private ?string $content = null;
+    protected ?string $content = null;
 
     protected int $is_reported = 0;
 

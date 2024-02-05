@@ -30,14 +30,17 @@
                         <td><?= $comment->getUpdatedAt(); ?></td>
                         <td class="tableau-action">
                             <form method="POST" action="/admin/comments/delete/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de supprimer ce commentaire ?')">
+                                <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
                                 <button class="button button-red button-sm" type="submit"><?= icon('trash'); ?></button>
                             </form>
                             <?php if ($comment->isReported()) { ?>
                                 <form method="POST" action="/admin/comments/keep/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de garder ce commentaire ?')">
+                                    <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
                                     <button class="button button-red button-sm" type="submit"><?= icon('flag'); ?></button>
                                 </form>
                             <?php } else { ?>
                                 <form method="POST" action="/admin/comments/report/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
+                                    <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
                                     <button class="button button-green button-sm" type="submit"><?= icon('flag'); ?></button>
                                 </form>
                             <?php } ?>
@@ -46,8 +49,9 @@
                 <?php } ?>
             </tbody>
         </table>
-
-        <!-- Ajout de la pagination -->
-        <?= $paginator->render(); ?>
+   
+        <div class="pagination">
+            <?= $this->component('pagination', $comments->links()); ?>
+        </div>
     </section>
 </div>
