@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use Core\DB\Model;
-use DateTime;
+use Core\DB\Relation\HasOne;
+
 
 class Comment extends Model
 {
@@ -104,16 +105,9 @@ class Comment extends Model
         $this->is_deleted = $is_deleted;
     }
 
-    public function getUsername(): string
+    public function user(): HasOne
     {
-        $userModel = new User();
-        $user = $userModel->find($this->getUser());
-
-        if ($user) {
-            return $user->getUsername();
-        }
-
-        return '';
+        return $this->hasOne(User::class, 'user_id', 'id');
     }
 
 }
