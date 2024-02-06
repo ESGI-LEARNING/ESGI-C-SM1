@@ -10,6 +10,7 @@ use App\Controllers\ArticleController;
 use App\Controllers\Admin\AdminCommentController;
 use App\Controllers\Auth\ForgotPasswordController;
 use App\Controllers\Auth\SecurityController;
+use App\Controllers\Auth\VerifyEmailController;
 use App\Controllers\ContactController;
 use App\Controllers\Auth\VerifyEmailController;
 use App\Controllers\ErrorController;
