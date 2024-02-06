@@ -13,20 +13,20 @@ class AdminCommentController extends AbstractController
     public function index(): View
     {
         $comments = Comment::query()
+            ->where('is_deleted', '=', false)
             ->with(['user'])
             ->paginate(10, intval($this->request()->get('page')));
-
+    
         return $this->render('admin/comments/index', 'back', [
             'comments' => $comments,
         ]);
     }
-
     public function delete(int $id): void
     {
         $comment = Comment::find($id);
 
         if ($comment) {
-            if ($this->verifyCsrfToken()) { // Vérification du jeton CSRF
+            if ($this->verifyCsrfToken()) {
                 $comment->setIsDeleted(true);
                 $comment->save();
 
@@ -41,7 +41,7 @@ class AdminCommentController extends AbstractController
         $comment = Comment::find($id);
 
         if ($comment) {
-            if ($this->verifyCsrfToken()) { // Vérification du jeton CSRF
+            if ($this->verifyCsrfToken()) { 
                 $comment->setIsReported(true);
                 $comment->save();
 
@@ -66,8 +66,8 @@ class AdminCommentController extends AbstractController
         $comment = Comment::find($id);
 
         if ($comment) {
-            if ($this->verifyCsrfToken()) { // Vérification du jeton CSRF
-                $comment->setIsReported(false); // Marquer comme non signalé
+            if ($this->verifyCsrfToken()) { 
+                $comment->setIsReported(false); 
                 $comment->save();
 
                 $this->addFlash('success', 'Le commentaire a été gardé.');
