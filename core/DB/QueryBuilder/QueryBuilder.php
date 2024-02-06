@@ -291,7 +291,7 @@ class QueryBuilder extends DB
         $query = $this->pdo->prepare($sql);
 
         $query->execute([
-            'user_id'    => Auth::id() ?? null,
+            'user_id'    => Auth::check() ? Auth::id() : null,
             'action'     => $action,
             'subject'    => $this->table.' '.$this->entity->getId(),
             'created_at' => date('Y-m-d H:i:s'),

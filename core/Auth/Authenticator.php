@@ -44,4 +44,9 @@ class Authenticator extends PHPSession
 
         return null;
     }
+
+    public static function generateToken(string $email): string
+    {
+        return hash('sha512', config('app.url') . '/verify-email/' . $email);
+    }
 }

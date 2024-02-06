@@ -8,6 +8,7 @@ use App\Controllers\Admin\AdminUserController;
 use App\Controllers\ArticleController;
 use App\Controllers\Auth\ForgotPasswordController;
 use App\Controllers\Auth\SecurityController;
+use App\Controllers\Auth\VerifyEmailController;
 use App\Controllers\ErrorController;
 use App\Controllers\ImageController;
 use App\Controllers\Install\InstallController;
@@ -51,6 +52,7 @@ $router->middleware(['installed'])->group(function (Router $router) {
     $router->post('/login', [SecurityController::class, 'login']);
     $router->get('/register', [SecurityController::class, 'register']);
     $router->post('/register', [SecurityController::class, 'register']);
+    $router->get('/verify-email/{id}/{token}', [VerifyEmailController::class, 'index']);
     $router->get('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
     $router->post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
     $router->get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword']);
