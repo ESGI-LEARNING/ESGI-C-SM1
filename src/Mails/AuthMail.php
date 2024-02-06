@@ -13,7 +13,7 @@ class AuthMail
             $email,
             'Vérification de votre compte',
             'auth/confirm-email',
-            'auth/verify-email',
+            'auth/confirm-email',
             $data
         );
     }

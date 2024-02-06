@@ -23,7 +23,7 @@
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation">
                             <tr>
                                 <td>
-                                    <a href="#" class="button button-primary" target="_blank"
+                                    <a href="<?= url('/verify-email', ['id' => $id, 'token' => $token]); ?>" class="button button-primary" target="_blank"
                                        rel="noopener">
                                         Verifier mon compte
                                     </a>
