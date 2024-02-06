@@ -147,7 +147,16 @@ class QueryBuilder extends DB
         $query = $this->pdo->prepare($sql);
         $query->execute($where);
 
-        return $query->fetchAll(\PDO::FETCH_CLASS, $this->model);
+        $result = $query->fetchAll(\PDO::FETCH_CLASS, $this->model);
+
+        if (!empty($result) && !empty($this->with)) {
+            foreach ($this->with as $relation) {
+                if (method_exists($this->model, $relation)) {
+                    $result = (new Relation($result, $relation))->getDatas();
+                }
+            }
+        }
+        return $result;
     }
 
     public function count(): int
