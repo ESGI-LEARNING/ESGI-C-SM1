@@ -23,7 +23,6 @@ class SecurityController extends AbstractController
             if ($user && password_verify($form->get('password'), $user->getPassword())) {
                 $authenticator = new Authenticator();
                 $authenticator->login($user);
-
                 $this->addFlash('success', 'Vous êtes bien connecté');
                 $this->redirect('/');
             } else {

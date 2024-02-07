@@ -85,6 +85,23 @@ class ProfileController extends AbstractController
             'formAuthor' => $form->getConfig(),
         ]);
     }
+
+    public function softDelete(int $id): void
+    {
+        $user = Auth::user();
+        $user->softDelete();
+        $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
+        $this->redirect('/');
+    }
+
+    public function hardDelete(int $id): void
+    {
+        $user = Auth::user();
+        $user->hardDelete();
+        $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
+        $this->redirect('/');
+    }
+
     public function updateAvatar(): string
     {
         if (isset($_FILES['avatar'])) {
