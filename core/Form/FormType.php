@@ -17,7 +17,7 @@ class FormType
 
     public function __construct(object $data = null)
     {
-        $this->data             = $data;
+        $this->data = $data;
         $this->csrfTokenService = new CsrfTokenService();
         $this->setConfig();
         $this->request = new Request();
@@ -70,6 +70,7 @@ class FormType
         // on fusion tout les types de données
         $data = array_merge($_POST, $_FILES);
 
+
         $validator = new Validator($data);
         $validator->validate($this->rules());
 
@@ -84,7 +85,7 @@ class FormType
                     if ($this->data->images === null) {
                         $this->config['inputs'][$key]['errors'][] = $validator->getErrors()[$key];
                     }
-                }else {
+                } else {
                     $this->config['inputs'][$key]['errors'][] = $validator->getErrors()[$key];
                 }
             }
@@ -92,7 +93,7 @@ class FormType
             // on set data for input select
             if (isset($input['input']) && $input['input'] === FormTypeEnum::INPUT_SELECT) {
                 $key = str_ends_with($key, '[]') ? str_replace('[]', '', $key) : $key;
-                $this->config['inputs'][$key]['value'] =  $_POST[$key] ?? [];
+                $this->config['inputs'][$key]['value'] = $_POST[$key] ?? [];
             }
 
             if ($key !== 'password' && $key !== 'password_confirm') {
@@ -109,6 +110,6 @@ class FormType
             return null;
         }
 
-        return array_map(fn ($v) => $v->getId(), $data);
+        return array_map(fn($v) => $v->getId(), $data);
     }
 }
