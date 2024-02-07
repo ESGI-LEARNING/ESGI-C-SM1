@@ -47,12 +47,13 @@
                         name="<?= $name; ?>"
                         id="<?= $configInput['name']     ?? ''; ?>"
                         class="<?= $configInput['class'] ?? ''; ?>"
+                        required
                     <?= isset($configInput['multiple']) && $configInput['multiple'] === true ? 'multiple' : ''; ?>
                 >
                     <option><?= $configInput['placeholder'] ?? ''; ?></option>
                     <?php foreach ($configInput['options'] as $option) { ?>
                         <option value="<?= $option->getId(); ?>"
-                            <?= isset($configInput['value']) != null && in_array($option->getId(), $configInput['value']) ? 'selected' : ''; ?>
+                        <?= isset($configInput['value']) && is_array($configInput['value']) && in_array($option->getId(), $configInput['value']) ? 'selected' : ''; ?>
                         >
                             <?= $option->getName(); ?>
                         </option>

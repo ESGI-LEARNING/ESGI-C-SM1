@@ -22,11 +22,13 @@ class Validator
         }
     }
 
-    public function applyRule(mixed $field, $rule): void
+    public function applyRule(mixed $field, string $rule): void
     {
         $ruleParts = explode(':', $rule);
         $ruleName  = $ruleParts[0];
         $ruleArgs  = isset($ruleParts[1]) ? explode(',', $ruleParts[1]) : [];
+
+        $field = $this->deleteEndString($field);
 
         switch ($ruleName) {
             case 'required':
@@ -48,6 +50,12 @@ class Validator
                 $args = explode('.', $ruleArgs[0]);
                 $this->exist($field, $args[0], $args[1]);
                 break;
+            case 'file':
+                $this->file($field);
+                break;
+            case 'size':
+                $this->size($field, $ruleArgs[0]);
+                break;
         }
     }
 
@@ -58,8 +66,14 @@ class Validator
 
     private function required(string $filed): void
     {
+        // require test, int, string
         if (empty($this->data[$filed])) {
             $this->errors[$filed][] = 'Le champ est requis';
+        }
+
+        // require file
+        if (!empty($this->data[$filed]) && empty($this->data[$filed]['name'][0])) {
+            $this->errors[$filed. '[]'][] = 'Le champ est requis';
         }
     }
 
@@ -91,11 +105,6 @@ class Validator
         }
     }
 
-    private function unique(string $field): void
-    {
-        // TODO: create unique validation
-    }
-
     private function exist(string $field, string $table, string $column): void
     {
         $db    = new DB();
@@ -112,5 +121,24 @@ class Validator
         if (!$result) {
             $this->errors[$field][] = 'L\''.$field.' n\'existe pas';
         }
+    }
+
+    private function file(string $field): void
+    {
+        if (!is_array($this->data[$field]) || !isset($this->data[$field]['tmp_name']) && !is_uploaded_file($this->data[$field]['tmp_name'])) {
+            $this->errors[$field][] = 'Le champ doit être un fichier';
+        }
+    }
+
+    private function size(string $size, string $field): void
+    {
+        if ($this->data[$field]['size'] > (int) $size) {
+                $this->errors[$field.'[]'][] = 'Le champ doit être inférieur à '.$size.' octets';
+        }
+    }
+
+    private function deleteEndString(string $filed): array|string
+    {
+        return str_ends_with($filed, '[]') ? str_replace('[]', '', $filed) : $filed;
     }
 }

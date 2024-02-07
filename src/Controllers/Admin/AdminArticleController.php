@@ -17,7 +17,7 @@ class AdminArticleController extends AbstractController
     {
         $articles = Picture::query()
             ->with(['user'])
-            ->findAll();
+            ->paginate(10, (int)$this->request()->get('page'));
 
         return $this->render('admin/articles/index', 'back', [
             'articles' => $articles,

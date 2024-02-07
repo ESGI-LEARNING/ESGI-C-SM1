@@ -2,6 +2,7 @@
 
 namespace Core\Form;
 
+use App\Enum\FormTypeEnum;
 use Core\Router\Request;
 use Core\Session\CsrfTokenService;
 
@@ -12,11 +13,14 @@ class FormType
 
     private CsrfTokenService $csrfTokenService;
 
+    private Request $request;
+
     public function __construct(object $data = null)
     {
         $this->data             = $data;
         $this->csrfTokenService = new CsrfTokenService();
         $this->setConfig();
+        $this->request = new Request();
     }
 
     public function getConfig(): array
@@ -31,13 +35,12 @@ class FormType
 
     public function handleRequest(): void
     {
-        $request                          = new Request();
-        $this->config['config']['action'] = $request->getUrl();
+        $this->config['config']['action'] = $this->request->getUrl();
     }
 
     public function isSubmitted(): bool
     {
-        return $_SERVER['REQUEST_METHOD'] === $this->config['config']['method'] && !empty($_POST);
+        return $this->request->getMethod() === $this->config['config']['method'] && !empty($_POST);
     }
 
     public function get(string $key): string|array
@@ -54,18 +57,20 @@ class FormType
     {
         $count = (count($_POST) - 2) + count($_FILES);
 
-        // on verifie que tous les champs sont remplis
         if (count($this->config['inputs']) != $count) {
             return false;
         }
+
 
         // on verifie le token csrf
         if (!$this->csrfTokenService->isValidCsrfToken($_REQUEST['csrf_token'])) {
             return false;
         }
 
-        // on verifie les regles de validation
-        $validator = new Validator($_REQUEST);
+        // on fusion tout les types de données
+        $data = array_merge($_POST, $_FILES);
+
+        $validator = new Validator($data);
         $validator->validate($this->rules());
 
         if (count($validator->getErrors()) === 0) {
@@ -74,7 +79,20 @@ class FormType
 
         foreach ($this->config['inputs'] as $key => $input) {
             if (!empty($validator->getErrors()[$key])) {
-                $this->config['inputs'][$key]['errors'][] = $validator->getErrors()[$key];
+                //regarde si le champ est un fichier
+                if (isset($input['type']) && $input['type'] == 'file') {
+                    if ($this->data->images === null) {
+                        $this->config['inputs'][$key]['errors'][] = $validator->getErrors()[$key];
+                    }
+                }else {
+                    $this->config['inputs'][$key]['errors'][] = $validator->getErrors()[$key];
+                }
+            }
+
+            // on set data for input select
+            if (isset($input['input']) && $input['input'] === FormTypeEnum::INPUT_SELECT) {
+                $key = str_ends_with($key, '[]') ? str_replace('[]', '', $key) : $key;
+                $this->config['inputs'][$key]['value'] =  $_POST[$key] ?? [];
             }
 
             if ($key !== 'password' && $key !== 'password_confirm') {

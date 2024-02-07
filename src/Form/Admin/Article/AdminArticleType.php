@@ -34,6 +34,7 @@ class AdminArticleType extends FormType
                     'value'       => $this->pluck($this->data->categories) ?? [],
                     'options'     => Category::findAll(),
                     'errors'      => [],
+                    'type'           => '',
                 ],
                 'images[]' => [
                     'label'       => 'Images',
@@ -42,7 +43,7 @@ class AdminArticleType extends FormType
                     'class'       => 'input-form',
                     'placeholder' => 'images',
                     'images'      => $this->data->images ?? [],
-                    'value'       => '',
+                    'value'       => [],
                     'errors'      => [],
                 ],
                 'description' => [
@@ -62,6 +63,7 @@ class AdminArticleType extends FormType
         return [
             'name'        => ['required', 'min:3'],
             'description' => ['required', 'min:3'],
+            'images[]'    => ['required', 'file'],
         ];
     }
 }
