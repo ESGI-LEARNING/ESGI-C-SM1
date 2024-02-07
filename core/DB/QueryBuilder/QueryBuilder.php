@@ -201,6 +201,45 @@ class QueryBuilder extends DB
         ]);
     }
 
+    public function softDelete(int $id): false|\PDOStatement
+    {
+        $sql = 'UPDATE `'.$this->table.'` SET is_deleted = :is_deleted WHERE id = :id';
+
+        $this->addLogs('soft_delete');
+
+        return $this->execute($sql, [
+            'id'         => $id,
+            'is_deleted' => 1,
+        ]);
+    }
+
+    public function hardDelete(int $id): false|\PDOStatement
+    {
+        $randomValue = random_int(100000, 999999);
+
+        $hashedPassword = password_hash('default_password', PASSWORD_BCRYPT);
+
+        $sql = 'UPDATE `' . $this->table . '` 
+            SET 
+                email = CONCAT("user", :randomValue, "@example.com"), 
+                username = CONCAT("user", :randomValue), 
+                password = :hashedPassword, 
+                avatar = NULL, 
+                verify = NULL, 
+                is_deleted = 1, 
+                created_at = NULL, 
+                updated_at = NULL 
+            WHERE id = :id';
+
+        $this->addLogs('hardDelete_user');
+
+        return $this->execute($sql, [
+            'id' => $id,
+            'randomValue' => $randomValue,
+            'hashedPassword' => $hashedPassword,
+        ]);
+    }
+
     public function getOneBy(array $data)
     {
         $sql = 'SELECT * FROM `'.$this->table.'` WHERE ';

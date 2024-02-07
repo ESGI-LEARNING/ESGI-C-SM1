@@ -1,13 +1,17 @@
 <?php if (!$this->isAuthor()) { ?>
 	<section class="profile">
-        <?php
-        if ($user->getAvatar()) { ?>
-			<img class="profile-image" src="<?= $user->getAvatar(); ?>" alt="Profile Image">
-        <?php } else { ?>
-			<div class="icon-profile">
-                <?= icon('camera'); ?>
-			</div>
-        <?php } ?>
+		<form id="form__avatar" class="profil-header__avatar" enctype="multipart/form-data" method="post">
+            <?php if ($user->getAvatar() !== null) { ?>
+				<div id="wrapper__avatar_img">
+					<img class="profile-image" src="<?= $user->getAvatar(); ?>" alt="Profile Image">
+				</div>
+            <?php } else { ?>
+				<div id="wrapper__avatar_img" class="icon-profile ">
+                    <?= icon('camera'); ?>
+				</div>
+            <?php } ?>
+			<input type="file" name="avatar" id="avatar" class="input-form">
+		</form>
 		<div class="profile-info">
 			<h2 class="profile-name"><?= $user->getUsername(); ?></h2>
 			<p class="profile-title">Email: <?= $user->getEmail(); ?></p>
@@ -54,8 +58,14 @@
 
 <section>
 	<a class="button button-lg button-blue" href="/forgot-password">changer le password</a>
-	<form method="POST" action="/admin/users/delete/<?= \Core\Auth\Auth::id() ?>"
+	<form method="POST" action="/profil/soft-delete/<?= \Core\Auth\Auth::id() ?>"
 	      onsubmit="return confirm('Etes vous vraiment sur ?')">
 		<button class="button button-red button-lg" type="submit">Supprimer le compte</button>
+		<input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
+	</form>
+	<form method="POST" action="/profil/hard-delete/<?= \Core\Auth\Auth::id() ?>"
+	      onsubmit="return confirm('Etes vous vraiment sur ?')">
+		<button class="button button-red button-lg" type="submit">Supprimer le compte définitivement</button>
+		<input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
 	</form>
 </section>
