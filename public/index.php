@@ -1,6 +1,5 @@
 <?php
 
-use App\Controllers\AboutUsController;
 use App\Controllers\Admin\AdminArticleController;
 use App\Controllers\Admin\AdminCategoryController;
 use App\Controllers\Admin\AdminController;
@@ -11,10 +10,7 @@ use App\Controllers\Admin\AdminCommentController;
 use App\Controllers\Auth\ForgotPasswordController;
 use App\Controllers\Auth\SecurityController;
 use App\Controllers\Auth\VerifyEmailController;
-use App\Controllers\ContactController;
-use App\Controllers\Auth\VerifyEmailController;
 use App\Controllers\ErrorController;
-use App\Controllers\GalleryController;
 use App\Controllers\ImageController;
 use App\Controllers\Install\InstallController;
 use App\Controllers\MainController;
@@ -22,7 +18,7 @@ use App\Controllers\ProfileController;
 use Core\Config\ConfigLoader;
 use Core\Router\Router;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 $config = new ConfigLoader();
 $config->load();
@@ -65,11 +61,13 @@ $router->middleware(['installed'])->group(function (Router $router) {
 
     $router->middleware(['auth'])->group(function (Router $router) {
         $router->get('/logout', [SecurityController::class, 'logout']);
+
         $router->get('/profile', [ProfileController::class, 'index']);
-        $router->post('/profile/edit', [ProfileController::class, 'edit']);
-        $router->post('/profile/editAuthor', [ProfileController::class, 'editAuthor']);
-        $router->post('/profile/soft-delete/{id}', [ProfileController::class, 'softDelete']);
-        $router->post('/profile/hard-delete/{id}', [ProfileController::class, 'hardDelete']);
+        $router->post('/profile', [ProfileController::class, 'edit']);
+        $router->post('/profile/edit-author', [ProfileController::class, 'editAuthor']);
+        $router->post('/profile/delete', [ProfileController::class, 'softDelete']);
+        $router->post('/profile/hard-delete', [ProfileController::class, 'hardDelete']);
+
         $router->post('/profile/avatar', [ProfileController::class, 'updateAvatar']);
 
         $router->middleware(['admin'])->prefix('/admin')->group(function (Router $router) {

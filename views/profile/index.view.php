@@ -36,14 +36,24 @@
 		<div class="profile-info">
 			<h2 id="artist-name" class="profile-name"><?= $user->getUsername(); ?></h2>
 			<p class="profile-title">Photographe</p>
+			<div class="profile-sub-info">
+				<p class="profile-info"><?= icon('user-round'); ?> <?= $author->getFirstName(); ?> <?= $author->getLastName(); ?></p>
+			</div>
+			<div class="profile-sub-info">
+				<p class="profile-info"><?= icon('mail'); ?> <?= $user->getEmail(); ?></p>
+				<p class="profile-info"><?= icon('building'); ?> <?= $author->getCity(); ?></p>
+				<p class="profile-info"><?= icon('land-plot'); ?><?= $author->getCountry(); ?></p>
+			</div>
+			<p class="profile-interests-list"><?= $author->getDescription(); ?></p>
 		</div>
+
 	</section>
 <?php } ?>
 <section class="profile-modif">
 	<ul class="tabs">
-		<li class="tab" data-tab="profile">Profil <?= icon('user-round') ?></li>
+		<li class="tab" data-tab="profile">Profil <?= icon('user-round'); ?></li>
         <?php if ($this->isAuthor()) { ?>
-			<li class="tab" data-tab="photographe">Information photographe <?= icon('camera') ?></li>
+			<li class="tab" data-tab="photographe">Information photographe <?= icon('camera'); ?></li>
         <?php } ?>
 	</ul>
 	<div class="tab-content" id="profile">
@@ -56,14 +66,14 @@
 
 
 
-<section>
-	<a class="button button-lg button-blue" href="/forgot-password">changer le password</a>
-	<form method="POST" action="/profil/soft-delete/<?= \Core\Auth\Auth::id() ?>"
+<section class="profile-action">
+	<a class="button button-blue button-lg " href="/forgot-password">changer le password</a>
+	<form method="POST" action="/profile/delete"
 	      onsubmit="return confirm('Etes vous vraiment sur ?')">
 		<button class="button button-red button-lg" type="submit">Supprimer le compte</button>
 		<input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
 	</form>
-	<form method="POST" action="/profil/hard-delete/<?= \Core\Auth\Auth::id() ?>"
+	<form method="POST" action="/profile/hard-delete"
 	      onsubmit="return confirm('Etes vous vraiment sur ?')">
 		<button class="button button-red button-lg" type="submit">Supprimer le compte définitivement</button>
 		<input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">

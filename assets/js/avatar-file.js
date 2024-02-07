@@ -11,6 +11,6 @@ if (avatar_input && wrapper) {
 			body: formData
 		}).then(response => response.text())
 
-		window.location.href = "/profile"
+		window.location.reload()
 	})
 }

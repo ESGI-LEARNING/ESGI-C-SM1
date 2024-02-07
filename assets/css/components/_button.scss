@@ -4,10 +4,11 @@
   cursor: pointer;
   padding: 1rem 2rem;
   margin: 1rem 0;
+  font-size: 1.5rem;
+  font-family: var(--font-family);
   background: var(--white);
   color: var(--black);
   border: solid .1rem var(--dark-gray);
-  box-shadow: .25rem .25rem 0 var(--dark-gray);
   border-radius: .25rem;
 
   &-link {
@@ -15,7 +16,7 @@
     color: var(--black);
     border: none;
     box-shadow: none;
-    padding: 0rem 2rem;
+    padding: 0 2rem;
     font-size: 1.6rem;
     text-decoration: underline;
     &:hover {
@@ -30,7 +31,6 @@
     background-color: var(--black);
     color: var(--white);
     border: none;
-    box-shadow: .25rem .25rem 0 var(--black);
 
     &:hover {
       background-color: var(--white);
@@ -47,7 +47,6 @@
       background-color: var(--black);
       color: var(--white);
       border: solid .1rem var(--black);
-      box-shadow: .25rem .25rem 0 var(--black);
     }
   }
 
@@ -55,8 +54,6 @@
     background-color: var(--success);
     color: var(--white);
     border: none;
-
-    box-shadow: .25rem .25rem 0 var(--success-dark);
 
     &:hover {
       background-color: var(--success-dark);
@@ -68,8 +65,6 @@
     color: var(--white);
     border: none;
 
-    box-shadow: .25rem .25rem 0 var(--primary-dark);
-
     &:hover {
       background-color: var(--primary-dark);
     }
@@ -79,8 +74,6 @@
     background-color: var(--error);
     color: var(--white);
     border: none;
-
-    box-shadow: .25rem .25rem 0 var(--error-dark);
 
     &:hover {
       background-color: var(--error-dark);

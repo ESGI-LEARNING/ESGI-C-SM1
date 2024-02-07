@@ -10,14 +10,30 @@
   background-color: var(--gray);
   color: var(--black);
   cursor: pointer;
-
+  &:hover {
+    background-color: var(--dark-gray);
+  }
   &.active {
     background-color: var(--primary-color);
     color: var(--white);
 
+    &:hover {
+      background-color: var(--primary-dark);
+    }
+
     svg {
       color: var(--white);
     }
+  }
+}
+
+.profile-action {
+  padding: 2rem;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: auto;
+  form {
+    display: inline-block;
   }
 }
 

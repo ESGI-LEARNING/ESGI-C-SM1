@@ -4,6 +4,7 @@
   justify-content: center;
   padding: 1rem 2rem;
   border-radius: .25rem;
+  background-color: var(--gray);
   @media screen and (max-width: 600px) {
     display: flex;
     flex-direction: column;
@@ -20,7 +21,10 @@
 
   .profile-info {
     margin-left: 1rem;
-    padding: 3rem 2rem;
+
+    .profile-sub-info{
+      display: flex;
+    }
 
     .profile-name {
       font-size: 2.4rem;
@@ -34,7 +38,7 @@
         position: absolute;
         z-index: -1;
         width: 50%;
-        transform: translate(3%, 45%);
+        transform: translate(15%, 50%);
         height: 2.5rem;
         border-radius: .25rem;
         background-color: var(--primary);
@@ -42,19 +46,16 @@
     }
 
     .profile-title {
-      font-size: 1.6rem;
       font-weight: bold;
-      padding: 2rem 0;
+      padding: 1rem 0;
     }
 
     .profile-location {
       color: var(--deep-gray);
-      font-size: 1.6rem;
       margin-bottom: 1rem;
     }
 
     .profile-interests-title {
-      font-size: 1.6rem;
       margin-bottom: 1.5rem;
     }
 

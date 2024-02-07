@@ -79,12 +79,11 @@ class User extends Model
 
     public function getAvatar(): ?string
     {
-        if($this->avatar === null)
-        {
+        if ($this->avatar === null) {
             return null;
         }
-        return GlideService::getLinkImage($this->avatar, 150, 150);
 
+        return GlideService::getLinkImage($this->avatar, 150, 150);
     }
 
     public function setAvatar(?string $avatar): void
@@ -135,5 +134,10 @@ class User extends Model
     public function roles(): BelongToMany
     {
         return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
+    }
+
+    public function author(): BelongToMany
+    {
+        return $this->belongsToMany(InformationPhotograph::class, 'information_photograph', 'user_id', 'id');
     }
 }

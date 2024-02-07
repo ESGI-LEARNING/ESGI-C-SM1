@@ -55,8 +55,8 @@ class SecurityController extends AbstractController
             $mailer = new AuthMail();
             $mailer->sendVerifyEmail($form->get('email'), [
                 'username' => $form->get('username'),
-                'token' => Authenticator::generateToken($user->getEmail()),
-                'id' => $user->getId(),
+                'token'    => Authenticator::generateToken($user->getEmail()),
+                'id'       => $user->getId(),
             ]);
 
             $this->addFlash('success', 'Votre compte a bien été créé');

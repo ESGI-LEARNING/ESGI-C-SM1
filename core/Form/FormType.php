@@ -17,7 +17,7 @@ class FormType
 
     public function __construct(object $data = null)
     {
-        $this->data = $data;
+        $this->data             = $data;
         $this->csrfTokenService = new CsrfTokenService();
         $this->setConfig();
         $this->request = new Request();
@@ -61,7 +61,6 @@ class FormType
             return false;
         }
 
-
         // on verifie le token csrf
         if (!$this->csrfTokenService->isValidCsrfToken($_REQUEST['csrf_token'])) {
             return false;
@@ -69,7 +68,6 @@ class FormType
 
         // on fusion tout les types de données
         $data = array_merge($_POST, $_FILES);
-
 
         $validator = new Validator($data);
         $validator->validate($this->rules());
@@ -80,7 +78,7 @@ class FormType
 
         foreach ($this->config['inputs'] as $key => $input) {
             if (!empty($validator->getErrors()[$key])) {
-                //regarde si le champ est un fichier
+                // regarde si le champ est un fichier
                 if (isset($input['type']) && $input['type'] == 'file') {
                     if ($this->data->images === null) {
                         $this->config['inputs'][$key]['errors'][] = $validator->getErrors()[$key];
@@ -92,7 +90,7 @@ class FormType
 
             // on set data for input select
             if (isset($input['input']) && $input['input'] === FormTypeEnum::INPUT_SELECT) {
-                $key = str_ends_with($key, '[]') ? str_replace('[]', '', $key) : $key;
+                $key                                   = str_ends_with($key, '[]') ? str_replace('[]', '', $key) : $key;
                 $this->config['inputs'][$key]['value'] = $_POST[$key] ?? [];
             }
 
@@ -110,6 +108,6 @@ class FormType
             return null;
         }
 
-        return array_map(fn($v) => $v->getId(), $data);
+        return array_map(fn ($v) => $v->getId(), $data);
     }
 }

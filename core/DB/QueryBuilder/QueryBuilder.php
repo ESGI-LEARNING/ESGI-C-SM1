@@ -156,6 +156,7 @@ class QueryBuilder extends DB
                 }
             }
         }
+
         return $result;
     }
 
@@ -219,23 +220,21 @@ class QueryBuilder extends DB
 
         $hashedPassword = password_hash('default_password', PASSWORD_BCRYPT);
 
-        $sql = 'UPDATE `' . $this->table . '` 
+        $sql = 'UPDATE `'.$this->table.'` 
             SET 
                 email = CONCAT("user", :randomValue, "@example.com"), 
                 username = CONCAT("user", :randomValue), 
                 password = :hashedPassword, 
                 avatar = NULL, 
-                verify = NULL, 
+                verify = 0, 
                 is_deleted = 1, 
-                created_at = NULL, 
-                updated_at = NULL 
             WHERE id = :id';
 
         $this->addLogs('hardDelete_user');
 
         return $this->execute($sql, [
-            'id' => $id,
-            'randomValue' => $randomValue,
+            'id'             => $id,
+            'randomValue'    => $randomValue,
             'hashedPassword' => $hashedPassword,
         ]);
     }
@@ -248,8 +247,7 @@ class QueryBuilder extends DB
             $sql .= ' '.$column.'=:'.$column.' AND';
         }
 
-        $sql = substr($sql, 0, -3);
-
+        $sql   = substr($sql, 0, -3);
         $query = $this->pdo->prepare($sql);
         $query->execute($data);
         $query->setFetchMode(\PDO::FETCH_CLASS, $this->model);

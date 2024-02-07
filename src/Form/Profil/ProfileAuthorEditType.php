@@ -3,7 +3,6 @@
 namespace App\Form\Profil;
 
 use App\Enum\FormTypeEnum;
-use App\Models\InformationPhotograph;
 use Core\Auth\Auth;
 use Core\Form\FormType;
 
@@ -14,7 +13,7 @@ class ProfileAuthorEditType extends FormType
         $this->config =  [
             'config' => [
                 'method' => 'POST',
-                'action' => '',
+                'action' => '/profile/edit-author',
                 'submit' => "Modifier l'utilisateur",
                 'class'  => 'form',
             ],
@@ -23,20 +22,20 @@ class ProfileAuthorEditType extends FormType
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'prénom',
-                    'value'       => '',
+                    'value'       => Auth::author()->firstname ?? '',
                     'errors'      => [],
                 ],
                 'lastName' => [
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'nom',
-                    'value'       => '',
+                    'value'       => Auth::author()->lastname ?? '',
                     'errors'      => [],
                 ],
                 'description' => [
                     'class'       => 'input-form',
                     'placeholder' => 'description',
-                    'value'       => '',
+                    'value'       => Auth::author()->description ?? '',
                     'errors'      => [],
                     'input'       => FormTypeEnum::INPUT_TEXTAREA,
                     'rows'        => '5',
@@ -45,14 +44,14 @@ class ProfileAuthorEditType extends FormType
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'ville',
-                    'value'       => '',
+                    'value'       => Auth::author()->city ?? '',
                     'errors'      => [],
                 ],
                 'country' => [
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'pays',
-                    'value'       => '',
+                    'value'       => Auth::author()->country ?? '',
                     'errors'      => [],
                 ],
             ],
@@ -62,8 +61,11 @@ class ProfileAuthorEditType extends FormType
     public function rules(): array
     {
         return [
-            'username' => ['required', 'min:3'],
-            'email'    => ['email', 'required'],
+            'firstName'   => ['required', 'min:3'],
+            'lastName'    => ['required', 'min:3'],
+            'description' => ['required', 'min:3'],
+            'city'        => ['required', 'min:3'],
+            'country'     => ['required', 'min:3'],
         ];
     }
 }

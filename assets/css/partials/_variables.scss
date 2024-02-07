@@ -1,5 +1,5 @@
 /*Variables*/
-
+$font-family: 'Inter', sans-serif;
 //light mode
 $black: #000;
 $gray: #fafafa;
@@ -34,6 +34,7 @@ $primary-dark: #416de7;
 
 /*Root*/
 :root {
+  --font-family: #{$font-family};
   --black: #{$black};
   --gray: #{$gray};
   --white: #{$white};

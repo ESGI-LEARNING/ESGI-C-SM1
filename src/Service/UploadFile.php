@@ -29,6 +29,5 @@ class UploadFile
             $user->setAvatar($path);
             $user->save();
         }
-
     }
 }
