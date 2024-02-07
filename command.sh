@@ -15,12 +15,14 @@ if [ "$command" = "make:controller" ]; then
    templateController "$className"
 elif [ "$command" = "make:model" ]; then
     templateModel "$className"
-elif [ "$command" = "make:repository" ]; then
-    templateRepository "$className"
 elif [ "$command" = "make:form" ]; then
     templateForm "$className"
 elif [ "$command" = "make:migration" ]; then
     migration "$className"
+elif [ "$command" = "make:mail" ]; then
+    templateMail "$className"
+elif [ "$command" = "make:middleware" ]; then
+    templateMiddleware "$className"
 else
     echo "Commande non supportée : $command"
     exit 1

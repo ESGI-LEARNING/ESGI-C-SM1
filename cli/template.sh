@@ -9,12 +9,12 @@ templateController() {
 
   echo "<?php
 
-  namespace App\Controllers;
+namespace App\Controllers;
 
-  class $controllerNane
-  {
-      //
-  }" > "src/Controllers/$controllerNane.php"
+class $controllerNane
+{
+    //
+}" > "src/Controllers/$controllerNane.php"
 
   #Message
   message "success" "Controller" "$controllerNane"
@@ -31,11 +31,11 @@ templateModel()
 
 namespace App\Models;
 
-use App\core\DB\DB;
+use Core\DB\Model;
 
-class $modelName extends DB
+class $modelName extends Model
 {
-   private ?int \$id = null;
+   protected ?int \$id = null;
 
     public function getId(): ?int
     {
@@ -55,23 +55,6 @@ class $modelName extends DB
 }
 
 # Template for repositories
-templateRepository()
-{
-  local modelName=$1
-  checkIfFolderExists "src/Repository"
-  checkIfFileExists "src/Repository/$modelName.php" "$modelName"
-
-  echo "<?php
-
-  namespace App\Repository;
-
-  class $modelName
-  {
-
-  }" > "src/Repository/$modelName.php"
-}
-
-# Template for repositories
 templateForm()
 {
   local formType=$1
@@ -80,18 +63,27 @@ templateForm()
 
   echo "<?php
 
-  namespace App\Form;
+namespace App\Form;
 
-  class $formType
-  {
-      public function getConfig(): array
-      {
-          return [];
-      }
+use Core\Form\FormType;
 
-  }" > "src/Form/$formType.php"
+class $formType extends FormType
+{
+    public function setConfig(): void
+    {
+        \$this->config = [];
+    }
 
-  message "Form" $formType
+    public function rules(): array
+    {
+        return [
+             //
+        ];
+    }
+
+}" > "src/Form/$formType.php"
+
+  message "Form" "success" $formType
 }
 
 # Migration
@@ -122,3 +114,51 @@ class $migrationName extends BaseMigration
 
   message "success" "Migration" "$(to_snake_case $migrationName)"
 }
+
+# Mail
+templateMail()
+{
+  local mailname=$1
+  checkIfFolderExists "src/Mails"
+  checkIfFileExists "src/Mails/$mailname.php" "$mailname"
+
+  echo "<?php
+
+namespace App\Mails;
+
+use Core\Mailer\Mailer;
+
+class $mailname
+{
+  //
+}" > "src/Mails/$mailname.php"
+
+message "success" "Mails" $mailname
+}
+
+# middleware
+templateMiddleware()
+{
+  local middlewareName=$1
+  checkIfFolderExists "src/Middlewares"
+  checkIfFileExists "src/Middlewares/$middlewareName.php" "$middlewareName"
+
+  echo "<?php
+
+namespace App\Middlewares;
+
+use Core\Middleware\BaseMiddleware;
+
+class $middlewareName extends BaseMiddleware
+{
+
+  public function __invoke(): void
+  {
+    //
+  }
+
+}" > "src/Middlewares/$middlewareName.php"
+
+message "success" "Middlewares" $middlewareName
+}
+
