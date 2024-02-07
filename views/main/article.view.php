@@ -1,15 +1,17 @@
+<?php if ($images): ?>
+    <div class="gallery-container">
+        <?= $this->component('gallery', $config = $images); ?>
+    </div>
+<?php endif; ?>
+
 <div class="article">
-    <h2><?= $article->name ?></h2>
-    <p>Description: <?= $article->description ?></p>
-    <?php if ($article->username): ?>
-        <p>Créateur: <?= $article->username ?></p>
+    <?php if ($article->image): ?>
+        <img src="<?= $articleImage ?>" alt="<?= $article->name ?>" class="article-image">
     <?php endif; ?>
 
-    <?php if ($article->image): ?>
-        <img src="<?= $articleImage ?>" alt="<?= $article->name ?>">
+    <h2 class="article-title"><?= $article->name ?></h2>
+    <p class="article-description">Description: <?= $article->description ?></p>
+    <?php if ($article->username): ?>
+        <p class="article-creator">Créateur: <?= $article->username ?></p>
     <?php endif; ?>
 </div>
-
-<?php if ($images): ?>
-    <?= $this->component('gallery', $config = $images); ?>
-<?php endif; ?>
