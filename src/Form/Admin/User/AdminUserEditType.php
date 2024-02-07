@@ -22,7 +22,7 @@ class AdminUserEditType extends FormType
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'prénom',
-                    'value'       => $this->data->getUsername() ?? '',
+                    'value'       => $this->data->getFirstName() ?? '',
                     'errors'      => [],
                 ],
                 'email' => [

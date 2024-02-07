@@ -17,19 +17,19 @@ class LoginType extends FormType
             ],
             'inputs' => [
                 'email' => [
-                    'type'        => 'email',
-                    'class'       => 'input-form',
-                    'placeholder' => 'email',
-                    'required'    => true,
-                    'errors'       => []
+                    'type'         => 'email',
+                    'class'        => 'input-form',
+                    'placeholder'  => 'email',
+                    'required'     => true,
+                    'errors'       => [],
                 ],
 
                 'password' => [
-                    'type'        => 'password',
-                    'class'       => 'input-form',
-                    'placeholder' => 'mot de passe',
-                    'required'    => true,
-                    'errors'       => []
+                    'type'         => 'password',
+                    'class'        => 'input-form',
+                    'placeholder'  => 'mot de passe',
+                    'required'     => true,
+                    'errors'       => [],
                 ],
             ],
         ];

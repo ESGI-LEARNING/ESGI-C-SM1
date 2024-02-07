@@ -14,7 +14,7 @@ class Storage
 
     public static function delete(string $path): void
     {
-        unlink(self::DOWNLOAD_PATH . '/media/' . $path);
+        unlink(self::DOWNLOAD_PATH.'/media/'.$path);
     }
 
     public static function upload(array &$files, string $path): array
@@ -23,15 +23,15 @@ class Storage
 
         if (isset($files['name']) && is_array($files['name'])) {
             $fileCount = count($files['name']);
-            for ($i = 0; $i < $fileCount; $i++) {
+            for ($i = 0; $i < $fileCount; ++$i) {
                 $name = self::getName($files['name'][$i]);
-                $tmp = $files['tmp_name'][$i];
+                $tmp  = $files['tmp_name'][$i];
 
-                if (!is_dir(self::DOWNLOAD_PATH . $path)) {
+                if (!is_dir(self::DOWNLOAD_PATH.$path)) {
                     (new Storage())->make($path);
                 }
 
-                $uploadFile = self::DOWNLOAD_PATH . $path . '/' . $name;
+                $uploadFile = self::DOWNLOAD_PATH.$path.'/'.$name;
 
                 move_uploaded_file($tmp, $uploadFile);
 
@@ -39,13 +39,13 @@ class Storage
             }
         } else {
             $name = self::getName($files['name']);
-            $tmp = $files['tmp_name'];
+            $tmp  = $files['tmp_name'];
 
-            if (!is_dir(self::DOWNLOAD_PATH . $path)) {
+            if (!is_dir(self::DOWNLOAD_PATH.$path)) {
                 (new Storage())->make($path);
             }
 
-            $uploadFile = self::DOWNLOAD_PATH . $path . '/' . $name;
+            $uploadFile = self::DOWNLOAD_PATH.$path.'/'.$name;
 
             move_uploaded_file($tmp, $uploadFile);
 
@@ -60,12 +60,12 @@ class Storage
         $name = iconv('UTF-8', 'ASCII//TRANSLIT', $name);
         $name = preg_replace('/[^A-Za-z0-9.]/', '', $name);
 
-        return basename(uniqid() . '_' . strtolower($name));
+        return basename(uniqid().'_'.strtolower($name));
     }
 
     public function make(string $path): void
     {
-        mkdir(self::DOWNLOAD_PATH . $path);
+        mkdir(self::DOWNLOAD_PATH.$path);
     }
 
     public static function getExtension(string $file): string

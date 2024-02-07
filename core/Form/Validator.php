@@ -73,7 +73,7 @@ class Validator
 
         // require file
         if (!empty($this->data[$filed]) && !empty($this->data[$filed]['name'][0])) {
-            $this->errors[$filed. '[]'][] = 'Le champ est requis';
+            $this->errors[$filed.'[]'][] = 'Le champ est requis';
         }
     }
 
@@ -133,7 +133,7 @@ class Validator
     private function size(string $size, string $field): void
     {
         if ($this->data[$field]['size'] > (int) $size) {
-                $this->errors[$field.'[]'][] = 'Le champ doit être inférieur à '.$size.' octets';
+            $this->errors[$field.'[]'][] = 'Le champ doit être inférieur à '.$size.' octets';
         }
     }
 

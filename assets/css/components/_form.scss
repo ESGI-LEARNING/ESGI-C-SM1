@@ -1,9 +1,9 @@
 form {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
+  margin: 2rem auto;
+  max-width: 80rem;
 
   .link{
     display: flex;
@@ -13,8 +13,8 @@ form {
   }
   fieldset {
     border: none;
-    width: 75%;
-    margin: 2rem auto;
+    width: 100%;
+    margin: 0 auto;
     label {
       font-weight: bold;
       display: flex;
@@ -28,30 +28,32 @@ form {
       width: 100%;
       border: solid .2rem var(--black);
       border-radius: .25rem;
+      font-size: 1.5rem;
 
       &[type="submit"], &[type="button"] {
         background-color: var(--black);
-        box-shadow: .25rem .25rem 0 var(--gray);
         color: var(--white);
         font-weight: bold;
         cursor: pointer;
+        transition: all 0.1s ease-in-out;
+        &:hover {
+          color: var(--black);
+          background-color: var(--white);
+        }
       }
 
       &[type="reset"] {
         background-color: var(--gray);
-        box-shadow: .25rem .25rem 0 var(--dark-gray);
         color: var(--black);
         font-weight: bold;
       }
       &[type="file"] {
         background-color: var(--gray);
-        box-shadow: .25rem .25rem 0 var(--dark-gray);
         color: var(--black);
         font-weight: bold;
       }
       &[type="text"], &[type="email"], &[type="password"] {
         background-color: var(--gray);
-        box-shadow: .25rem .25rem 0 var(--deep-gray);
         color: var(--black);
         font-weight: bold;
       }

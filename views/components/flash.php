@@ -1,3 +1,3 @@
-<?php foreach ($config as $key => $message) : ?>
-    <div class='alert alert-<?= $key ?>'><?= $message ?></div>
-<?php endforeach; ?>
+<?php foreach ($config as $key => $message) { ?>
+    <div class='alert alert-<?= $key; ?>'><?= $message; ?></div>
+<?php } ?>

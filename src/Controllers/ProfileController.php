@@ -4,37 +4,34 @@ namespace App\Controllers;
 
 use App\Form\Profil\ProfileAuthorEditType;
 use App\Form\Profil\ProfileEditType;
-use App\Models\Category;
 use App\Models\InformationPhotograph;
-use App\Models\User;
 use App\Service\UploadFile;
 use Core\Auth\Auth;
 use Core\Controller\AbstractController;
-use Core\Router\Request;
 use Core\Views\View;
 
 class ProfileController extends AbstractController
 {
     public function index(): View
     {
-        $user = Auth::user();
+        $user        = Auth::user();
+        $author      = new InformationPhotograph();
+        $author      = $author::query()->getOneBy(['user_id' => Auth::id()]);
         $formProfile = new ProfileEditType();
-        $formAuthor = new ProfileAuthorEditType();
-
+        $formAuthor  = new ProfileAuthorEditType();
 
         return $this->render('profile/index', 'front', [
-            'user' => $user,
+            'user'        => $user,
+            'author'      => $author,
             'formProfile' => $formProfile->getConfig(),
-            'formAuthor' => $formAuthor->getConfig(),
+            'formAuthor'  => $formAuthor->getConfig(),
         ]);
     }
 
-    public function edit(): View
+    public function edit(): void
     {
         $user = Auth::user();
         $form = new ProfileEditType();
-        $formAuthor = new ProfileAuthorEditType();
-
         $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,75 +39,62 @@ class ProfileController extends AbstractController
             $user->setEmail($form->get('email'));
             $user->setUpdatedAt(date('Y-m-d H:i:s'));
             $user->save();
-
-            if ($form->file('avatar')) {
-                UploadFile::uploadImageProfile($form->file('avatar'), $user->getId());
-            }
-
             $this->addFlash('success', 'L\'utilisateur a bien été modifié');
             $this->redirect('/profile');
         }
-
-        return $this->render('profile/index', 'front', [
-            'user' => $user,
-            'formProfile' => $form->getConfig(),
-            'formAuthor' => $formAuthor->getConfig(),
-
-        ]);
     }
 
-    public function editAuthor(): View
+    public function editAuthor(): void
     {
-        $user = Auth::user();
         $author = new InformationPhotograph();
-        $form = new ProfileAuthorEditType();
+        $form   = new ProfileAuthorEditType();
         $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $author->setId(Auth::author()->getId());
+            $author->setUserId(Auth::id());
             $author->setFirstName($form->get('firstName'));
             $author->setLastName($form->get('lastName'));
             $author->setDescription($form->get('description'));
             $author->setCity($form->get('city'));
             $author->setCountry($form->get('country'));
-            $author->setUpdatedAt(date('Y-m-d H:i:s'));
             $author->save();
 
-            $this->addFlash('success', 'L\'utilisateur a bien été modifié');
+            $this->addFlash('success', 'Le profil photographe a bien été modifié');
+            $this->redirect('/profile');
         }
-
-        return $this->render('profile/index', 'front', [
-            'user' => $user,
-            'author' => $author,
-            'formProfile' => $form->getConfig(),
-            'formAuthor' => $form->getConfig(),
-        ]);
     }
 
-    public function softDelete(int $id): void
+    public function softDelete(): void
     {
         $user = Auth::user();
-        $user->softDelete();
-        $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
-        $this->redirect('/');
+        if (Auth::id()) {
+            $user->softDelete();
+            $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
+            $this->redirect('/logout');
+        }
+        $this->redirect('/logout');
     }
 
-    public function hardDelete(int $id): void
+    public function hardDelete(): void
     {
         $user = Auth::user();
-        $user->hardDelete();
-        $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
-        $this->redirect('/');
+        if (Auth::id()) {
+            $user->hardDelete();
+            $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
+            $this->redirect('/logout');
+        }
+        $this->redirect('/logout');
     }
 
     public function updateAvatar(): string
     {
         if (isset($_FILES['avatar'])) {
             $path = UploadFile::uploadImageProfile($_FILES['avatar'], Auth::id());
+
             return json_encode(['path' => $path]);
         }
+
         return json_encode(['error' => 'No file uploaded']);
-    }
-    public function delete(): void
-    {
     }
 }

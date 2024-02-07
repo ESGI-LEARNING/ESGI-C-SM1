@@ -3,16 +3,19 @@
 namespace App\Models;
 
 use Core\DB\Model;
+use Core\DB\Relation\HasOne;
 
 class InformationPhotograph extends Model
 {
     protected ?int $id = null;
 
-    protected string $firstName;
+    protected ?string $firstname = null;
 
-    protected string $lastName;
+    protected ?string $lastname = null;
 
-    protected string $description;
+    protected ?string $user_id = null;
+
+    protected ?string $description = null;
 
     protected ?string $city = null;
 
@@ -42,24 +45,24 @@ class InformationPhotograph extends Model
         $this->id = $id;
     }
 
-    public function getFirstName(): string
+    public function getfirstname(): string
     {
-        return $this->firstName;
+        return $this->firstname;
     }
 
-    public function setFirstName(string $firstName): void
+    public function setfirstname(string $firstname): void
     {
-        $this->firstName = $firstName;
+        $this->firstname = $firstname;
     }
 
-    public function getLastName(): string
+    public function getlastname(): string
     {
-        return $this->lastName;
+        return $this->lastname;
     }
 
-    public function setLastName(string $lastName): void
+    public function setlastname(string $lastname): void
     {
-        $this->lastName = $lastName;
+        $this->lastname = $lastname;
     }
 
     public function getDescription(): string
@@ -67,7 +70,7 @@ class InformationPhotograph extends Model
         return $this->description;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
@@ -120,5 +123,20 @@ class InformationPhotograph extends Model
     public function setUpdatedAt(string $updated_at): void
     {
         $this->updated_at = $updated_at;
+    }
+
+    public function getUserId(): ?string
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?string $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'user_id', 'id');
     }
 }
