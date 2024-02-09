@@ -119,6 +119,8 @@ $router->middleware(['installed'])->group(function (Router $router) {
             });
             $router->controller(AdminCommentController::class)->prefix('/comments')->group(function (Router $router) {
                 $router->get('/', 'index');
+                $router->get('/create', 'create');
+                $router->post('/create', 'postComment');
                 $router->post('/report/{id}', 'report');
                 $router->post('/delete/{id}', 'delete');
                 $router->post('/keep/{id}', 'keep');
