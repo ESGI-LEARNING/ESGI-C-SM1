@@ -4,6 +4,7 @@ namespace Core\Views;
 
 use App\Models\User;
 use Core\Auth\Auth;
+use Core\Enum\Role;
 
 class HelperView
 {
@@ -18,5 +19,15 @@ class HelperView
             ->get();
 
         return $role[0]->name ?? null;
+    }
+
+    public function isAdministrator(): bool
+    {
+        return $this->hasRole(ROLE::ROLE_ADMIN);
+    }
+
+    public function isAuthor(): bool
+    {
+        return $this->hasRole(ROLE::ROLE_AUTHOR);
     }
 }

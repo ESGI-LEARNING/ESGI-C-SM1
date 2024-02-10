@@ -3,7 +3,6 @@
 namespace Core\Views;
 
 use Core\Auth\Auth;
-use Core\Enum\Role;
 use Core\Session\CsrfTokenService;
 use Core\Session\FlashService;
 
@@ -30,26 +29,9 @@ class View extends HelperView
         $this->templateName = '../views/templates/'.$templateName.'.tpl.php';
     }
 
-    public function isAdministrator(): bool
+    public function hasRole(string $role): bool
     {
-        if (Auth::check()) {
-            if ($this->getRole(roleCheck: ROLE::ROLE_ADMIN) === ROLE::ROLE_ADMIN) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public function isAuthor(): bool
-    {
-        if (Auth::check()) {
-            if ($this->getRole(roleCheck: ROLE::ROLE_AUTHOR) === ROLE::ROLE_AUTHOR) {
-                return true;
-            }
-        }
-
-        return false;
+        return Auth::check() && $this->getRole(roleCheck: $role) === $role;
     }
 
     public function setViewName(string $viewName): void

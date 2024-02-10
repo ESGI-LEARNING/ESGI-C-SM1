@@ -8,6 +8,7 @@ use App\Models\InformationPhotograph;
 use App\Service\UploadFile;
 use Core\Auth\Auth;
 use Core\Controller\AbstractController;
+use Core\Router\Request;
 use Core\Views\View;
 
 class ProfileController extends AbstractController
@@ -39,6 +40,7 @@ class ProfileController extends AbstractController
             $user->setEmail($form->get('email'));
             $user->setUpdatedAt(date('Y-m-d H:i:s'));
             $user->save();
+
             $this->addFlash('success', 'L\'utilisateur a bien été modifié');
             $this->redirect('/profile');
         }
@@ -68,17 +70,20 @@ class ProfileController extends AbstractController
     public function softDelete(): void
     {
         $user = Auth::user();
+
         if (Auth::id()) {
             $user->softDelete();
             $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
             $this->redirect('/logout');
         }
+
         $this->redirect('/logout');
     }
 
     public function hardDelete(): void
     {
         $user = Auth::user();
+
         if (Auth::id()) {
             $user->hardDelete();
             $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
@@ -89,8 +94,10 @@ class ProfileController extends AbstractController
 
     public function updateAvatar(): string
     {
-        if (isset($_FILES['avatar'])) {
-            $path = UploadFile::uploadImageProfile($_FILES['avatar'], Auth::id());
+        $request = new Request();
+
+        if ($request->file('avatar') !== null) {
+            $path = UploadFile::uploadImageProfile($request->file('avatar'), Auth::id());
 
             return json_encode(['path' => $path]);
         }
