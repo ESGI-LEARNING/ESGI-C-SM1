@@ -83,6 +83,6 @@ class Image extends Model
 
     public function picture(): HasOne
     {
-        return $this->hasOne(Picture::class, 'id', 'picture_id');
+        return $this->HasOne(Picture::class, 'picture_id', 'id');
     }
 }

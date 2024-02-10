@@ -1,9 +1,9 @@
 <div class="gallery gallery-container">
-    <?php foreach ($config as $image) : ?>
+    <?php foreach ($config as $image) { ?>
         <article>
-            <a href="/article/<?= $image->slug ;?>" class="gallery-item">
-                <img src="/images/<?= $image->images; ?>" alt="<?= $image->name; ?>" class="gallery-image">
+            <a href="/article/<?= $image->slug; ?>" class="gallery-item">
+	            <img src="<?= $image->image[0]->image(300, 400); ?>" alt="<?= $image->name; ?>">
             </a>
         </article>
-    <?php endforeach; ?>
+    <?php } ?>
 </div>
