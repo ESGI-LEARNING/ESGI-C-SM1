@@ -23,8 +23,6 @@ class Picture extends Model
 
     protected string $created_at;
 
-    protected ?string $image; 
-
     protected string $updated_at;
 
     protected ?string $username;
@@ -117,7 +115,7 @@ class Picture extends Model
         $this->updated_at = $updated_at;
     }
 
-    public function images(): HasMany
+    public function image(): HasMany
     {
         return $this->hasMany(Image::class, 'picture_id', 'id');
     }

@@ -11,14 +11,10 @@ class GalleryController extends AbstractController
     public function gallery(): View
     {
         $images = new Picture();
-        $images = $images::query()
-            ->findAll();
+        $images = $images::query()->with(['image'])->findAll();
 
         return $this->render('main/gallery', 'front', [
             'images' => $images,
         ]);
     }
-
-
-
 }
