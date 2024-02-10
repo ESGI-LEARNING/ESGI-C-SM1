@@ -3,14 +3,14 @@
   justify-content: flex-start;
   flex-direction: column;
   gap: 1rem;
-  margin: 1rem 0;
-  border: 1px solid var(--dark-gray);
+  border: 1px solid #ccc;
   padding: 1rem;
   border-radius: .25rem;
   max-width: 45rem;
   background-color: var(--gray);
   box-shadow: .25rem .25rem 0 var(--dark-gray);
   transition: 0.25s;
+  margin: 1rem auto;
   &:hover {
     transform: scale(1.015);
   }
