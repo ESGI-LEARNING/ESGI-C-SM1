@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Core\DB\Model;
 use Core\DB\Relation\HasOne;
+use Core\DB\Relation\BelongToMany;
+
 
 class Comment extends Model
 {
@@ -109,5 +111,10 @@ class Comment extends Model
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'user_id', 'id');
+    }
+
+    public function pictures(): BelongToMany
+    {
+        return $this->belongsToMany(Picture::class, 'picture_comment', 'comment_id', 'picture_id');
     }
 }

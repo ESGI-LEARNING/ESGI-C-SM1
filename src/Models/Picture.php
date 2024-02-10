@@ -131,4 +131,10 @@ class Picture extends Model
     {
         return $this->hasOne(User::class, 'user_id', 'id');
     }
+
+    public function comments(): BelongToMany
+    {
+        return $this->belongsToMany(Comment::class, 'picture_comment', 'picture_id', 'comment_id');
+    }
+
 }
