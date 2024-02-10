@@ -40,7 +40,6 @@ class QueryBuilder extends DB
     public function with(array $relations): QueryBuilder
     {
         $this->with = $relations;
-
         return $this;
     }
 
