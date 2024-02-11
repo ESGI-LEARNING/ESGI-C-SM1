@@ -22,6 +22,7 @@ class ArticleController extends AbstractController
             ->with(['user'])
             ->join('picture_comment', 'picture_comment.comment_id', '=', 'comment.id')
             ->where('picture_comment.picture_id', '=', $article->getId())
+            ->orderBy('esgi_comment.created_at', 'DESC')
             ->paginate(10, (int)($this->request()->get('page')));
         
         return $this->render('main/article', 'front', [
@@ -35,6 +36,10 @@ class ArticleController extends AbstractController
         $content = $_POST['comment'];
 
         // Vérifie si l'utilisateur est authentifié
+        if (empty($content)) {
+            $this->addFlash('error', 'Le commentaire ne peut pas être vide.');
+            $this->redirect("/article/{$pictureId}");
+        }
         if (Auth::check()) {
             $comment = [
                 'content'    => $content,
