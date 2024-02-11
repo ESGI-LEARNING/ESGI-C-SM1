@@ -35,23 +35,31 @@ class ArticleController extends AbstractController
     {
         $content = $_POST['comment'];
 
-        if(Auth::check()){
-            $comment = new Comment();
-            $comment->setContent($content);
-            $comment->setUser(Auth::id());
-            $comment->setCreatedAt(date('Y-m-d H:i:s'));
-            $comment->save(); 
+        // Vérifie si l'utilisateur est authentifié
+        if (Auth::check()) {
+            $comment = [
+                'content'    => $content,
+                'user_id'    => Auth::id(),
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+
+            // Insertion du commentaire dans la base de données
+            $commentModel = new Comment();
+            $queryBuilder = $commentModel->query();
+            $savedComment = $queryBuilder->save($comment, $commentModel);
+
+            $picture = Picture::find($pictureId);
+            $picture->comments()->attach($savedComment->getId());
+            $picture->save();
+
+            $this->addFlash('success', 'Commentaire ajouté avec succès!');
+        } else {
+            $this->addFlash('error', 'Vous devez être connecté pour ajouter un commentaire.');
         }
 
-        $picture = Picture::query()
-            ->where('id', '=', $pictureId)
-            ->get()[0];
-        
-
-        $picture->comments()->sync([$comment->getId()]);
-        $picture->save();
-       
         $this->redirect("/article/{$picture->getSlug()}");
     }
+    
+    
 
 }

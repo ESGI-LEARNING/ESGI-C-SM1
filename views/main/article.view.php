@@ -1,4 +1,4 @@
-<div class="card-photo" >
+<div class="card-photo">
     <?php if ($article->image[0]) { ?>
         <img src="<?= $article->image[0]->image(400, 300); ?>" alt="<?= $article->name; ?>">
     <?php } ?>
@@ -10,19 +10,7 @@
         <?php } ?>
     </div>
 </div>
-<div class="comments">
-    <h3>Commentaires</h3>
-    <?php if (empty($comments)) { ?>
-        <p>Aucun commentaire pour le moment</p>
-    <?php } else { ?>
-        <?php foreach ($comments as $comment) { ?>
-            <div class="comment">
-                <p><?= $comment->content; ?></p>
-                <p>Posté par <?= $comment->user->username; ?> le <?= $comment->created_at; ?></p>
-            </div>
-        <?php } ?>
-    <?php } ?>
-</div>
+
 <form class="form" action="/articles/create/<?= $article->id ?>" method="post">
     <input type="hidden" name="article_id" value="<?= $article->id ?>">
     <fieldset>
@@ -32,4 +20,16 @@
     </fieldset>
 </form>
 
-
+<div class="comments">
+    <h3>Commentaires</h3>
+    <?php if (empty($comments)) { ?>
+        <p>Aucun commentaire pour le moment</p>
+    <?php } else { ?>
+        <?php foreach ($comments as $comment) { ?>
+            <div class="comment">
+                <p><?= $comment->content; ?></p>
+                <p>Posté par <?= $comment->getUser(); ?> le <?= $comment->created_at; ?></p>
+            </div>
+        <?php } ?>
+    <?php } ?>
+</div>
