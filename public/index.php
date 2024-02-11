@@ -62,13 +62,16 @@ $router->middleware(['installed'])->group(function (Router $router) {
     $router->middleware(['auth'])->group(function (Router $router) {
         $router->get('/logout', [SecurityController::class, 'logout']);
 
-        $router->get('/profile', [ProfileController::class, 'index']);
-        $router->post('/profile', [ProfileController::class, 'edit']);
-        $router->post('/profile/edit-author', [ProfileController::class, 'editAuthor']);
-        $router->post('/profile/delete', [ProfileController::class, 'softDelete']);
-        $router->post('/profile/hard-delete', [ProfileController::class, 'hardDelete']);
-
-        $router->post('/profile/avatar', [ProfileController::class, 'updateAvatar']);
+        $router->controller(ProfileController::class)->prefix('/profile')->group(function (Router $router) {
+            $router->get('/', 'index');
+            $router->post('/', 'edit');
+            $router->post('/delete','softDelete');
+            $router->post('/hard-delete',  'hardDelete');
+            $router->middleware(['auth'])->group(function (Router $router) {
+                $router->post('/edit-author', 'editAuthor');
+            });
+            $router->post('/avatar', 'updateAvatar');
+        });
 
         $router->middleware(['admin'])->prefix('/admin')->group(function (Router $router) {
             $router->get('/', [AdminController::class, 'dashboard']);
