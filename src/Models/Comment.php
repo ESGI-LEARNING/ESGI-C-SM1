@@ -25,6 +25,8 @@ class Comment extends Model
 
     protected string $updated_at;
 
+    protected int $picture_id;
+
     public function __construct()
     {
         parent::__construct($this);
