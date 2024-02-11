@@ -29,12 +29,18 @@
             <div class="comment">
                 <p><?= $comment->content; ?></p>
                 <p>Posté par <?= $comment->getUser(); ?> le <?= $comment->created_at; ?></p>
+                
+                <!-- Formulaire de signalement de commentaire -->
+                <form method="POST" action="/articles/report-comment/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
+                    <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
+                    <button class="button button-green button-sm" type="submit"><?= icon('flag'); ?></button>
+                </form>
             </div>
         <?php } ?>
     <?php } ?>
-    <div class="pagination">
+</div>
+<div class="pagination">
         <?php if (!empty($comments) && method_exists($comments, 'links')): ?>
             <?= $this->component('pagination', $comments->links()); ?>
         <?php endif; ?>
     </div>
-</div>

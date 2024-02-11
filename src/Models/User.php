@@ -27,6 +27,12 @@ class User extends Model
 
     protected string $updated_at;
 
+     protected ?int $user_id = null;
+
+     protected ?int $role_id = null;
+     
+     protected ?string $name = null;
+
     public function __construct()
     {
         parent::__construct($this);
