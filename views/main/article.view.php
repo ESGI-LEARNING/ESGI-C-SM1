@@ -32,4 +32,9 @@
             </div>
         <?php } ?>
     <?php } ?>
+    <div class="pagination">
+        <?php if (!empty($comments) && method_exists($comments, 'links')): ?>
+            <?= $this->component('pagination', $comments->links()); ?>
+        <?php endif; ?>
+    </div>
 </div>
