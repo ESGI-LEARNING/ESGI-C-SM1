@@ -4,6 +4,7 @@ namespace App\Middlewares;
 
 use App\Models\User;
 use Core\Auth\Auth;
+use Core\Enum\Role;
 use Core\Middleware\BaseMiddleware;
 
 class AdminMiddleware extends BaseMiddleware
@@ -14,7 +15,7 @@ class AdminMiddleware extends BaseMiddleware
             ->select(['user.id'])
             ->join('user_role', 'user.id', '=', 'user_role.user_id')
             ->join('role', 'role.id', '=', 'user_role.role_id')
-            ->where('role.name', '=', 'ROLE_ADMIN')
+            ->where('role.name', '=', Role::ROLE_ADMIN)
             ->andWhere('user.id', '=', Auth::id())
             ->get();
 

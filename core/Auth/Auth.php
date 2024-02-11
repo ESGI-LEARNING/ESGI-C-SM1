@@ -17,6 +17,7 @@ class Auth extends Authenticator
         if (self::id() !== null) {
             return InformationPhotograph::query()->where('user_id', '=', Auth::id())->get()[0];
         }
+
         return null;
     }
 

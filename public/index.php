@@ -65,11 +65,9 @@ $router->middleware(['installed'])->group(function (Router $router) {
         $router->controller(ProfileController::class)->prefix('/profile')->group(function (Router $router) {
             $router->get('/', 'index');
             $router->post('/', 'edit');
-            $router->post('/delete','softDelete');
-            $router->post('/hard-delete',  'hardDelete');
-            $router->middleware(['auth'])->group(function (Router $router) {
-                $router->post('/edit-author', 'editAuthor');
-            });
+            $router->post('/delete', 'softDelete');
+            $router->post('/hard-delete', 'hardDelete');
+            $router->post('/edit-author', 'editAuthor');
             $router->post('/avatar', 'updateAvatar');
         });
 

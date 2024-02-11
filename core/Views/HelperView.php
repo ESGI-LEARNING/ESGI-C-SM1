@@ -8,6 +8,11 @@ use Core\Enum\Role;
 
 class HelperView
 {
+    public function hasRole(string $role): bool
+    {
+        return Auth::check() && $this->getRole(roleCheck: $role) === $role;
+    }
+
     public function getRole($roleCheck): ?string
     {
         $role = User::query()

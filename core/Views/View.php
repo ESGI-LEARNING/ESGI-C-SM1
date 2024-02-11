@@ -2,16 +2,15 @@
 
 namespace Core\Views;
 
-use Core\Auth\Auth;
 use Core\Session\CsrfTokenService;
 use Core\Session\FlashService;
 
 class View extends HelperView
 {
+    protected string $csrfToken;
     private string $templateName;
     private string $viewName;
     private array $params = [];
-    protected string $csrfToken;
 
     public function __construct(string $viewName, string $templateName = 'back', array $params = [])
     {
@@ -21,17 +20,11 @@ class View extends HelperView
         $this->setVariables($params);
     }
 
-    public function setTemplateName(string $templateName): void
+    public function setCsrf(): string
     {
-        if (!file_exists('../views/templates/'.$templateName.'.tpl.php')) {
-            exit('Le template views/templates/'.$templateName.".tpl.php n'existe pas");
-        }
-        $this->templateName = '../views/templates/'.$templateName.'.tpl.php';
-    }
+        $csrfTokenService = new CsrfTokenService();
 
-    public function hasRole(string $role): bool
-    {
-        return Auth::check() && $this->getRole(roleCheck: $role) === $role;
+        return $csrfTokenService->generateToken();
     }
 
     public function setViewName(string $viewName): void
@@ -42,12 +35,12 @@ class View extends HelperView
         $this->viewName = '../views/'.$viewName.'.view.php';
     }
 
-    public function component(string $component, array $config, array $data = []): void
+    public function setTemplateName(string $templateName): void
     {
-        if (!file_exists('../views/components/'.$component.'.php')) {
-            exit('Le composant views/components/'.$component.".php n'existe pas");
+        if (!file_exists('../views/templates/'.$templateName.'.tpl.php')) {
+            exit('Le template views/templates/'.$templateName.".tpl.php n'existe pas");
         }
-        include '../views/components/'.$component.'.php';
+        $this->templateName = '../views/templates/'.$templateName.'.tpl.php';
     }
 
     public function setVariables(array $params): void
@@ -55,11 +48,12 @@ class View extends HelperView
         $this->params = $params;
     }
 
-    public function setCsrf(): string
+    public function component(string $component, array $config, array $data = []): void
     {
-        $csrfTokenService = new CsrfTokenService();
-
-        return $csrfTokenService->generateToken();
+        if (!file_exists('../views/components/'.$component.'.php')) {
+            exit('Le composant views/components/'.$component.".php n'existe pas");
+        }
+        include '../views/components/'.$component.'.php';
     }
 
     public function flash(): array
