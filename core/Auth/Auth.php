@@ -12,11 +12,12 @@ class Auth extends Authenticator
         return (new Auth())->getUser();
     }
 
-    public static function author(): InformationPhotograph
+    public static function author(): ?InformationPhotograph
     {
-        $author = new InformationPhotograph();
-
-        return $author::query()->where('user_id', '=', Auth::id())->get()[0];
+        if (self::id() !== null) {
+            return InformationPhotograph::query()->where('user_id', '=', Auth::id())->get()[0];
+        }
+        return null;
     }
 
     public static function id(): int
