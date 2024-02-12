@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
       darkMode.querySelector('.moon-icon').style.display = isDarkMode ? 'none' : 'block';
       darkMode.querySelector('.sun-icon').style.display = isDarkMode ? 'block' : 'none';
     });
-
-    window.addEventListener('beforeunload', () => localStorage.removeItem('darkMode'));
+  }
+  if (localStorage.getItem('darkMode') === 'true') {
+    document.documentElement.classList.add('data-dark-mode');
   }
 });

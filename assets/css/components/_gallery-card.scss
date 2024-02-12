@@ -65,7 +65,7 @@
 
       li {
         display: inline-block;
-        background: #eee;
+        background: var(--deep-gray);
         padding: 0.5rem 1rem;
         border-radius: 0.25rem;
         box-shadow: .25rem .25rem 0 var(--dark-gray);
