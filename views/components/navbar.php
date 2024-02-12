@@ -13,7 +13,7 @@
 	    <?php
             if (Core\Auth\Auth::check()) {
                 echo '<li><a href="/profile">'.icon('user-round').'</a></li>';
-                if ($this->isAdministrator()) {
+                if ($this->hasRole(\Core\Enum\Role::ROLE_ADMIN)) {
                     echo '<li><a href="/admin">'.icon('settings').'</a></li>';
                 }
                 echo '<li><a href="/logout">'.icon('log-out').'</a></li>';

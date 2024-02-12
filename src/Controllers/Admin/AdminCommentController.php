@@ -2,8 +2,8 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\Comment;
 use App\Mails\CommentMail;
+use App\Models\Comment;
 use Core\Controller\AbstractController;
 use Core\Views\View;
 
@@ -15,12 +15,13 @@ class AdminCommentController extends AbstractController
         $comments = Comment::query()
             ->where('is_deleted', '=', false)
             ->with(['user'])
-            ->paginate(10, (int)($this->request()->get('page')));
-    
+            ->paginate(10, (int) $this->request()->get('page'));
+
         return $this->render('admin/comments/index', 'back', [
             'comments' => $comments,
         ]);
     }
+
     public function delete(int $id): void
     {
         $comment = Comment::find($id);
@@ -49,7 +50,7 @@ class AdminCommentController extends AbstractController
                 $mail = new CommentMail();
                 $mail->sendReportComment('quentinandrieu@yahoo.com', [
                     'comment_id' => $comment->getId(),
-                    'content' => $comment->getContent(),
+                    'content'    => $comment->getContent(),
                 ]);
 
                 $this->addFlash('success', 'Le commentaire a été signalé avec succès.');

@@ -3,7 +3,6 @@
 namespace App\Form\Profil;
 
 use App\Enum\FormTypeEnum;
-use Core\Auth\Auth;
 use Core\Form\FormType;
 
 class ProfileAuthorEditType extends FormType
@@ -22,20 +21,20 @@ class ProfileAuthorEditType extends FormType
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'prénom',
-                    'value'       => Auth::author()->firstname ?? '',
+                    'value'       => $this->data->firstname ?? '',
                     'errors'      => [],
                 ],
                 'lastName' => [
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'nom',
-                    'value'       => Auth::author()->lastname ?? '',
+                    'value'       => $this->data->lastname ?? '',
                     'errors'      => [],
                 ],
                 'description' => [
                     'class'       => 'input-form',
                     'placeholder' => 'description',
-                    'value'       => Auth::author()->description ?? '',
+                    'value'       => $this->data->description ?? '',
                     'errors'      => [],
                     'input'       => FormTypeEnum::INPUT_TEXTAREA,
                     'rows'        => '5',
@@ -44,14 +43,14 @@ class ProfileAuthorEditType extends FormType
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'ville',
-                    'value'       => Auth::author()->city ?? '',
+                    'value'       => $this->data->city ?? '',
                     'errors'      => [],
                 ],
                 'country' => [
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'pays',
-                    'value'       => Auth::author()->country ?? '',
+                    'value'       => $this->data->country ?? '',
                     'errors'      => [],
                 ],
             ],

@@ -77,12 +77,12 @@ class User extends Model
         $this->password = password_hash($password, PASSWORD_ARGON2ID);
     }
 
-    public function avatar(): ?string
+    public function avatar(): string
     {
         return GlideService::getLinkImage($this->avatar, 150, 150);
     }
 
-    public function getAvatar(): ?string
+    public function getAvatar(): string
     {
         return $this->avatar();
     }

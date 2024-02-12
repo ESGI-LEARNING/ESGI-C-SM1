@@ -18,7 +18,10 @@ class ProfileController extends AbstractController
         $user        = Auth::user();
         $author      = new InformationPhotograph();
         $author      = $author::query()->getOneBy(['user_id' => Auth::id()]);
-        $formProfile = new ProfileEditType();
+        $formProfile = new ProfileEditType($user);
+        if (!$author === null) {
+            $formAuthor  = new ProfileAuthorEditType($author);
+        }
         $formAuthor  = new ProfileAuthorEditType();
 
         return $this->render('profile/index', 'front', [
@@ -53,7 +56,7 @@ class ProfileController extends AbstractController
         $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $author->setId(Auth::author()->getId());
+            $author->setId($author::query()->getOneBy(['user_id' => Auth::id()])->getId());
             $author->setUserId(Auth::id());
             $author->setFirstName($form->get('firstName'));
             $author->setLastName($form->get('lastName'));
@@ -67,28 +70,16 @@ class ProfileController extends AbstractController
         }
     }
 
-    public function softDelete(): void
+    public function delete(): void
     {
         $user = Auth::user();
 
         if (Auth::id()) {
-            $user->softDelete();
+            $user->delete();
             $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
             $this->redirect('/logout');
         }
 
-        $this->redirect('/logout');
-    }
-
-    public function hardDelete(): void
-    {
-        $user = Auth::user();
-
-        if (Auth::id()) {
-            $user->hardDelete();
-            $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
-            $this->redirect('/logout');
-        }
         $this->redirect('/logout');
     }
 

@@ -11,29 +11,37 @@ class Authenticator extends PHPSession
 
     private ?User $user = null;
 
+    public static function generateToken(string $email): string
+    {
+        return hash('sha512', config('app.url').'/verify-email/'.$email);
+    }
+
     public function login(User $user): void
     {
         $this->set(self::SESSION_KEY_USER, $user->getId());
     }
 
-    public function logout(): void
-    {
-        $this->delete(self::SESSION_KEY_USER);
-    }
-
     public function getUser(): ?User
     {
-        if ($this->user) {
+        if ($this->user instanceof User) {
             return $this->user;
         }
 
         $userId = $this->get(self::SESSION_KEY_USER);
         if ($userId) {
             try {
-                $user       = new User();
-                $this->user = $user->findBy(['id' => $userId]);
+                $user          = new User();
+                $retrievedUser = $user->findBy(['id' => $userId]);
 
-                return $this->user;
+                if ($retrievedUser instanceof User) {
+                    $this->user = $retrievedUser;
+
+                    return $this->user;
+                } else {
+                    $this->logout();
+
+                    return null;
+                }
             } catch (\Exception $e) {
                 $this->logout();
 
@@ -44,8 +52,8 @@ class Authenticator extends PHPSession
         return null;
     }
 
-    public static function generateToken(string $email): string
+    public function logout(): void
     {
-        return hash('sha512', config('app.url').'/verify-email/'.$email);
+        $this->delete(self::SESSION_KEY_USER);
     }
 }

@@ -5,7 +5,6 @@ namespace App\Models;
 use Core\DB\Model;
 use Core\DB\Relation\HasOne;
 
-
 class Comment extends Model
 {
     protected ?int $id = null;
@@ -23,7 +22,6 @@ class Comment extends Model
     protected string $created_at;
 
     protected string $updated_at;
-
 
     public function __construct()
     {
@@ -112,5 +110,4 @@ class Comment extends Model
     {
         return $this->hasOne(User::class, 'user_id', 'id');
     }
-
 }
