@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 1.5rem;
+  background-color: var(--white);
   margin: 2rem auto;
 
   img {
@@ -12,6 +13,7 @@
     cursor: pointer;
     transition: 0.25s;
     border-radius: .25rem;
+
 
     &:hover {
       transform: scale(1.025);

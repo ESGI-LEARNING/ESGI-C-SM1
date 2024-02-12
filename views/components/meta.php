@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html class="" lang="fr">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport"
