@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Picture;
 use App\Models\Comment;
+use App\Models\User;
 use Core\Controller\AbstractController;
 use Core\Views\View;
 use Core\Auth\Auth;
@@ -24,6 +25,7 @@ class ArticleController extends AbstractController
             ->where('picture_comment.picture_id', '=', $article->getId())
             ->orderBy('esgi_comment.created_at', 'DESC')
             ->paginate(10, (int)($this->request()->get('page')));
+
         
         return $this->render('main/article', 'front', [
             'article' => $article,
@@ -63,4 +65,51 @@ class ArticleController extends AbstractController
 
         $this->redirect("/article/{$picture->getSlug()}");
     }
+
+    
+
+    public function reportComment(int $commentId)
+    {
+        // Find the comment by ID
+        $comment = Comment::find($commentId);
+    
+        if ($comment) {
+            // Set is_reported to 1
+            $comment->setIsReported(true);
+            // Save the changes to the database
+            $comment->save();
+    
+            // Fetch all admin users
+            $adminUsers = User::query()
+                ->join('user_role', 'user.id', '=', 'user_role.user_id')
+                ->join('role', 'user_role.role_id', '=', 'role.id')
+                ->where('role.name', '=', 'ROLE_ADMIN')
+                ->get();
+    
+            // Send email to each admin user
+            foreach ($adminUsers as $admin) {
+                $mail = new CommentMail();
+                $mail->sendReportComment($admin->getEmail(), [
+                    'comment_id' => $comment->getId(),
+                    'content'    => $comment->getContent(),
+                ]);
+            }
+    
+                $picture = Picture::query()
+            ->join('picture_comment', 'picture_comment.picture_id', '=', 'picture.id')
+            ->where('picture_comment.comment_id', '=', $commentId)
+            ->get()[0];
+    
+            if ($picture) {
+                $this->addFlash('success', 'Le commentaire a été signalé avec succès.');
+                // Redirect back to the article page using the slug of the associated picture
+                $this->redirect("/article/{$picture->getSlug()}");
+            } else {
+                $this->addFlash('error', 'L\'article associé à ce commentaire n\'a pas été trouvé.');
+            }
+        }
+
+    }
+    
+    
 }
