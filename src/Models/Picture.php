@@ -28,6 +28,10 @@ class Picture extends Model
     protected string $updated_at;
 
     protected ?string $username;
+    
+    // protected ?int $picture_id = null;
+
+    //  protected ?int $comment_id = null;
 
     public function __construct()
     {
