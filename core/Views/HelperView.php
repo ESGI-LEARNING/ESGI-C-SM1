@@ -4,16 +4,11 @@ namespace Core\Views;
 
 use App\Models\User;
 use Core\Auth\Auth;
-use Core\Enum\Role;
+use Core\Session\FlashService;
 
 class HelperView
 {
-    public function hasRole(string $role): bool
-    {
-        return Auth::check() && $this->getRole(roleCheck: $role) === $role;
-    }
-
-    public function getRole($roleCheck): ?string
+    public function hasRole(string $roleCheck): ?bool
     {
         $role = User::query()
             ->select(['user.id', 'user.email', 'role.name'])
@@ -22,17 +17,20 @@ class HelperView
             ->where('role.name', '=', $roleCheck)
             ->andWhere('user.id', '=', Auth::id())
             ->get();
+        $role = $role[0]->name ?? null;
 
-        return $role[0]->name ?? null;
+        return Auth::check() && $roleCheck === $role;
     }
 
-    public function isAdministrator(): bool
+    public function flash(): array
     {
-        return $this->hasRole(ROLE::ROLE_ADMIN);
-    }
+        $service = new FlashService();
+        $service->getFlash('success');
 
-    public function isAuthor(): bool
-    {
-        return $this->hasRole(ROLE::ROLE_AUTHOR);
+        if (!empty($service->getMessage())) {
+            return $service->getMessage();
+        }
+
+        return [];
     }
 }

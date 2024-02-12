@@ -2,11 +2,11 @@
 
 use App\Controllers\Admin\AdminArticleController;
 use App\Controllers\Admin\AdminCategoryController;
+use App\Controllers\Admin\AdminCommentController;
 use App\Controllers\Admin\AdminController;
 use App\Controllers\Admin\AdminLogController;
 use App\Controllers\Admin\AdminUserController;
 use App\Controllers\ArticleController;
-use App\Controllers\Admin\AdminCommentController;
 use App\Controllers\Auth\ForgotPasswordController;
 use App\Controllers\Auth\SecurityController;
 use App\Controllers\Auth\VerifyEmailController;
@@ -65,8 +65,7 @@ $router->middleware(['installed'])->group(function (Router $router) {
         $router->controller(ProfileController::class)->prefix('/profile')->group(function (Router $router) {
             $router->get('/', 'index');
             $router->post('/', 'edit');
-            $router->post('/delete', 'softDelete');
-            $router->post('/hard-delete', 'hardDelete');
+            $router->post('/delete', 'delete');
             $router->post('/edit-author', 'editAuthor');
             $router->post('/avatar', 'updateAvatar');
         });
@@ -118,6 +117,4 @@ $router->middleware(['installed'])->group(function (Router $router) {
     });
 });
 
-
 $router->run();
-

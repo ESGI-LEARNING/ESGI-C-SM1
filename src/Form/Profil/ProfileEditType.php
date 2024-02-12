@@ -2,7 +2,6 @@
 
 namespace App\Form\Profil;
 
-use Core\Auth\Auth;
 use Core\Form\FormType;
 
 class ProfileEditType extends FormType
@@ -21,14 +20,14 @@ class ProfileEditType extends FormType
                     'type'        => 'text',
                     'class'       => 'input-form',
                     'placeholder' => 'prénom',
-                    'value'       => Auth::user()->getUsername() ?? '',
+                    'value'       => $this->data->username ?? '',
                     'errors'      => [],
                 ],
                 'email' => [
                     'type'        => 'email',
                     'class'       => 'input-form',
                     'placeholder' => 'email',
-                    'value'       => Auth::user()->getEmail() ?? '',
+                    'value'       => $this->data->email ?? '',
                     'errors'      => [],
                 ],
             ],

@@ -3,7 +3,6 @@
 namespace Core\Views;
 
 use Core\Session\CsrfTokenService;
-use Core\Session\FlashService;
 
 class View extends HelperView
 {
@@ -54,18 +53,6 @@ class View extends HelperView
             exit('Le composant views/components/'.$component.".php n'existe pas");
         }
         include '../views/components/'.$component.'.php';
-    }
-
-    public function flash(): array
-    {
-        $service = new FlashService();
-        $service->getFlash('success');
-
-        if (!empty($service->getMessage())) {
-            return $service->getMessage();
-        }
-
-        return [];
     }
 
     public function __destruct()
