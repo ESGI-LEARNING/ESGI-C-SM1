@@ -78,7 +78,6 @@ $router->middleware(['installed'])->group(function (Router $router) {
             $router->get('/', [AdminController::class, 'dashboard']);
             $router->get('/comments', [AdminController::class, 'comments']);
             $router->get('/roles', [AdminController::class, 'roles']);
-            $router->get('/pages', [AdminController::class, 'pages']);
 
             $router->controller(AdminUserController::class)->prefix('/users')->group(function (Router $router) {
                 $router->get('/', 'index');

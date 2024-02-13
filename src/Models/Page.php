@@ -92,9 +92,17 @@ class Page extends Model
     {
         return $this->is_hidden;
     }
-    public  function setIsHidden(int $is_hidden):void
+    public  function setIsHidden(string $is_hidden): void
     {
-        $this->is_hidden = $is_hidden;
+        if($is_hidden === 'on')
+        {
+            $value = 1;
+        }
+        else
+        {
+            $value = 0;
+        }
+        $this->is_hidden = $value;
     }
 
     public function getCreatedAt(): string
@@ -117,6 +125,12 @@ class Page extends Model
         $this->updated_at = $updated_at;
     }
 
+    public function meta($name, $metadescription): Page
+    {
+        $this->setName($name);
+        $this->setMetadescription($metadescription);
+        return $this;
+    }
 
 }
 

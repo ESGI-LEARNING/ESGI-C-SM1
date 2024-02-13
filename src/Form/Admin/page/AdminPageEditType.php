@@ -13,7 +13,7 @@ class AdminPageEditType extends FormType
             'config' => [
                 'method' => 'POST',
                 'action' => '',
-                'submit' => 'Créer',
+                'submit' => 'mettre à jour',
                 'class' => 'form',
             ],
             'inputs' => [
@@ -22,12 +22,6 @@ class AdminPageEditType extends FormType
                     'type' => 'text',
                     'value' => $this->data->name ?? '',
                     'placeholder' => 'Nom de la page',
-                ],
-                'slug' => [
-                    'label' => 'Slug',
-                    'type' => 'text',
-                    'value' => $this->data->slug ?? '',
-                    'placeholder' => 'Slug de la page',
                 ],
                 'metadescription' => [
                     'label' => 'Meta description',
@@ -43,6 +37,11 @@ class AdminPageEditType extends FormType
                     'placeholder' => 'Contenu de la page',
                     'input' => FormTypeEnum::INPUT_TEXTAREA,
                     'rows' => '6',
+                ],
+                'hidden' => [
+                    'label' => 'Apparaitre sur le site ?',
+                    'input' => FormTypeEnum::INPUT_SWITCH,
+                    'checked' => $this->data->is_hidden ?? '',
                 ],
             ],
         ];

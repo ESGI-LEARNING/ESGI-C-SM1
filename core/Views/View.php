@@ -48,7 +48,7 @@ class View extends HelperView
         $this->params = $params;
     }
 
-    public function component(string $component, array $config, array $data = []): void
+    public function component(string $component, $config, array|object|string $data = null): void
     {
         if (!file_exists('../views/components/'.$component.'.php')) {
             exit('Le composant views/components/'.$component.".php n'existe pas");

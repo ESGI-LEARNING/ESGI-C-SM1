@@ -21,8 +21,8 @@ CREATE TABLE esgi_information_photograph
     city        VARCHAR(58),
     country     VARCHAR(58),
     is_deleted  TINYINT(1) DEFAULT 0,
-    created_at  DATETIME   DEFAULT CURRENT_TIMESTAMP,
-    updated_at  DATETIME   DEFAULT CURRENT_TIMESTAMP,
+    created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT FK_users_information_photograph FOREIGN KEY (user_id) REFERENCES esgi_user (id) ON DELETE CASCADE
 );
@@ -62,8 +62,8 @@ CREATE TABLE esgi_category
     name       VARCHAR(40) NOT NULL,
     slug       VARCHAR(40) NOT NULL,
     is_deleted TINYINT(1) DEFAULT 0,
-    created_at DATETIME   DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME   DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE esgi_material
@@ -76,8 +76,8 @@ CREATE TABLE esgi_material
     image       VARCHAR(255),
     user_id     INT         NOT NULL,
     is_deleted  TINYINT(1) DEFAULT 0,
-    created_at  DATETIME   DEFAULT CURRENT_TIMESTAMP,
-    updated_at  DATETIME   DEFAULT CURRENT_TIMESTAMP,
+    created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT FK_users_materials FOREIGN KEY (user_id) REFERENCES esgi_user (id)
 );
@@ -91,8 +91,8 @@ CREATE TABLE esgi_picture
     image       VARCHAR(255),
     user_id     INT         NOT NULL,
     is_deleted  TINYINT(1) DEFAULT 0,
-    created_at  DATETIME   DEFAULT CURRENT_TIMESTAMP,
-    updated_at  DATETIME   DEFAULT CURRENT_TIMESTAMP,
+    created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT FK_users_pictures FOREIGN KEY (user_id) REFERENCES esgi_user (id)
 );
@@ -143,15 +143,17 @@ CREATE TABLE esgi_setting
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE esgi_page(
-    id         INT AUTO_INCREMENT PRIMARY KEY,
-    name       VARCHAR(40) NOT NULL,
-    slug       VARCHAR(40) NOT NULL,
-    metadescription TEXT NOT NULL,
-    content    TEXT        NOT NULL,
-    is_deleted TINYINT(1) DEFAULT 0,
-    created_at DATETIME   DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME   DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE esgi_page
+(
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    name            VARCHAR(40) NOT NULL,
+    slug            VARCHAR(40) NOT NULL,
+    metadescription TEXT        NOT NULL,
+    content         TEXT        NOT NULL,
+    is_deleted      TINYINT(1) DEFAULT 0,
+    is_hidden       TINYINT(1) DEFAULT 1,
+    created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at      DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE esgi_log
@@ -185,3 +187,12 @@ VALUES ('ROLE_USER');
 INSERT INTO `esgi_role` (name)
 VALUES ('ROLE_AUTHOR');
 
+-- INSERT PAGE
+INSERT INTO
+    `esgi_page` (name, slug, metadescription, content)
+VALUES
+    ('Mentions légales', '/mentions-legales', 'Mentions légales', 'Mentions légales'),
+    ('Accueil', 'accueil', '/', 'Contenu de la page d\'accueil'),
+    ('Contact', 'contact', '/contact', 'Contenu de la page de contact'),
+    ('À propos', 'a-propos', '/about-us', 'Contenu de la page à propos'),
+    ('Galerie', 'galerie', '/gallery', 'Contenu de la galerie');
