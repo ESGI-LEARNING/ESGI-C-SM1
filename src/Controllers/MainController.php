@@ -17,17 +17,20 @@ class MainController extends AbstractController
         $page = $page::query()
             ->where('slug', '=', $_SERVER['REQUEST_URI'])
             ->get()[0];
-        if($page->slug){
-            return $this->render('main/home', 'front', [
-                'page' => $page
-            ]);
-        }
-        return $this->render('main/404', 'front');
+        return $this->render('main/home', 'front', [
+            'page' => $page,
+        ]);
     }
 
     public function aboutUs(): View
     {
-        return $this->render('main/aboutUs', 'front');
+        $page = new Page();
+        $page = $page::query()
+            ->where('slug', '=', $_SERVER['REQUEST_URI'])
+            ->get()[0];
+        return $this->render('main/aboutUs', 'front', [
+            'page' => $page,
+        ]);
     }
 
     public function contact(): View
@@ -47,9 +50,13 @@ class MainController extends AbstractController
             $this->addFlash('success', 'Votre message à bien été envoyé');
             $this->redirect('/contact');
         }
-
+        $page = new Page();
+        $page = $page::query()
+            ->where('slug', '=', $_SERVER['REQUEST_URI'])
+            ->get()[0];
         return $this->render('main/contact', 'front', [
-            'form' => $form->getConfig()
+            'form' => $form->getConfig(),
+            'page' => 'contact',
         ]);
     }
 

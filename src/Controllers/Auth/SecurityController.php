@@ -5,6 +5,7 @@ namespace App\Controllers\Auth;
 use App\Form\Auth\LoginType;
 use App\Form\Auth\RegisterType;
 use App\Mails\AuthMail;
+use App\Models\Page;
 use App\Models\User;
 use Core\Auth\Authenticator;
 use Core\Controller\AbstractController;
@@ -31,8 +32,12 @@ class SecurityController extends AbstractController
             }
         }
 
+        $page = new Page();
+        $page->meta('Connexion', 'Connexion à votre compte');
+
         return $this->render('security/login', 'front', [
             'form' => $form->getConfig(),
+            'page' => $page,
         ]);
     }
 
@@ -63,8 +68,12 @@ class SecurityController extends AbstractController
             $this->redirect('/login');
         }
 
+        $page = new Page();
+        $page->meta('Inscription', 'Inscription à votre compte');
+
         return $this->render('security/register', 'front', [
             'form' => $form->getConfig(),
+            'page' => $page,
         ]);
     }
 

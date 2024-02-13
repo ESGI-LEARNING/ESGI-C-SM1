@@ -13,7 +13,6 @@
 			<th>metadescription</th>
 			<th>slug</th>
 			<th>content</th>
-			<th>is_deleted</th>
 			<th>hidden</th>
 			<th>action</th>
 		</tr>
@@ -26,7 +25,6 @@
 				<td><?= $page->getMetaDescription() ?></td>
 				<td><?= $page->getSlug() ?></td>
 				<td><?= $page->getContent() ?></td>
-				<td><?= $page->getIsDeleted() ?></td>
 				<td>
 					<label class="switch">
 						<input type="checkbox"

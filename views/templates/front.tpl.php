@@ -1,4 +1,4 @@
-<?= $this->component('meta', $config = []) ?>
+<?= $this->component('meta', $config = [], $page) ?>
 <body>
 <header>
     <?= $this->component('navbar', $config = []) ?>

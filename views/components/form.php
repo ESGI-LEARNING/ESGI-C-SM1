@@ -63,13 +63,18 @@
             <?php } ?>
 
             <?php if (isset($configInput['input']) && $configInput['input'] === \App\Enum\FormTypeEnum::INPUT_SWITCH) { ?>
-                <input type="checkbox"
-                       name="<?= $name; ?>"
-                       id="<?= $configInput['name']                 ?? ''; ?>"
-                       class="<?= $configInput['class']             ?? ''; ?>"
-                       placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
-                       value="<?= $configInput['value']             ?? ''; ?>"
-                >
+		        <label class="switch">
+			        <input type="checkbox"
+			               name="<?= $name; ?>"
+			               id="<?= $configInput['name']                 ?? ''; ?>"
+			               class="<?= $configInput['class']             ?? ''; ?>"
+				            <?php if(isset($configInput['checked']) && $configInput['checked'] == 1): ?>
+						        checked
+	                        <?php endif; ?>
+			        />
+			        <span class="slider"></span>
+		        </label>
+
             <?php } ?>
 
             <?php if (!empty($configInput['errors'])) { ?>

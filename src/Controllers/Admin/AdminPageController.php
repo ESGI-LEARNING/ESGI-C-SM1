@@ -45,9 +45,9 @@ class AdminPageController extends AbstractController
         $form->handleRequest();
         if ($form->isSubmitted() && $form->isValid()) {
             $page->setName($form->get('name'));
-            $page->setSlug(slug($form->get('slug')));
             $page->setMetadescription($form->get('metadescription'));
             $page->setContent($form->get('content'));
+            $page->setIsHidden($form->get('hidden'));
             $page->setUpdatedAt(date('Y-m-d H:i:s'));
             $page->save();
             $this->addFlash('success', 'La page a bien été modifiée');
