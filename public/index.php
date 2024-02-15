@@ -48,7 +48,6 @@ $router->middleware(['installed'])->group(function (Router $router) {
     $router->get('/gallery', [GalleryController::class, 'gallery']);
     $router->get('/template', [MainController::class, 'template']);
     $router->get('/article/{name}', [ArticleController::class, 'article']);
-    $router->get('/images/{path}', [ImageController::class, 'index']);
 
     $router->get('/login', [SecurityController::class, 'login']);
     $router->post('/login', [SecurityController::class, 'login']);
