@@ -74,7 +74,6 @@ class AdminCommentController extends AbstractController
 }
 
     
-    
     public function keep(int $id): void
     {
         $comment = Comment::find($id);
@@ -82,24 +81,6 @@ class AdminCommentController extends AbstractController
         if ($comment) {
             if ($this->verifyCsrfToken()) {
                 $comment->setIsReported(0);
-                $comment->save();
-
-                $this->addFlash('success', 'Le commentaire a été gardé.');
-            }
-        } else {
-            $this->addFlash('error', 'Commentaire non trouvé.');
-        }
-
-        $this->redirect('/admin/comments');
-    }
-
-    public function keep(int $id): void
-    {
-        $comment = Comment::find($id);
-
-        if ($comment) {
-            if ($this->verifyCsrfToken()) { // Vérification du jeton CSRF
-                $comment->setIsReported(false); // Marquer comme non signalé
                 $comment->save();
 
                 $this->addFlash('success', 'Le commentaire a été gardé.');
