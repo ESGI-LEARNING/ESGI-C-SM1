@@ -31,7 +31,7 @@
                 <p>Posté par <?= $comment->getUser(); ?> le <?= $comment->created_at; ?></p>
                 
                 <!-- Formulaire de signalement de commentaire -->
-                <form method="POST" action="/articles/report-comment/<?= $comment->comment_id; ?>" onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
+                <form class="__report-form"POST" action="/articles/report-comment/<?= $comment->comment_id; ?>" onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
                     <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
                     <button class="button button-green button-sm" type="submit"><?= icon('flag'); ?></button>
                 </form>
