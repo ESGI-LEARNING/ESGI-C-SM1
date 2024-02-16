@@ -110,10 +110,8 @@ class ProfileController extends AbstractController
     public function updateAvatar(): string
     {
         $request = new Request();
-
         if ($request->file('avatar') !== null) {
             $path = UploadFile::uploadImageProfile($request->file('avatar'), Auth::id());
-
             return json_encode(['path' => $path]);
         }
 

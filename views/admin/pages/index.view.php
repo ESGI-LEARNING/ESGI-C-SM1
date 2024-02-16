@@ -12,25 +12,24 @@
 			<th>title</th>
 			<th>metadescription</th>
 			<th>slug</th>
-			<th>content</th>
-			<th>hidden</th>
+			<th>is_hidden</th>
 			<th>action</th>
 		</tr>
 		</thead>
 		<tbody>
-        <?php foreach ($pages as $page): ?>
+        <?php foreach ($pages as $page) { ?>
 			<tr>
-				<td><?= $page->getId() ?></td>
-				<td><?= $page->getName() ?></td>
-				<td><?= $page->getMetaDescription() ?></td>
-				<td><?= $page->getSlug() ?></td>
-				<td><?= $page->getContent() ?></td>
+				<td><?= $page->getId(); ?></td>
+				<td><?= $page->getTitle(); ?></td>
+				<td><?= $page->getMetaDescription(); ?></td>
+				<td><?= $page->getSlug(); ?></td>
 				<td>
-					<label class="switch">
-						<input type="checkbox"
-							<?=  $page->getIsHidden() ? 'checked' : '' ?>>
-						<span class="slider"></span>
-					</label>
+					<form class="hiddenForm" action="/admin/pages/hidden/<?= $page->getId(); ?>" method="post">
+						<label class="switch">
+							<input class="hiddenCheckbox" type="checkbox" <?= $page->getIsHidden() == 1 ? 'checked' : ''; ?>>
+							<span class="slider"></span>
+						</label>
+					</form>
 				</td>
 				<td class="tableau-action">
 					<a class="button button-blue button-sm" href="/admin/pages/edit/<?= $page->getId(); ?>">
@@ -42,7 +41,7 @@
 					</form>
 				</td>
 			</tr>
-        <?php endforeach; ?>
+        <?php } ?>
 		</tbody>
 	</table>
 </section>

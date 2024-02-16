@@ -7,7 +7,6 @@ use App\Models\Comment;
 use Core\Controller\AbstractController;
 use Core\Views\View;
 
-
 class AdminCommentController extends AbstractController
 {
     public function index(): View

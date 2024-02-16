@@ -9,7 +9,7 @@
   background: var(--white);
   color: var(--black);
   border: solid .1rem var(--dark-gray);
-  border-radius: .25rem;
+  border-radius: var(--border-radius);
 
   &-link {
     background: none;
@@ -114,7 +114,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--dark-gray);
+  background-color: var(--deep-gray);
+
   transition: .4s;
   border-radius: 2rem;
 
@@ -130,8 +131,8 @@
     content: "";
     height: 1.6rem;
     width: 1.6rem;
-    left: 4px;
-    bottom: 4px;
+    left: .4rem;
+    bottom: .4rem;
     background-color: white;
     transition: .4s;
     border-radius: 2rem;

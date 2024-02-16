@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use Core\DB\Model;
@@ -18,8 +17,9 @@ class Page extends Model
     protected int $is_deleted = 0;
     protected string $created_at;
     protected string $updated_at;
-    protected int $is_hidden = 1;
+    protected string $title;
 
+    protected int $is_hidden = 1;
 
     public function __construct()
     {
@@ -49,11 +49,12 @@ class Page extends Model
         $this->name = $name;
     }
 
-    public  function getMetadescription(): string
+    public function getMetadescription(): string
     {
         return $this->metadescription;
     }
-    public  function setMetadescription(string $metadescription):void
+
+    public function setMetadescription(string $metadescription): void
     {
         $this->metadescription = $metadescription;
     }
@@ -88,21 +89,24 @@ class Page extends Model
         $this->is_deleted = $is_deleted;
     }
 
-    public  function getIsHidden(): int
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    public function getIsHidden(): int
     {
         return $this->is_hidden;
     }
-    public  function setIsHidden(string $is_hidden): void
+
+    public function setIsHidden(int $isHidden): void
     {
-        if($is_hidden === 'on')
-        {
-            $value = 1;
-        }
-        else
-        {
-            $value = 0;
-        }
-        $this->is_hidden = $value;
+        $this->is_hidden = $isHidden;
     }
 
     public function getCreatedAt(): string
@@ -125,15 +129,11 @@ class Page extends Model
         $this->updated_at = $updated_at;
     }
 
-    public function meta($name, $metadescription): Page
+    public function meta($title, $metadescription): Page
     {
-        $this->setName($name);
+        $this->setTitle($title);
         $this->setMetadescription($metadescription);
+
         return $this;
     }
-
 }
-
-
-
-

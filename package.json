@@ -12,5 +12,8 @@
   "devDependencies": {
     "sass": "1.69.7",
     "vite": "5.0.11"
+  },
+  "dependencies": {
+    "tinymce": "^6"
   }
 }

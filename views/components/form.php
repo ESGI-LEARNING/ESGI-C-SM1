@@ -36,7 +36,7 @@
             <?php if (isset($configInput['input']) && $configInput['input'] === \App\Enum\FormTypeEnum::INPUT_TEXTAREA) { ?>
 				<textarea
 						name="<?= $name; ?>"
-						id="<?= $configInput['name']                 ?? ''; ?>"
+						id="<?= $configInput['id']                 ?? ''; ?>"
 						class="<?= $configInput['class']             ?? ''; ?>"
 						placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
 						rows="<?= $configInput['rows']               ?? ''; ?>"
@@ -68,9 +68,9 @@
 			               name="<?= $name; ?>"
 			               id="<?= $configInput['name']                 ?? ''; ?>"
 			               class="<?= $configInput['class']             ?? ''; ?>"
-				            <?php if(isset($configInput['checked']) && $configInput['checked'] == 1): ?>
+				            <?php if ($configInput['checked'] == 1) { ?>
 						        checked
-	                        <?php endif; ?>
+	                        <?php } ?>
 			        />
 			        <span class="slider"></span>
 		        </label>

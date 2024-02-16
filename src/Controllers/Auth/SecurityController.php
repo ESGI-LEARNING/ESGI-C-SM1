@@ -33,11 +33,11 @@ class SecurityController extends AbstractController
         }
 
         $page = new Page();
-        $page->meta('Connexion', 'Connexion à votre compte');
+        $page->meta(title: 'Connexion', metadescription: 'Connexion à votre compte');
 
         return $this->render('security/login', 'front', [
             'form' => $form->getConfig(),
-            'page' => $page,
+            'meta' => $page,
         ]);
     }
 
@@ -73,7 +73,7 @@ class SecurityController extends AbstractController
 
         return $this->render('security/register', 'front', [
             'form' => $form->getConfig(),
-            'page' => $page,
+            'meta' => $page,
         ]);
     }
 
