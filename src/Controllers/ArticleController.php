@@ -16,7 +16,7 @@ class ArticleController extends AbstractController
             ->get()[0];
 
         return $this->render('main/article', 'front', [
-            'page' => $page,
+            'meta' => $page,
         ]);
     }
 }

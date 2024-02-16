@@ -16,6 +16,8 @@ $secondary-color: #222222;
 $background-color: #222222;
 $primary: #416de7;
 
+$border-radius: .25rem;
+
 //dark mode
 $black-dark: #fff;
 $gray-dark: #222;
@@ -54,6 +56,7 @@ $primary-dark: #416de7;
   --primary-dark: #{darken($primary, 10%)};
   --secondary-color: #{$secondary-color};
   --background-color: #{$background-color};
+  --border-radius: #{$border-radius};
 }
 :root.data-dark-mode {
   --black: #{$black-dark};

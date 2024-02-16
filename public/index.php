@@ -2,9 +2,10 @@
 
 use App\Controllers\Admin\AdminArticleController;
 use App\Controllers\Admin\AdminCategoryController;
+use App\Controllers\Admin\AdminCommentController;
 use App\Controllers\Admin\AdminController;
-use App\Controllers\Admin\AdminPageController;
 use App\Controllers\Admin\AdminLogController;
+use App\Controllers\Admin\AdminPageController;
 use App\Controllers\Admin\AdminUserController;
 use App\Controllers\ArticleController;
 use App\Controllers\Auth\ForgotPasswordController;
@@ -104,8 +105,8 @@ $router->middleware(['installed'])->group(function (Router $router) {
                 $router->get('/edit/{id}', 'edit');
                 $router->post('/edit/{id}', 'edit');
                 $router->post('/delete/{id}', 'delete');
+                $router->post('/hidden/{id}', 'hidden');
             });
-
 
             $router->controller(AdminArticleController::class)->prefix('/articles')->group(function (Router $router) {
                 $router->get('/', 'index');

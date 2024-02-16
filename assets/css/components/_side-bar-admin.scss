@@ -7,7 +7,6 @@
 
   .side-bar-content {
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
     width: fit-content;
     padding: 0;
@@ -34,7 +33,8 @@
         gap: 1rem;
         padding: 2rem;
         background-color: var(--dark-gray);
-        min-height: 93vh;
+        height: 100%;
+
         @media screen and (max-width: 600px) {
           display: block;
         }
@@ -53,6 +53,12 @@
 
           &:hover {
             background-color: var(--primary);
+            a{
+              color: var(--white);
+            }
+            svg {
+              color: var(--white);
+            }
           }
 
           a {

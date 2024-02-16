@@ -17,8 +17,10 @@ class MainController extends AbstractController
         $page = $page::query()
             ->where('slug', '=', $_SERVER['REQUEST_URI'])
             ->get()[0];
+
         return $this->render('main/home', 'front', [
-            'page' => $page,
+            'meta' => $page,
+            'page' => $page
         ]);
     }
 
@@ -54,9 +56,11 @@ class MainController extends AbstractController
         $page = $page::query()
             ->where('slug', '=', $_SERVER['REQUEST_URI'])
             ->get()[0];
+
         return $this->render('main/contact', 'front', [
             'form' => $form->getConfig(),
             'page' => 'contact',
+            'meta' => $page,
         ]);
     }
 

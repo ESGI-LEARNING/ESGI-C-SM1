@@ -2,7 +2,6 @@
 
 namespace App\Controllers\Admin;
 
-use App\Form\Admin\Category\AdminCategoryType;
 use App\Form\Admin\page\AdminPageCreateType;
 use App\Form\Admin\page\AdminPageEditType;
 use App\Models\Page;
@@ -33,6 +32,7 @@ class AdminPageController extends AbstractController
             $this->redirect('/admin/pages');
         }
         $form = $form->getConfig();
+
         return $this->render('admin/pages/create', 'back', [
             'form' => $form,
         ]);
@@ -44,20 +44,30 @@ class AdminPageController extends AbstractController
         $form = new AdminPageEditType($page);
         $form->handleRequest();
         if ($form->isSubmitted() && $form->isValid()) {
+            $page->setTitle($form->get('title'));
             $page->setName($form->get('name'));
             $page->setMetadescription($form->get('metadescription'));
             $page->setContent($form->get('content'));
-            $page->setIsHidden($form->get('hidden'));
             $page->setUpdatedAt(date('Y-m-d H:i:s'));
             $page->save();
             $this->addFlash('success', 'La page a bien été modifiée');
             $this->redirect('/admin/pages');
         }
         $form = $form->getConfig();
+
         return $this->render('admin/pages/edit', 'back', [
             'form' => $form,
             'page' => $page,
         ]);
+    }
+
+    public function hidden($id): void
+    {
+        $page = Page::find($id);
+        $page->setIsHidden($page->getIsHidden() == 1 ? 0 : 1);
+        $page->save();
+        $this->addFlash('success', 'La page a bien été modifiée');
+        $this->redirect('/admin/pages');
     }
 
     public function delete(int $id): void

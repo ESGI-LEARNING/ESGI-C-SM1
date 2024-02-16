@@ -147,6 +147,7 @@ CREATE TABLE esgi_page
 (
     id              INT AUTO_INCREMENT PRIMARY KEY,
     name            VARCHAR(40) NOT NULL,
+    title           VARCHAR(40) NOT NULL,
     slug            VARCHAR(40) NOT NULL,
     metadescription TEXT        NOT NULL,
     content         TEXT        NOT NULL,
@@ -189,10 +190,9 @@ VALUES ('ROLE_AUTHOR');
 
 -- INSERT PAGE
 INSERT INTO
-    `esgi_page` (name, slug, metadescription, content)
+    `esgi_page` (name, title, metadescription , slug, content)
 VALUES
-    ('Mentions légales', '/mentions-legales', 'Mentions légales', 'Mentions légales'),
-    ('Accueil', 'accueil', '/', 'Contenu de la page d\'accueil'),
-    ('Contact', 'contact', '/contact', 'Contenu de la page de contact'),
-    ('À propos', 'a-propos', '/about-us', 'Contenu de la page à propos'),
-    ('Galerie', 'galerie', '/gallery', 'Contenu de la galerie');
+    ('Accueil','Accueil', 'accueil', '/', 'Contenu de la page d\'accueil'),
+    ('Contact','Contact', 'contact', '/contact', 'Contenu de la page de contact'),
+    ('À propos','a-propos' , 'a-propos', '/about-us', 'Contenu de la page à propos'),
+    ('Galerie','galerie', 'galerie', '/gallery', 'Contenu de la galerie'),

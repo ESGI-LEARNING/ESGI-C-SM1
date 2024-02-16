@@ -3,7 +3,7 @@
   color: var(--black-light);
   border: var(--black) solid .2rem;
   box-shadow: .25rem .25rem 0 var(--black);
-  border-radius: .25rem;
+  border-radius: var(--border-radius);
 
   &-success {
     background-color: var(--success);

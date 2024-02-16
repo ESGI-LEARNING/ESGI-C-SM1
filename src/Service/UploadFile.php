@@ -23,7 +23,6 @@ class UploadFile
     public static function uploadImageProfile(array $files, string $userId): void
     {
         $paths = Storage::upload($files, '/media');
-
         foreach ($paths as $path) {
             $user = new User();
             $user->setId($userId);

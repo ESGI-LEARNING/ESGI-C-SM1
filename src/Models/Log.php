@@ -9,7 +9,7 @@ class Log extends Model
 {
     protected ?int $id = null;
 
-    protected int $user_id;
+    protected ?int $user_id = null;
 
     protected string $action;
 

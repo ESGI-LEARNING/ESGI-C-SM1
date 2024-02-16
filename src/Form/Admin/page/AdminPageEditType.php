@@ -14,34 +14,36 @@ class AdminPageEditType extends FormType
                 'method' => 'POST',
                 'action' => '',
                 'submit' => 'mettre à jour',
-                'class' => 'form',
+                'class'  => 'form',
             ],
             'inputs' => [
+                'title' => [
+                    'label'       => 'Titre de la page',
+                    'type'        => 'text',
+                    'value'       => $this->data->title ?? '',
+                    'placeholder' => 'Nom de la page',
+                ],
                 'name' => [
-                    'label' => 'Nom',
-                    'type' => 'text',
-                    'value' => $this->data->name ?? '',
+                    'label'       => 'Nom',
+                    'type'        => 'text',
+                    'value'       => $this->data->name ?? '',
                     'placeholder' => 'Nom de la page',
                 ],
                 'metadescription' => [
-                    'label' => 'Meta description',
-                    'input' => FormTypeEnum::INPUT_TEXTAREA,
-                    'value' => $this->data->metadescription ?? '',
+                    'label'       => 'Meta description',
+                    'input'       => FormTypeEnum::INPUT_TEXTAREA,
+                    'value'       => $this->data->metadescription ?? '',
                     'placeholder' => 'Meta description de la page',
-                    'rows' => '6',
+                    'rows'        => '6',
                 ],
                 'content' => [
-                    'label' => 'Contenu',
-                    'type' => 'textarea',
-                    'value' => $this->data->content ?? '',
+                    'label'       => 'Contenu',
+                    'type'        => 'textarea',
+                    'id'          => 'mytextarea',
+                    'value'       => $this->data->content ?? '',
                     'placeholder' => 'Contenu de la page',
-                    'input' => FormTypeEnum::INPUT_TEXTAREA,
-                    'rows' => '6',
-                ],
-                'hidden' => [
-                    'label' => 'Apparaitre sur le site ?',
-                    'input' => FormTypeEnum::INPUT_SWITCH,
-                    'checked' => $this->data->is_hidden ?? '',
+                    'input'       => FormTypeEnum::INPUT_TEXTAREA,
+                    'rows'        => '6',
                 ],
             ],
         ];
@@ -50,9 +52,8 @@ class AdminPageEditType extends FormType
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:3', 'max:255'],
+            'name'            => ['required', 'min:3', 'max:255'],
             'metadescription' => ['required', 'min:3', 'max:255'],
-            'content' => ['required', 'min:3', 'max:255'],
         ];
     }
 }
