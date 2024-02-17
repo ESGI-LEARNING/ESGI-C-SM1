@@ -27,20 +27,28 @@
     <?php } else { ?>
         <?php foreach ($comments as $comment) { ?>
             <div class="comment">
-                <p><?= $comment->content; ?></p>
-                <p>Posté par <?= $comment->getUser(); ?> le <?= $comment->created_at; ?></p>
-                
-                <!-- Formulaire de signalement de commentaire -->
-                <form class="__report-form" method="POST" action="/articles/report-comment/<?= $comment->comment_id; ?>" onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
-                    <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
-                    <button class="button button-green button-sm" type="submit"><?= icon('flag'); ?></button>
-                </form>
+                <div class="column">
+                    <p><?= $comment->content; ?></p>
+                    <p>Posté par <?= $comment->getUser(); ?> le <?= $comment->created_at; ?></p>
+                </div>
+                <div class="column">
+                    <form class="__report-form" method="POST" action="/articles/report-comment/<?= $comment->comment_id; ?>" onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
+                        <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
+                        <button class="button button-green button-sm" type="submit"><?= icon('flag'); ?></button>
+                    </form>
+                    <form class="__delete-form" method="POST" action="/articles/delete-comment/<?= $comment->comment_id; ?>" onsubmit="return confirm('Êtes-vous sûr(e) de supprimer ce commentaire ?')">
+                        <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
+                        <button class="button button-red button-sm" type="submit"><?= icon('trash'); ?></button>
+                    </form>
+                </div>
             </div>
         <?php } ?>
     <?php } ?>
 </div>
+
 <div class="pagination">
         <?php if (!empty($comments) && method_exists($comments, 'links')): ?>
             <?= $this->component('pagination', $comments->links()); ?>
         <?php endif; ?>
     </div>
+
