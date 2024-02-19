@@ -110,13 +110,18 @@ class Comment extends Model
         $this->is_deleted = $is_deleted;
     }
 
+    public function getPictureId(): int
+    {
+        return $this->picture_id;
+    }
+
+    public function setPictureId(int $picture_id): void
+    {
+        $this->picture_id = $picture_id;
+    }
+
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'user_id', 'id');
-    }
-
-    public function pictures(): BelongToMany
-    {
-        return $this->belongsToMany(Picture::class, 'picture_comment', 'comment_id', 'picture_id');
     }
 }

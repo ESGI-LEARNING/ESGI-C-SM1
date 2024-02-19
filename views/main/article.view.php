@@ -1,13 +1,12 @@
 <div class="card-photo">
-    <?php if ($article->image[0]) { ?>
-        <img src="<?= $article->image[0]->image(400, 300); ?>" alt="<?= $article->name; ?>">
-    <?php } ?>
+    <?php foreach ($article->images as $image): ?>
+        <img src="<?= $image->image(400, 300); ?>" alt="<?= $article->getName(); ?>">
+    <?php endforeach; ?>
+
     <div class="card-photo-info">
-        <h2 class="card-photo-title"><?= $article->name; ?></h2>
-        <p class="article-description">Description: <?= $article->description; ?></p>
-        <?php if ($article->username) { ?>
-            <p class="card-photo-author">Créateur: <?= $article->username; ?></p>
-        <?php } ?>
+        <h2 class="card-photo-title"><?= $article->getName(); ?></h2>
+        <p class="article-description">Description: <?= $article->getDescription(); ?></p>
+        <p class="card-photo-author">Créateur: <?= $article->user->getUsername(); ?></p>
     </div>
 </div>
 
@@ -22,26 +21,26 @@
 
 <div class="comments">
     <h3>Commentaires</h3>
-    <?php if (empty($comments)) { ?>
+    <?php if (empty($article->comments)) { ?>
         <p>Aucun commentaire pour le moment</p>
     <?php } else { ?>
-        <?php foreach ($comments as $comment) { ?>
+        <?php foreach ($article->comments as $comment) { ?>
             <div class="comment">
                 <div class="column">
-                    <p><?= $comment->content; ?></p>
-                    <p>Posté par <?= $comment->getUser(); ?> le <?= $comment->created_at; ?></p>
+                    <p><?= $comment->getContent(); ?></p>
+                    <p>Posté par <?= $comment->user->getUsername(); ?> le <?= $comment->getCreatedAt(); ?></p>
                 </div>
                 <div class="column">
                     <div class="formActions">
-                    <form class="__report-form" method="POST" action="/articles/report-comment/<?= $comment->comment_id; ?>" onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
+                    <form class="__report-form" method="POST" action="/articles/report-comment/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
                         <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
                         <button class="button button-green button-sm" type="submit"><?= icon('flag'); ?></button>
                     </form>
-                    <form class="__delete-form" method="POST" action="/articles/delete-comment/<?= $comment->comment_id; ?>" onsubmit="return confirm('Êtes-vous sûr(e) de supprimer ce commentaire ?')">
+                    <form class="__delete-form" method="POST" action="/articles/delete-comment/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de supprimer ce commentaire ?')">
                         <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
                         <button class="button button-red button-sm" type="submit"><?= icon('trash'); ?></button>
                     </form>
-                    <form class="__edit-form" method="POST" action="/articles/edit-comment/<?= $comment->comment_id; ?>" onsubmit="return confirm('Êtes-vous sûr(e) de modifier ce commentaire ?')">
+                    <form class="__edit-form" method="POST" action="/articles/edit-comment/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de modifier ce commentaire ?')">
                         <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
                         <button class="button button-blue button-sm" type="submit"><?= icon('square-pen'); ?></button>
                     </form>
@@ -51,8 +50,4 @@
         <?php } ?>
     <?php } ?>
 </div>
-
-<div class="pagination">
-            <?= $this->component('pagination', $comments->links()); ?>
-    </div>
 

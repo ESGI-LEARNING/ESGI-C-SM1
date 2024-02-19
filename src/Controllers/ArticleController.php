@@ -13,25 +13,15 @@ use App\Form\Commentaire\CommentEditType;
 
 class ArticleController extends AbstractController
 {
-    public function article(string $name): View
+    public function article(string $slug): View
     {
         $article = Picture::query()
-            ->with(['image'])
-            ->where('picture.name', '=', $name)
-            ->get()[0];
-
-        $comments = Comment::query()
-            ->with(['user'])
-            ->join('picture_comment', 'picture_comment.comment_id', '=', 'comment.id')
-            ->where('picture_comment.picture_id', '=', $article->getId())
-            ->where('comment.is_deleted', '=', false)
-            ->orderBy('esgi_comment.created_at', 'DESC')
-            ->paginate(10, (int)($this->request()->get('page')));
+            ->with(['images', 'comments', 'user'])
+            ->getOneBy(['slug' => $slug]);
 
         
         return $this->render('main/article', 'front', [
-            'article' => $article,
-            'comments' => $comments
+            'article' => $article
         ]);
     }
 
