@@ -154,7 +154,7 @@ CREATE TABLE esgi_setting
 CREATE TABLE esgi_log
 (
     id         INT AUTO_INCREMENT PRIMARY KEY,
-    user_id    INT         NOT NULL,
+    user_id    INT,
     action     VARCHAR(40) NOT NULL,
     subject    VARCHAR(40) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
