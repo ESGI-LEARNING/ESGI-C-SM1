@@ -28,10 +28,6 @@ class Picture extends Model
     protected string $updated_at;
 
     protected ?string $username;
-    
-    // protected ?int $picture_id = null;
-
-    //  protected ?int $comment_id = null;
 
     public function __construct()
     {
@@ -121,7 +117,7 @@ class Picture extends Model
         $this->updated_at = $updated_at;
     }
 
-    public function image(): HasMany
+    public function images(): HasMany
     {
         return $this->hasMany(Image::class, 'picture_id', 'id');
     }
@@ -136,9 +132,9 @@ class Picture extends Model
         return $this->hasOne(User::class, 'user_id', 'id');
     }
 
-    public function comments(): BelongToMany
+    public function comments(): HasMany
     {
-        return $this->belongsToMany(Comment::class, 'picture_comment', 'picture_id', 'comment_id');
+        return $this->hasMany(Comment::class, 'comment_id', 'id');
     }
 
 }
