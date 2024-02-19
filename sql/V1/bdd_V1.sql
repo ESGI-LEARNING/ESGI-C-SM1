@@ -150,7 +150,7 @@ CREATE TABLE esgi_page
     title           VARCHAR(40) NOT NULL,
     slug            VARCHAR(40) NOT NULL,
     metadescription TEXT        NOT NULL,
-    content         TEXT        NOT NULL,
+    content         LONGTEXT        NOT NULL,
     is_deleted      TINYINT(1) DEFAULT 0,
     is_hidden       TINYINT(1) DEFAULT 1,
     created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -190,7 +190,7 @@ VALUES ('ROLE_AUTHOR');
 
 -- INSERT PAGE
 INSERT INTO
-    `esgi_page` (name, title, metadescription , slug, content)
+    `esgi_page` (name,title, metadescription , slug, content)
 VALUES
     ('Accueil','Accueil', 'accueil', '/', 'Contenu de la page d\'accueil'),
     ('Contact','Contact', 'contact', '/contact', 'Contenu de la page de contact'),

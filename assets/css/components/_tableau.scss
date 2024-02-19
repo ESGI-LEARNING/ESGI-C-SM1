@@ -32,6 +32,9 @@ table {
                     cursor: pointer;
                     color: var(--white);
                 }
+                form{
+                    margin: 0
+                }
             }
             &:nth-child(even) {
                 background-color: var(--dark-gray);
