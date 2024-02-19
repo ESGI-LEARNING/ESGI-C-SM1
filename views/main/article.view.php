@@ -32,6 +32,7 @@
                     <p>Posté par <?= $comment->getUser(); ?> le <?= $comment->created_at; ?></p>
                 </div>
                 <div class="column">
+                    <div class="formActions">
                     <form class="__report-form" method="POST" action="/articles/report-comment/<?= $comment->comment_id; ?>" onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
                         <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
                         <button class="button button-green button-sm" type="submit"><?= icon('flag'); ?></button>
@@ -45,6 +46,7 @@
                         <button class="button button-blue button-sm" type="submit"><?= icon('square-pen'); ?></button>
                     </form>
                 </div>
+            </div>
             </div>
         <?php } ?>
     <?php } ?>
