@@ -24,7 +24,6 @@ class ArticleController extends AbstractController
             ->join('picture_comment', 'picture_comment.comment_id', '=', 'comment.id')
             ->where('picture_comment.picture_id', '=', $article->getId())
             ->where('comment.is_deleted', '=', false)
-            ->where('comment.is_reported', '=', false)
             ->orderBy('esgi_comment.created_at', 'DESC')
             ->paginate(10, (int)($this->request()->get('page')));
 
@@ -78,21 +77,28 @@ class ArticleController extends AbstractController
                 $comment->setIsReported(true);
                 $comment->save();
     
-                // Fetch all admin users
                 $adminUsers = User::query()
                     ->join('user_role', 'user.id', '=', 'user_role.user_id')
                     ->join('role', 'user_role.role_id', '=', 'role.id')
                     ->where('role.name', '=', 'ROLE_ADMIN')
                     ->get();
-    
-                // Send email to each admin user
-                foreach ($adminUsers as $admin) {
-                    $mail = new CommentMail();
-                    $mail->sendReportComment($admin->getEmail(), [
+
+                    $userReported = User::find($comment->user_id);
+                    $userReporter = User::find(Auth::id());
+                    
+                    $data = [
                         'comment_id' => $comment->getId(),
-                        'content'    => $comment->getContent(),
-                    ]);
-                }
+                        'content' => $comment->getContent(),
+                    ];
+                    
+                    $mail = new CommentMail();
+                    
+                    $mail->sendReportCommentToUserReported($userReported->getEmail(), $data);
+                    $mail->sendReportCommentToUserReporter($userReporter->getEmail(), $data);
+
+                    foreach ($adminUsers as $admin) {
+                        $mail->sendReportComment($admin->getEmail(), $data);
+                    }
     
                 // Fetch the associated picture
                 $picture = Picture::query()

@@ -13,4 +13,3 @@
 	</fieldset>
 </form>
 <?= $this->component('gallery', $config = $images); ?>
-<?= $this->component('modal', $config = []); ?>
