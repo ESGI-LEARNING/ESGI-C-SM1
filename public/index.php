@@ -70,6 +70,7 @@ $router->middleware(['installed'])->group(function (Router $router) {
             $router->post('/create/{id}', 'addComment');
             $router->post('/report-comment/{id}', 'reportComment');
             $router->post('/delete-comment/{id}', 'deleteComment');
+        });
 
         $router->controller(ProfileController::class)->prefix('/profile')->group(function (Router $router) {
             $router->get('/', 'index');
