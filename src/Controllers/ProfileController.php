@@ -2,9 +2,11 @@
 
 namespace App\Controllers;
 
+use App\Form\Auth\ResetPasswordType;
 use App\Form\Profil\ProfileAuthorEditType;
 use App\Form\Profil\ProfileEditType;
 use App\Models\InformationPhotograph;
+use App\Models\User;
 use App\Service\UploadFile;
 use Core\Auth\Auth;
 use Core\Controller\AbstractController;
@@ -15,28 +17,43 @@ class ProfileController extends AbstractController
 {
     public function index(): View
     {
-        $user        = Auth::user();
-        $author      = new InformationPhotograph();
-        $author      = $author::query()->getOneBy(['user_id' => Auth::id()]);
-        $formProfile = new ProfileEditType($user);
+        $user              = Auth::user();
+        $author            = new InformationPhotograph();
+        $author            = $author::query()->getOneBy(['user_id' => Auth::id()]);
+        $formProfile       = new ProfileEditType($user);
+        $formResetPassword = new ResetPasswordType();
 
         return $this->render('profile/index', 'profile', [
-            'user'        => $user,
-            'author'      => $author,
-            'formProfile' => $formProfile->getConfig(),
+            'user'              => $user,
+            'author'            => $author,
+            'formProfile'       => $formProfile->getConfig(),
+            'formResetPassword' => $formResetPassword->getConfig(),
         ]);
     }
 
     public function author(): View
     {
-        $user        = Auth::user();
-        $author      = InformationPhotograph::query()->getOneBy(['user_id' => Auth::id()]);
-        $formAuthor  = new ProfileAuthorEditType($author);
+        $user              = Auth::user();
+        $author            = InformationPhotograph::query()->getOneBy(['user_id' => Auth::id()]);
+        $formAuthor        = new ProfileAuthorEditType($author);
+        $formResetPassword = new ResetPasswordType();
 
         return $this->render('profile/index', 'profile', [
-            'user'        => $user,
-            'author'      => $author,
-            'formAuthor'  => $formAuthor->getConfig(),
+            'user'              => $user,
+            'author'            => $author,
+            'formAuthor'        => $formAuthor->getConfig(),
+            'formResetPassword' => $formResetPassword->getConfig(),
+        ]);
+    }
+
+    public function password(): View
+    {
+        $user              = Auth::user();
+        $formResetPassword = new ResetPasswordType();
+
+        return $this->render('profile/index', 'profile', [
+            'user'              => $user,
+            'formResetPassword' => $formResetPassword->getConfig(),
         ]);
     }
 
@@ -59,7 +76,6 @@ class ProfileController extends AbstractController
 
     public function editAuthor(): void
     {
-        $author = new InformationPhotograph();
         $form   = new ProfileAuthorEditType();
         $form->handleRequest();
 
@@ -102,5 +118,20 @@ class ProfileController extends AbstractController
         }
 
         return json_encode(['error' => 'No file uploaded']);
+    }
+
+    public function resetPassword(): void
+    {
+        $form          = new ResetPasswordType();
+        $form->handleRequest();
+        $user = new User();
+        $user = $user::query()->getOneBy(['id' => Auth::id()]);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword($form->get('password'));
+            $user->save();
+
+            $this->addFlash('success', 'Votre mot de passe a bien été modifié');
+            $this->redirect('/profile');
+        }
     }
 }
