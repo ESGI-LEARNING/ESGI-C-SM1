@@ -163,5 +163,30 @@ class ArticleController extends AbstractController
             $this->redirect("/gallery");
         }
     }
+    public function editComment(int $commentId): View
+    {
+        $comment = Comment::find($commentId);
+    
+        if (!$comment) {
+            $this->addFlash('error', 'Le commentaire que vous essayez de modifier n\'existe pas.');
+            $this->redirect->previous();
+        }
+    
+        $form = new CommentEditType($comment);
+        $form->handleRequest();
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setContent($form->get('content'));
+            $comment->save();
+    
+            $this->addFlash('success', 'Le commentaire a bien été modifié');
+            $this->redirect('/article/' . $comment->getPicture()->getSlug());
+        }
+    
+        return $this->render('comments/edit', 'back', [
+            'comment' => $comment,
+            'form' => $form->getConfig(),
+        ]);
+    }
     
 }
