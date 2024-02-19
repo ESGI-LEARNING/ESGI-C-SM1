@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Admin\Comment;
+namespace App\Form\Commentaire;
 
 use Core\Form\FormType;
 
