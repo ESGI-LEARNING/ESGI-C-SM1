@@ -19,15 +19,23 @@ class ProfileController extends AbstractController
         $author      = new InformationPhotograph();
         $author      = $author::query()->getOneBy(['user_id' => Auth::id()]);
         $formProfile = new ProfileEditType($user);
-        if (!$author === null) {
-            $formAuthor  = new ProfileAuthorEditType($author);
-        }
-        $formAuthor  = new ProfileAuthorEditType();
 
-        return $this->render('profile/index', 'front', [
+        return $this->render('profile/index', 'profile', [
             'user'        => $user,
             'author'      => $author,
             'formProfile' => $formProfile->getConfig(),
+        ]);
+    }
+
+    public function author(): View
+    {
+        $user        = Auth::user();
+        $author      = InformationPhotograph::query()->getOneBy(['user_id' => Auth::id()]);
+        $formAuthor  = new ProfileAuthorEditType($author);
+
+        return $this->render('profile/index', 'profile', [
+            'user'        => $user,
+            'author'      => $author,
             'formAuthor'  => $formAuthor->getConfig(),
         ]);
     }

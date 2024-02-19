@@ -4,6 +4,7 @@ namespace Core\Views;
 
 use App\Models\User;
 use Core\Auth\Auth;
+use Core\Router\Request;
 use Core\Session\FlashService;
 
 class HelperView
@@ -32,5 +33,10 @@ class HelperView
         }
 
         return [];
+    }
+
+    public function rootIs(string $path): bool
+    {
+        return (new Request())->getUrl() === $path;
     }
 }

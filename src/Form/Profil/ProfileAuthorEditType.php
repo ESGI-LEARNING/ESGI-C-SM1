@@ -12,7 +12,7 @@ class ProfileAuthorEditType extends FormType
         $this->config =  [
             'config' => [
                 'method' => 'POST',
-                'action' => '/profile/edit-author',
+                'action' => '/profile/author',
                 'submit' => "Modifier l'utilisateur",
                 'class'  => 'form',
             ],

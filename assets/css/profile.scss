@@ -10,12 +10,19 @@
   background-color: var(--gray);
   color: var(--black);
   cursor: pointer;
+  a{
+    color: var(--black);
+
+  }
   &:hover {
     background-color: var(--dark-gray);
   }
   &.active {
     background-color: var(--primary-color);
     color: var(--white);
+    a {
+      color: var(--white);
+    }
 
     &:hover {
       background-color: var(--primary-dark);
@@ -35,12 +42,4 @@
   form {
     display: inline-block;
   }
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
 }
