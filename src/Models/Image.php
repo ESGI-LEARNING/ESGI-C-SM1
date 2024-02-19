@@ -12,7 +12,7 @@ class Image extends Model
 
     protected string $image;
 
-    protected string $picture_id;
+    protected int $picture_id;
 
     protected string $created_at;
 
@@ -46,6 +46,11 @@ class Image extends Model
         return GlideService::getLinkImage($this->image, 300, 300);
     }
 
+    public function getPictureId(): int
+    {
+        return $this->picture_id;
+    }
+
     public function setImage(string $image): void
     {
         $this->image = $image;
@@ -71,7 +76,7 @@ class Image extends Model
         $this->updated_at = $updated_at;
     }
 
-    public function setPictureId(string $picture_id): void
+    public function setPictureId(int $picture_id): void
     {
         $this->picture_id = $picture_id;
     }

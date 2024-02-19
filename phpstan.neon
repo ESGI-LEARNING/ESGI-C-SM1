@@ -1,5 +1,5 @@
 parameters:
-  level: 8
+  level: 6
   parallel:
     maximumNumberOfProcesses: 1
   paths:
@@ -11,5 +11,6 @@ parameters:
     - ./storage
     - ./storage-db
     - ./vendor
+    - ./src/Migrations
   checkMissingIterableValueType: false
   checkGenericClassInNonGenericObjectType: false

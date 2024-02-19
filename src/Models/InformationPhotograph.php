@@ -72,7 +72,7 @@ class InformationPhotograph extends Model
         $this->description = $description;
     }
 
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -82,7 +82,7 @@ class InformationPhotograph extends Model
         $this->city = $city;
     }
 
-    public function getCountry(): string
+    public function getCountry(): ?string
     {
         return $this->country;
     }
@@ -92,12 +92,12 @@ class InformationPhotograph extends Model
         $this->country = $country;
     }
 
-    public function getIsDeleted(): string
+    public function getIsDeleted(): int
     {
         return $this->is_deleted;
     }
 
-    public function setIsDeleted(string $id_deleted): void
+    public function setIsDeleted(int $id_deleted): void
     {
         $this->is_deleted = $id_deleted;
     }

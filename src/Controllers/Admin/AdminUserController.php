@@ -42,11 +42,11 @@ class AdminUserController extends AbstractController
 
     public function edit(int $id): View
     {
-        $user  = User::query()
+        $user = User::query()
             ->with(['roles'])
             ->getOneBy(['id' => $id]);
 
-        $form  = new AdminUserEditType($user);
+        $form = new AdminUserEditType($user);
         $form->handleRequest();
 
         if ($form->isSubmitted() && $form->isValid()) {

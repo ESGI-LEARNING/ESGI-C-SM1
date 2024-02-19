@@ -22,7 +22,7 @@ delete:	## delete container
 ## —— Tools 🛠️️ ———————————————————————————————————————————————————————————————
 .PHONY: phpstan
 phpstan:  ## phpstan
-	./vendor/bin/phpstan analyse --memory-limit=2G
+	./vendor/bin/phpstan analyse --memory-limit=2G -v
 
 .PHONY: phpcs
 phpcs: ## Php cs fixer

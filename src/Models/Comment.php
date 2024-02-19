@@ -28,6 +28,9 @@ class Comment extends Model
     public function __construct()
     {
         parent::__construct($this);
+
+        $this->setCreatedAt(date('Y-m-d H:i:s'));
+        $this->setUpdatedAt(date('Y-m-d H:i:s'));
     }
 
     public function getId(): ?int
@@ -55,7 +58,7 @@ class Comment extends Model
         return $this->is_reported;
     }
 
-    public function setIsReported(bool $is_reported): void
+    public function setIsReported(int $is_reported): void
     {
         $this->is_reported = $is_reported;
     }
@@ -82,7 +85,7 @@ class Comment extends Model
 
     public function setCreatedAt(string $created_at): void
     {
-        $this->created_at = date('Y-m-d H:i:s', strtotime($created_at));
+        $this->created_at = $created_at;
     }
 
     public function getUpdatedAt(): string

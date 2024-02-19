@@ -7,7 +7,7 @@ use Core\FileStorage\Storage;
 
 class UploadFile
 {
-    public static function uploadImageArticles(array $files, string $article_id): void
+    public static function uploadImageArticles(array $files, int $article_id): void
     {
         $paths = Storage::upload($files, '/media');
 

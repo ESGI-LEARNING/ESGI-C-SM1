@@ -11,6 +11,7 @@ use App\Controllers\Auth\ForgotPasswordController;
 use App\Controllers\Auth\SecurityController;
 use App\Controllers\Auth\VerifyEmailController;
 use App\Controllers\ErrorController;
+use App\Controllers\ImageController;
 use App\Controllers\Install\InstallController;
 use App\Controllers\MainController;
 use App\Controllers\ProfileController;
