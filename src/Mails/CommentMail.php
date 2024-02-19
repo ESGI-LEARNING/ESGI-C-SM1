@@ -6,7 +6,6 @@ use Core\Mailer\Mailer;
 
 class CommentMail
 {
-    //mail pour l'admin
     public function sendReportComment(string $email, array $data): void
     {
         $mail = new Mailer();
