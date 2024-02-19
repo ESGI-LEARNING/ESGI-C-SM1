@@ -9,6 +9,7 @@ use Core\Controller\AbstractController;
 use Core\Views\View;
 use Core\Auth\Auth;
 use App\Mails\CommentMail;
+use App\Form\Commentaire\CommentEditType;
 
 class ArticleController extends AbstractController
 {
@@ -172,7 +173,7 @@ class ArticleController extends AbstractController
             $this->redirect->previous();
         }
     
-        $form = new CommentEditType($comment);
+        $form = new CommentEditType($comment);  
         $form->handleRequest();
     
         if ($form->isSubmitted() && $form->isValid()) {
@@ -183,7 +184,7 @@ class ArticleController extends AbstractController
             $this->redirect('/article/' . $comment->getPicture()->getSlug());
         }
     
-        return $this->render('comments/edit', 'back', [
+        return $this->render('main/comments/edit', 'front', [
             'comment' => $comment,
             'form' => $form->getConfig(),
         ]);
