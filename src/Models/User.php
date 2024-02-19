@@ -11,7 +11,6 @@ class User extends Model
     protected ?int $id = null;
 
     protected ?string $username = null;
-    protected string $name;
 
     protected ?string $email = null;
 
