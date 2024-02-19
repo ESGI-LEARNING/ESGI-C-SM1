@@ -64,7 +64,7 @@ class ForgotPasswordController extends AbstractController
         ]);
     }
 
-    private function setToken(string $id): string
+    private function setToken(int $id): string
     {
         $token = bin2hex(random_bytes(32));
 

@@ -8,7 +8,7 @@ use League\Glide\Signatures\SignatureFactory;
 
 class ImageController extends AbstractController
 {
-    public function index(string $path)
+    public function index(string $path): void
     {
         $requestParams = $_GET;
         $key           = config('glide.key');

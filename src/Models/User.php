@@ -9,11 +9,11 @@ class User extends Model
 {
     protected ?int $id = null;
 
-    protected string $username;
+    protected ?string $username = null;
 
-    protected string $email;
+    protected ?string $email = null;
 
-    protected string $password;
+    protected ?string $password = null;
 
     protected ?string $avatar = null;
 
@@ -43,7 +43,7 @@ class User extends Model
         $this->id = $id;
     }
 
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -53,7 +53,7 @@ class User extends Model
         $this->username =  ucwords(strtolower(trim($username)));
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -63,7 +63,7 @@ class User extends Model
         $this->email = $email;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -90,7 +90,7 @@ class User extends Model
 
     public function setCreatedAt(string $created_at): void
     {
-        $this->created_at = date('Y-m-d H:i:s', strtotime($created_at));
+        $this->created_at = $created_at;
     }
 
     public function getUpdatedAt(): string
@@ -100,7 +100,7 @@ class User extends Model
 
     public function setUpdatedAt(string $updated_at): void
     {
-        $this->updated_at = date('Y-m-d H:i:s', strtotime($updated_at));
+        $this->updated_at = $updated_at;
     }
 
     public function getIsDeleted(): int

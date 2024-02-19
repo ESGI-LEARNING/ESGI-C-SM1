@@ -73,7 +73,7 @@ class InstallController extends AbstractController
                 ['email' => $form->get('email')]
             );
 
-            if ($mailer->getMessage() === null) {
+            if ($mailer->getMessage() == null) {
                 $this->addFlash('success', 'SMTP configuré avec success');
                 $this->redirect('/install/admin-user');
             } else {

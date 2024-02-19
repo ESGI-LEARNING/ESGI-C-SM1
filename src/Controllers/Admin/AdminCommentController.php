@@ -27,7 +27,7 @@ class AdminCommentController extends AbstractController
 
         if ($comment) {
             if ($this->verifyCsrfToken()) {
-                $comment->setIsDeleted(true);
+                $comment->setIsDeleted(1);
                 $comment->save();
 
                 $this->addFlash('success', 'Le commentaire a bien été supprimé');
@@ -42,7 +42,7 @@ class AdminCommentController extends AbstractController
 
         if ($comment) {
             if ($this->verifyCsrfToken()) { 
-                $comment->setIsReported(true);
+                $comment->setIsReported(1);
                 $comment->save();
 
                 // Envoyer un mail à l'admin
@@ -67,7 +67,7 @@ class AdminCommentController extends AbstractController
 
         if ($comment) {
             if ($this->verifyCsrfToken()) { 
-                $comment->setIsReported(false); 
+                $comment->setIsReported(0);
                 $comment->save();
 
                 $this->addFlash('success', 'Le commentaire a été gardé.');
