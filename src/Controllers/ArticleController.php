@@ -67,9 +67,9 @@ class ArticleController extends AbstractController
 
     public function reportComment(int $commentId)
     {
-        // Verify CSRF token
+
         if ($this->verifyCsrfToken()) {
-            // Find the comment by ID
+
             $comment = Comment::find($commentId);
     
             if ($comment) {
@@ -100,7 +100,6 @@ class ArticleController extends AbstractController
                         $mail->sendReportComment($admin->getEmail(), $data);
                     }
     
-                // Fetch the associated picture
                 $picture = Picture::query()
                     ->join('picture_comment', 'picture_comment.picture_id', '=', 'picture.id')
                     ->where('picture_comment.comment_id', '=', $commentId)
@@ -130,7 +129,6 @@ class ArticleController extends AbstractController
             $this->redirect("/");
         }
     
-        // Verify CSRF token
         if ($this->verifyCsrfToken()) {
 
             $comment = Comment::find($commentId);

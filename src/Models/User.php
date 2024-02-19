@@ -10,9 +10,7 @@ class User extends Model
 {
     protected ?int $id = null;
 
-    protected string $username;
-
-    protected string $name;
+    protected ?string $username = null;
 
     protected string $email;
 
