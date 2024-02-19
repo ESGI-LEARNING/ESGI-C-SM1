@@ -13,8 +13,6 @@ class User extends Model
     protected ?string $username = null;
     protected string $name;
 
-    protected string $username;
-
     protected ?string $email = null;
 
     protected string $password;
