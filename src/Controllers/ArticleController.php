@@ -181,7 +181,7 @@ class ArticleController extends AbstractController
             $comment->save();
     
             $this->addFlash('success', 'Le commentaire a bien été modifié');
-            $this->redirect('/article/' . $comment->getPicture()->getSlug());
+            $this->redirect->previous();
         }
     
         return $this->render('main/comments/edit', 'front', [
