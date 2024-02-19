@@ -103,11 +103,11 @@ class ArticleController extends AbstractController
                 $picture = Picture::query()
                     ->join('picture_comment', 'picture_comment.picture_id', '=', 'picture.id')
                     ->where('picture_comment.comment_id', '=', $commentId)
-                    ->first();
+                    ->get()[0];
     
                 if ($picture) {
                     $this->addFlash('success', 'Le commentaire a été signalé avec succès.');
-                    $this->redirect("/article/{$picture->getSlug()}");
+                    $this->redirect->previous();
                 } else {
                     $this->addFlash('error', 'L\'article associé à ce commentaire n\'a pas été trouvé.');
                 }
@@ -145,7 +145,7 @@ class ArticleController extends AbstractController
                 $picture = Picture::query()
                     ->join('picture_comment', 'picture_comment.picture_id', '=', 'picture.id')
                     ->where('picture_comment.comment_id', '=', $commentId)
-                    ->first();
+                    ->get()[0];
     
                 if ($picture) {
                     $this->addFlash('success', 'Le commentaire a été supprimé avec succès.');
