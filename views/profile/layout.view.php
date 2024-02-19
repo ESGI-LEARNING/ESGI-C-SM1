@@ -51,18 +51,26 @@
 <?php } ?>
 <section class="profile-modif">
     <ul class="tabs">
-        <li class="tab <?= $this->rootIs('/profile') ? 'active' : ''; ?>" data-tab="profile">
+        <li class="tab <?= $this->rootIs('/profile') ? 'active' : ''; ?>">
 	        <a href="/profile">Profil <?= icon('user-round'); ?></a>
         </li>
         <?php if ($this->hasRole(\Core\Enum\Role::ROLE_AUTHOR)) { ?>
-            <li class="tab <?= $this->rootIs('/profile/author') ? 'active' : ''; ?>" data-tab="photographe">
+            <li class="tab <?= $this->rootIs('/profile/author') ? 'active' : ''; ?>">
 	            <a href="/profile/author">Information photographe <?= icon('camera'); ?><a>
             </li>
         <?php } ?>
+	    <li class="tab <?= $this->rootIs('/profile/reset-password') ? 'active' : ''; ?>">
+		    <a href="/profile/reset-password">Changer le mot de passe <?= icon('lock'); ?></a>
+	    </li>
     </ul>
 	<?php if ($this->rootIs('/profile')) { ?>
 	    <div class="tab-content" id="profile">
 	        <?= $this->component('form', $formProfile); ?>
+	    </div>
+	<?php } ?>
+	<?php if ($this->rootIs('/profile/reset-password')) { ?>
+	    <div class="tab-content" id="password">
+	        <?= $this->component('form', $formResetPassword); ?>
 	    </div>
 	<?php } ?>
 	<?php if ($this->rootIs('/profile/author')) { ?>
@@ -70,4 +78,5 @@
 	        <?= $this->component('form', $formAuthor); ?>
 	    </div>
 	<?php } ?>
+
 </section>
