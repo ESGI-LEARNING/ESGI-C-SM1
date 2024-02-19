@@ -22,6 +22,11 @@
             border-bottom: 1px solid $black;
         }
 
+        .formActions{
+            display: flex;
+            align-items: center;
+        }
+
         p {
             margin: 0;
 
@@ -36,7 +41,7 @@
             }
         }
 
-        .__report-form {
+        .__report-form, .__edit-form, .__delete-form {
             display: inline-block;
             margin-right: 1rem;
             cursor: pointer;
