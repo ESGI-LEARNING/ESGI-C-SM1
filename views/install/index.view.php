@@ -1,4 +1,4 @@
-<section>
+<section class="install-container">
     <h1>Installation</h1>
 
     <div>
@@ -25,22 +25,12 @@
         </div>
     </div>
 
-    <div>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero nam, voluptatibus. A aspernatur eligendi
-        expedita, natus non ut veritatis? Aperiam aspernatur consectetur in mollitia quidem? Ab maxime nihil quod vitae!
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero nam, voluptatibus. A aspernatur eligendi
-        expedita, natus non ut veritatis? Aperiam aspernatur consectetur in mollitia quidem? Ab maxime nihil quod vitae!
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero nam, voluptatibus. A aspernatur eligendi
-        expedita, natus non ut veritatis? Aperiam aspernatur consectetur in mollitia quidem? Ab maxime nihil quod vitae!
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero nam, voluptatibus. A aspernatur eligendi
-        expedita, natus non ut veritatis? Aperiam aspernatur consectetur in mollitia quidem? Ab maxime nihil quod vitae!
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero nam, voluptatibus. A aspernatur eligendi
-        expedita, natus non ut veritatis? Aperiam aspernatur consectetur in mollitia quidem? Ab maxime nihil quod vitae!
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero nam, voluptatibus. A aspernatur eligendi
-        expedita, natus non ut veritatis? Aperiam aspernatur consectetur in mollitia quidem? Ab maxime nihil quod vitae!
-    </div>
+	<div>
+		<p>Le processus d'installation guidera à travers les étapes nécessaires pour configurer votre site. Assurez-vous de suivre attentivement chaque étape et de fournir les informations requises avec précision.</p>
+		<p>Si vous rencontrez des problèmes ou si vous avez des questions pendant le processus d'installation, n'hésitez pas à consulter la documentation ou à contacter notre équipe de support pour obtenir de l'aide.</p>
+	</div>
 
-    <div>
+	<div>
         <a href="/install/db" class="button button-blue">Suivant</a>
     </div>
 </section>
