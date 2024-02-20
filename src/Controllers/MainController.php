@@ -2,6 +2,9 @@
 
 namespace App\Controllers;
 
+use App\Form\FormContactType;
+use App\Mails\ContactMail;
+use App\Models\User;
 use Core\Controller\AbstractController;
 use Core\Views\View;
 
@@ -19,7 +22,25 @@ class MainController extends AbstractController
 
     public function contact(): View
     {
-        return $this->render('main/contact', 'front');
+        $form = new FormContactType();
+        $form->handleRequest();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $mail = new ContactMail();
+            $mail->send([
+                'username' => $form->get('username'),
+                'email' => $form->get('email'),
+                'content' => $form->get('content'),
+            ]);
+
+            $this->addFlash('success', 'Votre message à bien été envoyé');
+            $this->redirect('/contact');
+        }
+
+        return $this->render('main/contact', 'front', [
+            'form' => $form->getConfig()
+        ]);
     }
 
     public function gallery(): View
