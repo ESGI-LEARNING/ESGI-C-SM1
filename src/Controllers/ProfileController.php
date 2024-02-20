@@ -112,8 +112,21 @@ class ProfileController extends AbstractController
         $user = Auth::user();
 
         if (Auth::id()) {
-            $user->delete();
+            $user->softDelete();
             $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
+            $this->redirect('/logout');
+        }
+
+        $this->redirect('/logout');
+    }
+
+    public function hardDelete(): void
+    {
+        $user = Auth::user();
+
+        if (Auth::id()) {
+            $user->hardDelete();
+            $this->addFlash('success', 'L\'utilisateur a bien été supprimé définitivement');
             $this->redirect('/logout');
         }
 

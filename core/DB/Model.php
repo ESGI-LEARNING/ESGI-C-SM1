@@ -76,6 +76,15 @@ abstract class Model
     {
         return $this->queryBuilder->delete($this->entity->getId());
     }
+    public function softDelete(): \PDOStatement|false
+    {
+        return $this->queryBuilder->softDelete($this->entity->getId());
+    }
+
+    public function hardDelete(): \PDOStatement|false
+    {
+        return $this->queryBuilder->hardDelete($this->entity->getId());
+    }
 
     private function getDataObject(): array
     {

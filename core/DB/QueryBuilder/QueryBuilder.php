@@ -202,6 +202,28 @@ class QueryBuilder extends DB
         ]);
     }
 
+    public function softDelete(int $id): false|\PDOStatement
+    {
+        $sql = 'UPDATE `'.$this->table.'` SET is_deleted = 1 WHERE id = :id';
+
+        $this->addLogs('soft delete');
+
+        return $this->execute($sql, [
+            'id' => $id,
+        ]);
+    }
+
+    public function hardDelete(int $id): false|\PDOStatement
+    {
+        $sql = 'UPDATE `'.$this->table.'` SET is_deleted = 1 WHERE id = :id';
+
+        $this->addLogs('soft delete');
+
+        return $this->execute($sql, [
+            'id' => $id,
+        ]);
+    }
+
     public function getOneBy(array $data)
     {
         $sql = 'SELECT * FROM `'.$this->table.'` WHERE ';
