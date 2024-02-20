@@ -52,6 +52,7 @@ class AdminArticleType extends FormType
                     'placeholder' => 'description',
                     'value'       => $this->data->getDescription(),
                     'errors'      => [],
+                    'rows'        => 6,
                     'input'       => FormTypeEnum::INPUT_TEXTAREA,
                 ],
             ],
@@ -63,7 +64,7 @@ class AdminArticleType extends FormType
         return [
             'name'        => ['required', 'min:3'],
             'description' => ['required', 'min:3'],
-            'images[]'    => ['required', 'file'],
+            'images[]'    => ['required'],
         ];
     }
 }

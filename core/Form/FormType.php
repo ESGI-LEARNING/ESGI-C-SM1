@@ -17,7 +17,7 @@ class FormType
 
     public function __construct(object $data = null)
     {
-        $this->data             = $data;
+        $this->data = $data;
         $this->csrfTokenService = new CsrfTokenService();
         $this->setConfig();
         $this->request = new Request();
@@ -78,20 +78,17 @@ class FormType
 
         foreach ($this->config['inputs'] as $key => $input) {
             if (!empty($validator->getErrors()[$key])) {
-                // regarde si le champ est un fichier
-                if (isset($input['type']) && $input['type'] == 'file') {
-                    if ($this->data->images === null) {
-                        $this->config['inputs'][$key]['errors'][] = $validator->getErrors()[$key];
-                    }
-                } else {
-                    $this->config['inputs'][$key]['errors'][] = $validator->getErrors()[$key];
-                }
+                $this->config['inputs'][$key]['errors'][] = $validator->getErrors()[$key];
             }
 
-            // on set data for input select
-            if (isset($input['input']) && $input['input'] === FormTypeEnum::INPUT_SELECT) {
-                $key                                   = str_ends_with($key, '[]') ? str_replace('[]', '', $key) : $key;
-                $this->config['inputs'][$key]['value'] = $_POST[$key] ?? [];
+            // images edit
+            if (str_contains($this->request->getUrl(), '/edit')) {
+                if (isset($input['type']) && $input['type'] == 'file' ) {
+                    if (empty($data[str_replace('[]', '', $key)]['name'][0]) && empty($this->data->images)) {
+                        $this->config['inputs'][$key]['errors'] = [];
+                        return true;
+                    }
+                }
             }
 
             if ($key !== 'password' && $key !== 'password_confirm') {
@@ -108,6 +105,6 @@ class FormType
             return null;
         }
 
-        return array_map(fn ($v) => $v->getId(), $data);
+        return array_map(fn($v) => $v->getId(), $data);
     }
 }
