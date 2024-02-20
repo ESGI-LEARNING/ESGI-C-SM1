@@ -34,7 +34,8 @@ class ProfileController extends AbstractController
     public function author(): View
     {
         $user              = Auth::user();
-        $author            = InformationPhotograph::query()->getOneBy(['user_id' => Auth::id()]);
+        $author            = new InformationPhotograph();
+        $author            = $author::query()->getOneBy(['user_id' => Auth::id()]);
         $formAuthor        = new ProfileAuthorEditType($author);
         $formResetPassword = new ResetPasswordType();
 
@@ -77,10 +78,10 @@ class ProfileController extends AbstractController
     public function editAuthor(): void
     {
         $form   = new ProfileAuthorEditType();
+        $author            = new InformationPhotograph();
+        $author            = $author::query()->getOneBy(['user_id' => Auth::id()]);
         $form->handleRequest();
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $author->setId($author::query()->getOneBy(['user_id' => Auth::id()])->getId());
             $author->setUserId(Auth::id());
             $author->setFirstName($form->get('firstName'));
             $author->setLastName($form->get('lastName'));

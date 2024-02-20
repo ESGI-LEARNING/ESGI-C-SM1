@@ -9,6 +9,7 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 
   .dashboard-card {
     max-width: 50%;
@@ -23,6 +24,10 @@
     justify-content: space-around;
     align-items: center;
 
+    @media screen and (max-width: 600px){
+      max-width: 100%;
+      width: 100%;
+    }
     h3 {
       font-size: 1.8rem;
       font-weight: bold;
