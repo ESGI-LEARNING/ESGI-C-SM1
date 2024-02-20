@@ -8,8 +8,9 @@ class Relation
 {
     public function __construct(
         protected Model|array $result,
-        protected string $relationName
-    ) {
+        protected string      $relationName
+    )
+    {
     }
 
     public function getDatas(): Model|array
@@ -28,22 +29,24 @@ class Relation
             $primaryKey = $this->getPrimaryKey($relation->getLocalKey());
         }
 
+        $foreignKeyValue = $this->getFk($relation->getForeignKey());
+
         if ($this->result instanceof Model) {
             if ($relation instanceof HasOne) {
-                $this->result->relations[$this->relationName] = $model::findBy([$relation->getLocalKey() => $this->result->$primaryKey()]);
+                $this->result->relations[$this->relationName] = $model::findBy([$relation->getLocalKey() =>  $this->result->$foreignKeyValue()]);
             }
 
             if ($relation instanceof HasMany) {
                 $this->result->relations[$this->relationName] = $model::query()
-                    ->where($relation->getForeignKey(), '=', $this->result->$primaryKey())
+                    ->where($relation->getForeignKey(), '=',  $this->result->$primaryKey())
                     ->get();
             }
 
             if ($relation instanceof BelongToMany) {
                 $this->result->relations[$this->relationName] = $model::query()
-                    ->select([$this->getTableName($model).'.*'])
-                    ->join($relation->getPivot(), $relation->getPivot().'.'.$relation->getOtherKey(), '=', $this->getTableName($model).'.id')
-                    ->where($relation->getPivot().'.'.$relation->getForeignKey(), '=', $this->result->$primaryKey())
+                    ->select([$this->getTableName($model) . '.*'])
+                    ->join($relation->getPivot(), $relation->getPivot() . '.' . $relation->getOtherKey(), '=', $this->getTableName($model) . '.id')
+                    ->where($relation->getPivot() . '.' . $relation->getForeignKey(), '=',  $this->result->$primaryKey())
                     ->get();
             }
 
@@ -53,20 +56,20 @@ class Relation
         // return array
         foreach ($this->result as $key => $result) {
             if ($relation instanceof HasOne) {
-                $this->result[$key]->relations[$this->relationName] = $model::findBy([$relation->getLocalKey() => $result->$primaryKey()]);
+                $this->result[$key]->relations[$this->relationName] = $model::findBy([$relation->getLocalKey() => $this->result[$key]->$foreignKeyValue()]);
             }
 
             if ($relation instanceof HasMany) {
                 $this->result[$key]->relations[$this->relationName] = $model::query()
-                    ->where($relation->getForeignKey(), '=', $result->$primaryKey())
+                    ->where($relation->getForeignKey(), '=', $this->result[$key]->$primaryKey())
                     ->get();
             }
 
             if ($relation instanceof BelongToMany) {
                 $this->result[$key]->relations[$this->relationName] = $model::query()
-                    ->select([$this->getTableName($model).'.*'])
-                    ->join($relation->getPivot(), $relation->getPivot().'.'.$relation->getOtherKey(), '=', $this->getTableName($model).'.id')
-                    ->where($relation->getPivot().'.'.$relation->getForeignKey(), '=', $this->result[$key]->$primaryKey())
+                    ->select([$this->getTableName($model) . '.*'])
+                    ->join($relation->getPivot(), $relation->getPivot() . '.' . $relation->getOtherKey(), '=', $this->getTableName($model) . '.id')
+                    ->where($relation->getPivot() . '.' . $relation->getForeignKey(), '=', $this->result[$key]->$primaryKey())
                     ->get();
             }
         }
@@ -78,13 +81,23 @@ class Relation
     {
         $tableName = (new $model())->getTableName();
 
-        return str_replace(config('database.prefix').'_', '', $tableName);
+        return str_replace(config('database.prefix') . '_', '', $tableName);
     }
 
     private function getPrimaryKey(string $key = null): string
     {
         if ($key) {
-            return 'get'.ucfirst($key);
+            return 'get' . ucfirst($key);
+        }
+
+        return 'getId';
+    }
+
+    private function getFk(string $key = null): string
+    {
+        if ($key) {
+            $key = explode('_', $key);
+            return 'get' . ucwords(strtolower($key[0])) . ucwords(strtolower($key[1]));
         }
 
         return 'getId';
