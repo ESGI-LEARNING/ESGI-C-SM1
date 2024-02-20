@@ -65,12 +65,12 @@ class Comment extends Model
         $this->is_reported = $is_reported;
     }
 
-    public function getUser(): int
+    public function getUserId(): int
     {
         return $this->user_id;
     }
 
-    public function setUser(int $user_id): void
+    public function setUserId(int $user_id): void
     {
         $this->user_id = $user_id;
     }
@@ -123,5 +123,10 @@ class Comment extends Model
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'user_id', 'id');
+    }
+
+    public function getUser(): User
+    {
+        return User::find($this->user_id);
     }
 }

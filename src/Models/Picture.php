@@ -134,7 +134,6 @@ class Picture extends Model
 
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class, 'comment_id', 'id');
+        return $this->hasMany(Comment::class, 'picture_id', 'id');
     }
-
 }

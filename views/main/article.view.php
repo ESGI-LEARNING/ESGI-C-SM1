@@ -21,14 +21,11 @@
 
 <div class="comments">
     <h3>Commentaires</h3>
-    <?php if (empty($article->comments)) { ?>
-        <p>Aucun commentaire pour le moment</p>
-    <?php } else { ?>
-        <?php foreach ($article->comments as $comment) { ?>
+        <?php foreach ($article->comments as $comment): ?>
             <div class="comment">
                 <div class="column">
                     <p><?= $comment->getContent(); ?></p>
-                    <p>Posté par <?= $comment->user->getUsername(); ?> le <?= $comment->getCreatedAt(); ?></p>
+                    <p>Posté par <?= $comment->getUser()->getUsername(); ?> le <?= $comment->getCreatedAt(); ?></p>
                 </div>
                 <div class="column">
                     <div class="formActions">
@@ -46,7 +43,6 @@
                 </div>
             </div>
             </div>
-        <?php } ?>
-    <?php } ?>
+        <?php endforeach; ?>
 </div>
 
