@@ -25,7 +25,7 @@
                                 <?= $comment->isReported() ? 'Oui' : 'Non'; ?>
                             </p>
                         </td>
-                        <td><?= $comment->user->username; ?></td>
+                        <td><?= $comment->user->getUsername(); ?></td>
                         <td><?= $comment->getCreatedAt(); ?></td>
                         <td><?= $comment->getUpdatedAt(); ?></td>
                         <td class="tableau-action">
