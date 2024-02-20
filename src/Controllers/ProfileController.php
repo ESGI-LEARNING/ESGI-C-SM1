@@ -6,6 +6,7 @@ use App\Form\Auth\ResetPasswordType;
 use App\Form\Profil\ProfileAuthorEditType;
 use App\Form\Profil\ProfileEditType;
 use App\Models\InformationPhotograph;
+use App\Models\Page;
 use App\Models\User;
 use App\Service\UploadFile;
 use Core\Auth\Auth;
@@ -18,8 +19,11 @@ class ProfileController extends AbstractController
     public function index(): View
     {
         $user              = Auth::user();
-        $author            = new InformationPhotograph();
-        $author            = $author::query()->getOneBy(['user_id' => Auth::id()]);
+        $author            = InformationPhotograph::query()->getOneBy(['user_id' => Auth::id()]);
+        if($author === null)
+        {
+            $author = new InformationPhotograph();
+        }
         $formProfile       = new ProfileEditType($user);
         $formResetPassword = new ResetPasswordType();
 
@@ -34,9 +38,15 @@ class ProfileController extends AbstractController
     public function author(): View
     {
         $user              = Auth::user();
-        $author            = new InformationPhotograph();
-        $author            = $author::query()->getOneBy(['user_id' => Auth::id()]);
-        $formAuthor        = new ProfileAuthorEditType($author);
+        $author            = InformationPhotograph::query()->getOneBy(['user_id' => Auth::id()]);
+        if($author === false)
+        {
+            $author = new InformationPhotograph();
+            $formAuthor        = new ProfileAuthorEditType();
+        }
+        else{
+            $formAuthor        = new ProfileAuthorEditType($author);
+        }
         $formResetPassword = new ResetPasswordType();
 
         return $this->render('profile/index', 'profile', [
@@ -78,8 +88,11 @@ class ProfileController extends AbstractController
     public function editAuthor(): void
     {
         $form   = new ProfileAuthorEditType();
-        $author            = new InformationPhotograph();
-        $author            = $author::query()->getOneBy(['user_id' => Auth::id()]);
+        $author            = InformationPhotograph::query()->getOneBy(['user_id' => Auth::id()]);
+        if($author === false)
+        {
+            $author = new InformationPhotograph();
+        }
         $form->handleRequest();
         if ($form->isSubmitted() && $form->isValid()) {
             $author->setUserId(Auth::id());

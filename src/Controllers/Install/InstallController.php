@@ -30,6 +30,7 @@ class InstallController extends AbstractController
             $this->setEnv('DB_USERNAME', $form->get('username'));
             $this->setEnv('DB_PASSWORD', $form->get('password'));
             $this->setEnv('DB_PREFIX', $form->get('prefix'));
+            $this->setEnv('APP_NAME', $form->get('sitename'));
 
             $db = new DB();
             if ($db->getError() === null) {
