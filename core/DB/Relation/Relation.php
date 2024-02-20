@@ -66,7 +66,7 @@ class Relation
                 $this->result[$key]->relations[$this->relationName] = $model::query()
                     ->select([$this->getTableName($model).'.*'])
                     ->join($relation->getPivot(), $relation->getPivot().'.'.$relation->getOtherKey(), '=', $this->getTableName($model).'.id')
-                    ->where($relation->getPivot().'.'.$relation->getForeignKey(), '=', $this->result->$primaryKey())
+                    ->where($relation->getPivot().'.'.$relation->getForeignKey(), '=', $this->result[$key]->$primaryKey())
                     ->get();
             }
         }

@@ -22,7 +22,9 @@
 				<td><?= $user->getUsername(); ?></td>
 				<td><?= $user->getEmail(); ?></td>
 				<td>
-					#
+					<?php foreach ($user->roles as $role): ?>
+                        <span class="badge badge-blue"><?= $role->getName(); ?></span>
+                    <?php endforeach; ?>
 				</td>
 				<td class="tableau-action">
 					<a class="button button-blue button-sm" href="/admin/users/edit/<?= $user->getId(); ?>">
