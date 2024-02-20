@@ -15,22 +15,22 @@
 
             <?php
                 $start_page = max(1, $config['current_page'] - 4);
-                $end_page = min($config['total_pages'], $start_page + 9);
+    $end_page               = min($config['total_pages'], $start_page + 9);
 
-                if ($start_page > 1) {
-                    echo '<li class="page-item disabled"><span>...</span></li>';
-                }
+    if ($start_page > 1) {
+        echo '<li class="page-item disabled"><span>...</span></li>';
+    }
 
-                for ($page = $start_page; $page <= $end_page; ++$page) { ?>
+    for ($page = $start_page; $page <= $end_page; ++$page) { ?>
                     <li class="page-item <?= ($config['current_page'] == $page) ? 'active' : ''; ?>">
                         <a href="?page=<?= $page; ?>" class="page-link"><?= $page; ?></a>
                     </li>
                 <?php }
 
-                if ($end_page < $config['total_pages']) {
-                    echo '<li class="page-item disabled"><span>...</span></li>';
-                }
-            ?>
+    if ($end_page < $config['total_pages']) {
+        echo '<li class="page-item disabled"><span>...</span></li>';
+    }
+    ?>
 
             <?php if ($config['current_page'] < $config['total_pages']) { ?>
                 <li class="page-item">

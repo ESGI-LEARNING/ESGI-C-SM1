@@ -41,7 +41,7 @@ class AdminCommentController extends AbstractController
         $comment = Comment::find($id);
 
         if ($comment) {
-            if ($this->verifyCsrfToken()) { 
+            if ($this->verifyCsrfToken()) {
                 $comment->setIsReported(1);
                 $comment->save();
 
@@ -66,7 +66,7 @@ class AdminCommentController extends AbstractController
         $comment = Comment::find($id);
 
         if ($comment) {
-            if ($this->verifyCsrfToken()) { 
+            if ($this->verifyCsrfToken()) {
                 $comment->setIsReported(0);
                 $comment->save();
 

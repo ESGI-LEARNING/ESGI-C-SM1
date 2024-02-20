@@ -8,20 +8,6 @@
             <label for="<?= $configInput['label'] ?? ''; ?>"><?= $configInput['label'] ?? ''; ?></label>
 
             <?php if (!isset($configInput['input'])) { ?>
-                <?php if ($configInput['type'] == 'file' && isset($configInput['images'])) { ?>
-                    <div class="flex gap-4">
-                        <?php foreach ($configInput['images'] as $image) { ?>
-                            <div class="flex flex-col">
-                                <img src="<?= $image->image(300, 100); ?>" alt="<?= $image->getImage(); ?>">
-                                <form action="/admin/articles/delete/images/<?= $image->getId(); ?>" method="POST"
-                                      onsubmit="return confirm('Êtes-vous vraiment sûr ?')">
-                                    <button type="submit" class="button button-red">Supprimer</button>
-                                </form>
-                            </div>
-                        <?php } ?>
-                    </div>
-                <?php } ?>
-
                 <input
                         name="<?= $name; ?>"
                         type="<?= $configInput['type']               ?? 'text'; ?>"
@@ -36,17 +22,17 @@
             <?php if (isset($configInput['input']) && $configInput['input'] === \App\Enum\FormTypeEnum::INPUT_TEXTAREA) { ?>
                 <textarea
                         name="<?= $name; ?>"
-                        id="<?= $configInput['id'] ?? ''; ?>"
-                        class="<?= $configInput['class'] ?? ''; ?>"
+                        id="<?= $configInput['id']                   ?? ''; ?>"
+                        class="<?= $configInput['class']             ?? ''; ?>"
                         placeholder="<?= $configInput['placeholder'] ?? ''; ?>"
-                        rows="<?= $configInput['rows'] ?? ''; ?>"
-                ><?= $configInput['value'] ?? ''; ?></textarea>
+                        rows="<?= $configInput['rows']               ?? ''; ?>"
+                ><?= $configInput['value']                           ?? ''; ?></textarea>
             <?php } ?>
 
             <?php if (isset($configInput['input']) && $configInput['input'] === \App\Enum\FormTypeEnum::INPUT_SELECT) { ?>
                 <select
                         name="<?= $name; ?>"
-                        id="<?= $configInput['name'] ?? ''; ?>"
+                        id="<?= $configInput['name']     ?? ''; ?>"
                         class="<?= $configInput['class'] ?? ''; ?>"
                     <?= isset($configInput['multiple']) && $configInput['multiple'] === true ? 'multiple' : ''; ?>
                 >

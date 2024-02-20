@@ -8,9 +8,8 @@ class Relation
 {
     public function __construct(
         protected Model|array $result,
-        protected string      $relationName
-    )
-    {
+        protected string $relationName
+    ) {
     }
 
     public function getDatas(): Model|array
@@ -38,15 +37,15 @@ class Relation
 
             if ($relation instanceof HasMany) {
                 $this->result->relations[$this->relationName] = $model::query()
-                    ->where($relation->getForeignKey(), '=',  $this->result->$primaryKey())
+                    ->where($relation->getForeignKey(), '=', $this->result->$primaryKey())
                     ->get();
             }
 
             if ($relation instanceof BelongToMany) {
                 $this->result->relations[$this->relationName] = $model::query()
-                    ->select([$this->getTableName($model) . '.*'])
-                    ->join($relation->getPivot(), $relation->getPivot() . '.' . $relation->getOtherKey(), '=', $this->getTableName($model) . '.id')
-                    ->where($relation->getPivot() . '.' . $relation->getForeignKey(), '=',  $this->result->$primaryKey())
+                    ->select([$this->getTableName($model).'.*'])
+                    ->join($relation->getPivot(), $relation->getPivot().'.'.$relation->getOtherKey(), '=', $this->getTableName($model).'.id')
+                    ->where($relation->getPivot().'.'.$relation->getForeignKey(), '=', $this->result->$primaryKey())
                     ->get();
             }
 
@@ -67,9 +66,9 @@ class Relation
 
             if ($relation instanceof BelongToMany) {
                 $this->result[$key]->relations[$this->relationName] = $model::query()
-                    ->select([$this->getTableName($model) . '.*'])
-                    ->join($relation->getPivot(), $relation->getPivot() . '.' . $relation->getOtherKey(), '=', $this->getTableName($model) . '.id')
-                    ->where($relation->getPivot() . '.' . $relation->getForeignKey(), '=', $this->result[$key]->$primaryKey())
+                    ->select([$this->getTableName($model).'.*'])
+                    ->join($relation->getPivot(), $relation->getPivot().'.'.$relation->getOtherKey(), '=', $this->getTableName($model).'.id')
+                    ->where($relation->getPivot().'.'.$relation->getForeignKey(), '=', $this->result[$key]->$primaryKey())
                     ->get();
             }
         }
@@ -81,13 +80,13 @@ class Relation
     {
         $tableName = (new $model())->getTableName();
 
-        return str_replace(config('database.prefix') . '_', '', $tableName);
+        return str_replace(config('database.prefix').'_', '', $tableName);
     }
 
     private function getPrimaryKey(string $key = null): string
     {
         if ($key) {
-            return 'get' . ucfirst($key);
+            return 'get'.ucfirst($key);
         }
 
         return 'getId';
@@ -97,7 +96,8 @@ class Relation
     {
         if ($key) {
             $key = explode('_', $key);
-            return 'get' . ucwords(strtolower($key[0])) . ucwords(strtolower($key[1]));
+
+            return 'get'.ucwords(strtolower($key[0])).ucwords(strtolower($key[1]));
         }
 
         return 'getId';

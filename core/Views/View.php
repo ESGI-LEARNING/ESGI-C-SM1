@@ -4,7 +4,6 @@ namespace Core\Views;
 
 use App\Models\Page;
 use Core\Session\CsrfTokenService;
-use Core\Session\FlashService;
 
 class View extends HelperView
 {
@@ -51,10 +50,10 @@ class View extends HelperView
 
     public function component(string $component, $config, array|object|string $data = null): void
     {
-        if (!file_exists('../views/components/' . $component . '.php')) {
-            exit('Le composant views/components/' . $component . ".php n'existe pas");
+        if (!file_exists('../views/components/'.$component.'.php')) {
+            exit('Le composant views/components/'.$component.".php n'existe pas");
         }
-        include '../views/components/' . $component . '.php';
+        include '../views/components/'.$component.'.php';
     }
 
     public function __destruct()
