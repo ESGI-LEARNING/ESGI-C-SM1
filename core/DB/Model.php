@@ -43,26 +43,9 @@ abstract class Model
 
     public static function count(array $conditions = []): int
     {
-        return (new static())->queryBuilder->count();
-        $object = self::instance();
-
-        $sql = 'SELECT COUNT(*) FROM '.$object->table;
-
-        if (!empty($conditions)) {
-            $sql .= ' WHERE ';
-
-            foreach ($conditions as $column => $value) {
-                $sql .= ' '.$column.'=:'.$column.' AND';
-            }
-
-            $sql = rtrim($sql, ' AND');
-        }
-
-        $queryPrepared = $object->pdo->prepare($sql);
-        $queryPrepared->execute($conditions);
-
-        return $queryPrepared->fetchColumn();
+        return (new static())->queryBuilder->count($conditions);
     }
+    
 
     public static function find(int $id): static|null
     {
