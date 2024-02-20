@@ -1,6 +1,5 @@
 <section>
 	<h2>Contact</h2>
-	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-
+	<p><?= $page->content ?></p>
     <?= $this->component('form', $form); ?>
 </section>

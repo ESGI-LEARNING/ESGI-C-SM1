@@ -61,7 +61,7 @@ class MainController extends AbstractController
 
         return $this->render('main/contact', 'front', [
             'form' => $form->getConfig(),
-            'page' => 'contact',
+            'page' => $page,
             'meta' => $page,
         ]);
     }
