@@ -68,7 +68,7 @@ class AdminArticleController extends AbstractController
             $article->setUpdatedAt(date('Y-m-d H:i:s'));
             $article->save();
 
-            if ($form->file('images')) {
+            if (!empty($form->file('images')['name'][0])) {
                 UploadFile::uploadImageArticles($form->file('images'), $article->getId());
             }
 
@@ -78,6 +78,7 @@ class AdminArticleController extends AbstractController
             $this->addFlash('success', 'L\'article a bien été modifié');
             $this->redirect('/admin/articles');
         }
+
 
         return $this->render('admin/articles/edit', 'back', [
             'form'    => $form->getConfig(),

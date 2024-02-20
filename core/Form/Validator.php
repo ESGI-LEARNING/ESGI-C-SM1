@@ -69,11 +69,12 @@ class Validator
         // require test, int, string
         if (empty($this->data[$filed])) {
             $this->errors[$filed][] = 'Le champ est requis';
-        }
-
-        // require file
-        if (!empty($this->data[$filed]) && !empty($this->data[$filed]['name'][0])) {
-            $this->errors[$filed.'[]'][] = 'Le champ est requis';
+        } else {
+            if (isset($this->data[$filed]['name'])) {
+                if (empty($this->data[$filed]['name'][0])) {
+                    $this->errors[$filed.'[]'][] = 'Le champ est requis';
+                }
+            }
         }
     }
 
