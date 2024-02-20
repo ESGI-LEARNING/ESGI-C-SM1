@@ -29,7 +29,7 @@ class Request
         return $_FILES[$key];
     }
 
-    public static function getBody(): array
+    public function getBody(): array
     {
         $body = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
