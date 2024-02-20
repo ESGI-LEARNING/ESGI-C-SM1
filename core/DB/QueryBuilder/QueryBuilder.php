@@ -185,7 +185,6 @@ class QueryBuilder extends DB
         return $query->fetchColumn();
     }
     
-
     public function findAll(): array
     {
         if (method_exists($this->entity, 'getIsDeleted')) {

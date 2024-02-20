@@ -46,7 +46,6 @@ abstract class Model
         return (new static())->queryBuilder->count($conditions);
     }
     
-
     public static function find(int $id): static|null
     {
         return (new static())->queryBuilder->getOneBy(['id' => $id]);
