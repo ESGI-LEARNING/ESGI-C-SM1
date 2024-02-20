@@ -55,27 +55,24 @@ class CommentService
             $comment->save();
 
             $adminUsers = User::query()
-            ->join('user_role', 'user.id', '=', 'user_role.user_id')
-            ->join('role', 'user_role.role_id', '=', 'role.id')
-            ->where('role.name', '=', Role::ROLE_ADMIN)
-            ->get();
+                ->join('user_role', 'user.id', '=', 'user_role.user_id')
+                ->join('role', 'user_role.role_id', '=', 'role.id')
+                ->where('role.name', '=', Role::ROLE_ADMIN)
+                ->get();
 
             $userReported = User::find($comment->user_id);
             $userReporter = User::find(Auth::id());
-            
+
             $data = [
                 'comment_id' => $comment->getId(),
                 'content' => $comment->getContent(),
             ];
-            
+
             $mail = new CommentMail();
-            
+
             $mail->sendReportCommentToUserReported($userReported->getEmail(), $data);
             $mail->sendReportCommentToUserReporter($userReporter->getEmail(), $data);
-
-            foreach ($adminUsers as $admin) {
-                $mail->sendReportComment($admin->getEmail(), $data);
-            }
+            $mail->sendReportCommentToAdmins($adminUsers, $data);
         }
     }
 }
