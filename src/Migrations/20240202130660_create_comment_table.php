@@ -28,8 +28,8 @@ class CreateCommentTable extends BaseMigration
 
     CONSTRAINT FK_users_comments FOREIGN KEY (user_id) REFERENCES `{$this->getPrefix()}user` (id) ON DELETE CASCADE,
     CONSTRAINT FK_comments FOREIGN KEY (comment_id) REFERENCES `{$this->getPrefix()}comment` (id) ON DELETE CASCADE,
-    CONSTRAINT FK_picture FOREIGN KEY (picture_id) REFERENCES `{$this->getPrefix()}picture` (id) ON DELETE CASCADE,
-);";
+    CONSTRAINT FK_picture FOREIGN KEY (picture_id) REFERENCES `{$this->getPrefix()}picture` (id) ON DELETE CASCADE
+    )";
 
         $this->execute($sql);
     }
