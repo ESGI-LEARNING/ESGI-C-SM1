@@ -12,11 +12,12 @@ class ContactMail
     public function send(array $data): void
     {
         $mail = new Mailer();
-        $emails = $this->getAdminsUsers();
+        $users = $this->getAdminsUsers();
 
-        foreach ($emails as $email) {
+
+        foreach ($users as $user) {
             $mail->send(
-                $email,
+                $user->email,
                 'Email de contact',
                 'contact/index',
                 'contact/index',
@@ -28,7 +29,7 @@ class ContactMail
     private function getAdminsUsers(): array
     {
         return User::query()
-            ->select(['user.emails'])
+            ->select(['user.email'])
             ->join('user_role', 'user.id', '=', 'user_role.user_id')
             ->join('role', 'role.id', '=', 'user_role.role_id')
             ->where('role.name', '=', Role::ROLE_ADMIN)
