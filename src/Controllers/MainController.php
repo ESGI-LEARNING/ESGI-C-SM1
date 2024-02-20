@@ -30,8 +30,10 @@ class MainController extends AbstractController
         $page = $page::query()
             ->where('slug', '=', $_SERVER['REQUEST_URI'])
             ->get()[0];
+
         return $this->render('main/aboutUs', 'front', [
-            'page' => $page,
+            'meta' => $page,
+            'page' => $page
         ]);
     }
 
