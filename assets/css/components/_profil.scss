@@ -22,7 +22,12 @@
   .profile-info {
     margin-left: 1rem;
 
-    .profile-sub-info{
+    svg {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+
+    .profile-sub-info {
       display: flex;
     }
 

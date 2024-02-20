@@ -21,7 +21,7 @@
 <?php if ($this->hasRole(\Core\Enum\Role::ROLE_AUTHOR)) { ?>
     <section class="profile">
         <form id="form__avatar" class="profil-header__avatar" enctype="multipart/form-data" method="post">
-            <?php if ($user->getAvatar() !== null) { ?>
+            <?php if ($user->avatar !== null) { ?>
                 <div id="wrapper__avatar_img">
                     <img class="profile-image" src="<?= $user->getAvatar(); ?>" alt="Profile Image">
                 </div>
