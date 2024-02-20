@@ -17,8 +17,10 @@ class ArticleController extends AbstractController
     {
         $article = Picture::query()
             ->with(['images', 'comments', 'user'])
-            ->getOneBy(['slug' => $slug]);
-
+            ->where('slug', '=', $slug)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+            
         
         return $this->render('main/article', 'front', [
             'article' => $article
