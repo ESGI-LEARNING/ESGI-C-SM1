@@ -2,6 +2,7 @@
 
 namespace Core\Views;
 
+use App\Models\Page;
 use App\Models\User;
 use Core\Auth\Auth;
 use Core\Router\Request;
@@ -38,5 +39,14 @@ class HelperView
     public function rootIs(string $path): bool
     {
         return (new Request())->getUrl() === $path;
+    }
+
+    public function meta(): ?Page
+    {
+        $page = new Page();
+        $page = $page::query()->where(
+            'slug', '=', (new Request())->getUrl())
+            ->get();
+        return $page[0] ?? null;
     }
 }

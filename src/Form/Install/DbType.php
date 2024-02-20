@@ -45,6 +45,12 @@ class DbType extends FormType
                     'class'             => 'input-form',
                     'placeholder'       => 'prefix',
                 ],
+                'sitename' => [
+                    'label'             => 'Nom du site',
+                    'type'              => 'text',
+                    'class'             => 'input-form',
+                    'placeholder'       => 'sitename',
+                ],
             ],
         ];
     }

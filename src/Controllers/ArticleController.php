@@ -10,13 +10,6 @@ class ArticleController extends AbstractController
 {
     public function article(): View
     {
-        $page = new Page();
-        $page = $page::query()
-            ->where('slug', '=', $_SERVER['REQUEST_URI'])
-            ->get()[0];
-
-        return $this->render('main/article', 'front', [
-            'meta' => $page,
-        ]);
+        return $this->render('main/article', 'front');
     }
 }

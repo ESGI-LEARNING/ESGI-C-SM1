@@ -15,7 +15,7 @@
         <?php foreach ($logs as $log) { ?>
             <tr>
                 <td><?= $log->getId(); ?></td>
-                <td><?= $log->userId; ?></td>
+                <td><?= $log->user->getUsername() ?></td>
                 <td><?= $log->getSubject(); ?></td>
                 <td><?= $log->getCreatedAt(); ?></td>
             </tr>

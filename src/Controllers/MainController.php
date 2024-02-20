@@ -13,28 +13,13 @@ class MainController extends AbstractController
 {
     public function home(): View
     {
-        $page = new Page();
-        $page = $page::query()
-            ->where('slug', '=', $_SERVER['REQUEST_URI'])
-            ->get()[0];
-
-        return $this->render('main/home', 'front', [
-            'meta' => $page,
-            'page' => $page
-        ]);
+        return $this->render('main/home', 'front');
     }
 
     public function aboutUs(): View
     {
-        $page = new Page();
-        $page = $page::query()
-            ->where('slug', '=', $_SERVER['REQUEST_URI'])
-            ->get()[0];
 
-        return $this->render('main/aboutUs', 'front', [
-            'meta' => $page,
-            'page' => $page
-        ]);
+        return $this->render('main/aboutUs', 'front');
     }
 
     public function contact(): View
@@ -54,15 +39,9 @@ class MainController extends AbstractController
             $this->addFlash('success', 'Votre message à bien été envoyé');
             $this->redirect('/contact');
         }
-        $page = new Page();
-        $page = $page::query()
-            ->where('slug', '=', $_SERVER['REQUEST_URI'])
-            ->get()[0];
 
         return $this->render('main/contact', 'front', [
             'form' => $form->getConfig(),
-            'page' => $page,
-            'meta' => $page,
         ]);
     }
 
@@ -71,8 +50,4 @@ class MainController extends AbstractController
         return $this->render('main/gallery', 'front');
     }
 
-    public function artist(): View
-    {
-        return $this->render('main/artist', 'front');
-    }
 }
