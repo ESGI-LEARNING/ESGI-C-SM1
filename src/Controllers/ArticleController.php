@@ -38,22 +38,21 @@ class ArticleController extends AbstractController
                 'content'    => $content,
                 'user_id'    => Auth::id(),
                 'created_at' => date('Y-m-d H:i:s'),
+                'picture_id' => $pictureId,
             ];
 
             $commentModel = new Comment();
             $queryBuilder = $commentModel->query();
             $savedComment = $queryBuilder->save($comment, $commentModel);
 
-            $picture = Picture::find($pictureId);
-            $picture->comments()->attach($savedComment->getId());
-            $picture->save();
+
 
             $this->addFlash('success', 'Commentaire ajouté avec succès!');
         } else {
             $this->addFlash('error', 'Vous devez être connecté pour ajouter un commentaire.');
         }
 
-        $this->redirect("/article/{$picture->getSlug()}");
+        $this->previous();
     }
 
     public function reportComment(int $commentId)

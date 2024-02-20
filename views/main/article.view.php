@@ -41,7 +41,6 @@
                         <button class="button button-red button-sm" type="submit"><?= icon('trash'); ?></button>
                     </form>
                     <form class="__edit-form" method="POST" action="/articles/edit-comment/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de modifier ce commentaire ?')">
-                        <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
                         <button class="button button-blue button-sm" type="submit"><?= icon('square-pen'); ?></button>
                     </form>
                 </div>
