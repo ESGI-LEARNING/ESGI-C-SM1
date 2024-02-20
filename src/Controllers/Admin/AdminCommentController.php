@@ -5,7 +5,6 @@ namespace App\Controllers\Admin;
 use App\Mails\CommentMail;
 use App\Models\Comment;
 use Core\Controller\AbstractController;
-use Core\Pagination\Paginator;
 use Core\Views\View;
 use App\Models\User;
 
