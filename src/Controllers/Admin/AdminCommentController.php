@@ -8,6 +8,7 @@ use Core\Controller\AbstractController;
 use Core\Pagination\Paginator;
 use Core\Views\View;
 use App\Models\User;
+use Core\Enum\Role;
 
 
 class AdminCommentController extends AbstractController
@@ -48,21 +49,20 @@ class AdminCommentController extends AbstractController
                 $comment->setIsReported(1);
                 $comment->save();
 
-            // Fetch all admin users
-            $adminUsers = User::query()
+                $adminUsers = User::query()
                 ->join('user_role', 'user.id', '=', 'user_role.user_id')
                 ->join('role', 'user_role.role_id', '=', 'role.id')
-                ->where('role.name', '=', 'ROLE_ADMIN')
+                ->where('role.name', '=', Role::ROLE_ADMIN)
                 ->get();
-
-            // Send email to each admin user
-            foreach ($adminUsers as $admin) {
-                $mail = new CommentMail();
-                $mail->sendReportComment($admin->getEmail(), [
+                
+                $data = [
                     'comment_id' => $comment->getId(),
-                    'content'    => $comment->getContent(),
-                ]);
-            }
+                    'content' => $comment->getContent(),
+                ];
+
+                $mail = new CommentMail();
+
+                $mail->sendReportCommentToAdmins($adminUsers, $data);
 
             $this->addFlash('success', 'Le commentaire a été signalé avec succès.');
         }
