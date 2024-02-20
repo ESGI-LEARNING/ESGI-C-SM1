@@ -4,6 +4,9 @@ namespace App\Service;
 
 use App\Models\Comment;
 use App\Models\Picture;
+use App\Models\User;
+use Core\Auth\Auth;
+use App\Mails\CommentMail;
 
 class CommentService
 {
@@ -49,6 +52,29 @@ class CommentService
         if ($comment) {
             $comment->setIsReported(1);
             $comment->save();
+
+            $adminUsers = User::query()
+            ->join('user_role', 'user.id', '=', 'user_role.user_id')
+            ->join('role', 'user_role.role_id', '=', 'role.id')
+            ->where('role.name', '=', 'ROLE_ADMIN')
+            ->get();
+
+            $userReported = User::find($comment->user_id);
+            $userReporter = User::find(Auth::id());
+            
+            $data = [
+                'comment_id' => $comment->getId(),
+                'content' => $comment->getContent(),
+            ];
+            
+            $mail = new CommentMail();
+            
+            $mail->sendReportCommentToUserReported($userReported->getEmail(), $data);
+            $mail->sendReportCommentToUserReporter($userReporter->getEmail(), $data);
+
+            foreach ($adminUsers as $admin) {
+                $mail->sendReportComment($admin->getEmail(), $data);
+            }
         }
     }
 }
