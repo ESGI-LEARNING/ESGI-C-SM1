@@ -13,3 +13,7 @@
 	</fieldset>
 </form>
 <?= $this->component('gallery', $config = $images); ?>
+
+<div class="pagination">
+        <?= $this->component('pagination', $images->links()); ?>
+</div>
