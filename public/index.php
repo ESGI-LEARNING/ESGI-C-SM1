@@ -43,6 +43,7 @@ $router->middleware(['install'])->group(function (Router $router) {
 $router->middleware(['installed'])->group(function (Router $router) {
     $router->get('/', [MainController::class, 'home']);
     $router->get('/contact', [MainController::class, 'contact']);
+    $router->post('/contact', [MainController::class, 'contact']);
     $router->get('/about', [MainController::class, 'aboutUs']);
     $router->get('/gallery', [MainController::class, 'gallery']);
     $router->get('/template', [MainController::class, 'template']);

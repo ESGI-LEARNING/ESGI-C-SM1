@@ -34,6 +34,7 @@ class FormContactType extends FormType
                 'content' => [
                     'type'        => 'content',
                     'input'       =>  FormTypeEnum::INPUT_TEXTAREA,
+                    'rows'        => 10,
                     'class'       => 'input-form',
                     'placeholder' => 'Votre message',
                     'value'       => '',
