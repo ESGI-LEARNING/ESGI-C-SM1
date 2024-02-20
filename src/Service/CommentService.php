@@ -61,7 +61,7 @@ class CommentService
                 ->get();
 
             $userReported = User::find($comment->user_id);
-            $userReporter = User::find(Auth::id());
+            $userReporter = Auth::user()->getEmail();
 
             $data = [
                 'comment_id' => $comment->getId(),
@@ -71,7 +71,7 @@ class CommentService
             $mail = new CommentMail();
 
             $mail->sendReportCommentToUserReported($userReported->getEmail(), $data);
-            $mail->sendReportCommentToUserReporter($userReporter->getEmail(), $data);
+            $mail->sendReportCommentToUserReporter($userReporter, $data);
             $mail->sendReportCommentToAdmins($adminUsers, $data);
         }
     }
