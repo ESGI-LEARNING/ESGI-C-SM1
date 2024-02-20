@@ -107,7 +107,7 @@ class ProfileController extends AbstractController
         }
     }
 
-    public function delete(): void
+    public function softDelete(): void
     {
         $user = Auth::user();
 
@@ -129,8 +129,6 @@ class ProfileController extends AbstractController
             $this->addFlash('success', 'L\'utilisateur a bien été supprimé définitivement');
             $this->redirect('/logout');
         }
-
-        $this->redirect('/logout');
     }
 
     public function updateAvatar(): string

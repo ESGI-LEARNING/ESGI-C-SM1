@@ -215,9 +215,9 @@ class QueryBuilder extends DB
 
     public function hardDelete(int $id): false|\PDOStatement
     {
-        $sql = 'UPDATE `'.$this->table.'` SET is_deleted = 1 WHERE id = :id';
+        $sql = 'DELETE FROM `'.$this->table.'` WHERE id = :id';
 
-        $this->addLogs('soft delete');
+        $this->addLogs('hard delete');
 
         return $this->execute($sql, [
             'id' => $id,
