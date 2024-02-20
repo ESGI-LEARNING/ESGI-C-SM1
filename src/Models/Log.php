@@ -34,7 +34,7 @@ class Log extends Model
         $this->id = $id;
     }
 
-    public function getUserId(): int
+    public function getUserId(): ?int
     {
         return $this->user_id;
     }

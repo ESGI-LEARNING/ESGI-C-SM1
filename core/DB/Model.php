@@ -51,7 +51,7 @@ abstract class Model
         return (new static())->queryBuilder->getOneBy(['id' => $id]);
     }
 
-    public static function findBy(array $data): static|bool
+    public static function findBy(array $data): static|null
     {
         return (new static())->queryBuilder->getOneBy($data);
     }

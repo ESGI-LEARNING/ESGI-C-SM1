@@ -225,7 +225,7 @@ class QueryBuilder extends DB
             }
         }
 
-        return $result;
+        return $result === false ? null : $result;
     }
 
     public function paginate(int $perPage = 10, int $page = 1): Pagination
