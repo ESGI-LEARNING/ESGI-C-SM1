@@ -1,0 +1,92 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    border: 1px solid var(--dark-gray);
+    margin: 1rem auto;
+    padding: 0;
+
+    thead {
+        background-color: var(--dark-gray);
+
+        tr {
+            th {
+                padding: .5rem 1rem;
+                text-align: center;
+                border-top: 1px solid var(--dark-gray);
+                font-size: .85em;
+                letter-spacing: .1em;
+                text-transform: uppercase;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            td {
+                padding: 0 1rem;
+                text-align: center;
+                border-top: 1px solid var(--dark-gray);
+                border-bottom: 1px solid var(--dark-gray);
+                svg{
+                    cursor: pointer;
+                    color: var(--white);
+                }
+                form{
+                    margin: 0
+                }
+            }
+            &:nth-child(even) {
+                background-color: var(--dark-gray);
+            }
+            .tableau-action {
+                display: flex;
+                border: none;
+                justify-content: flex-end;
+                align-items: center;
+                width: 100%;
+                gap: 1rem;
+                a, form {
+                    margin: 0 .5rem;
+                }
+            }
+        }
+    }
+    @media screen and (max-width: 600px) {
+        border: 0;
+
+        thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+
+        tr {
+            border-bottom: 3px solid var(--dark-gray);
+            display: block;
+            margin-bottom: .625em;
+        }
+
+        td {
+            border-bottom: 1px solid var(--dark-gray);
+            display: block;
+            font-size: .8em;
+            text-align: right;
+
+            &:before {
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            &:last-child {
+                border-bottom: 0;
+            }
+        }
+    }
+}

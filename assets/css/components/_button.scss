@@ -1,0 +1,152 @@
+.button {
+  font-weight: bold;
+  display: inline-block;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  margin: 1rem 0;
+  font-size: 1.5rem;
+  font-family: var(--font-family);
+  background: var(--white);
+  color: var(--black);
+  border: solid .1rem var(--dark-gray);
+  border-radius: var(--border-radius);
+
+  &-link {
+    background: none;
+    color: var(--black);
+    border: none;
+    box-shadow: none;
+    padding: 0 2rem;
+    font-size: 1.6rem;
+    text-decoration: underline;
+    &:hover {
+      background: none;
+      color: var(--black);
+      border: none;
+      box-shadow: none;
+    }
+  }
+
+  &-black {
+    background-color: var(--black);
+    color: var(--white);
+    border: none;
+
+    &:hover {
+      background-color: var(--white);
+      color: var(--black);
+      border: solid .1rem var(--black);
+    }
+  }
+
+  &-white {
+    background-color: var(--white);
+    color: var(--black);
+
+    &:hover {
+      background-color: var(--black);
+      color: var(--white);
+      border: solid .1rem var(--black);
+    }
+  }
+
+  &-green {
+    background-color: var(--success);
+    color: var(--white);
+    border: none;
+
+    &:hover {
+      background-color: var(--success-dark);
+    }
+  }
+
+  &-blue {
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+
+    &:hover {
+      background-color: var(--primary-dark);
+    }
+  }
+
+  &-red {
+    background-color: var(--error);
+    color: var(--white);
+    border: none;
+
+    &:hover {
+      background-color: var(--error-dark);
+    }
+  }
+
+  &-sm {
+    padding: .5rem 1rem;
+  }
+
+  &-md {
+    padding: 1rem 2rem;
+  }
+
+  &-lg {
+    padding: 1.5rem 3rem;
+  }
+}
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 4rem;
+  height: 2.4rem;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--deep-gray);
+
+  transition: .4s;
+  border-radius: 2rem;
+
+  &.round {
+    border-radius: 2rem;
+    &:before {
+      border-radius: 50%;
+    }
+  }
+
+  &:before{
+    position: absolute;
+    content: "";
+    height: 1.6rem;
+    width: 1.6rem;
+    left: .4rem;
+    bottom: .4rem;
+    background-color: white;
+    transition: .4s;
+    border-radius: 2rem;
+  }
+}
+input:checked + .slider {
+  background-color: var(--primary);
+  border-radius: 2rem;
+}
+input:checked + .slider:before {
+  transform: translateX(1.6rem);
+  border-radius: 2rem;
+}
+
+
+
+

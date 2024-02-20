@@ -1,0 +1,50 @@
+main {
+  margin: 0 auto;
+  min-height: 90vh;
+  padding: 2rem 10rem;
+  border-top: var(--dark-gray) solid .2rem;
+  border-bottom: var(--dark-gray) solid .2rem;
+  background: var(--white);
+  position: relative;
+  @media screen and (max-width: 600px) {
+    padding: 1rem;
+  }
+
+  h1, h2 {
+    font-weight: bold;
+    font-family: 'Merriweather', sans-serif;
+    color: var(--black);
+  }
+
+  h1 {
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  h2 {
+    padding-top: 1rem;
+    font-size: 2rem;
+  }
+
+  section {
+    width: 100%;
+    margin: 1rem auto;
+    padding: 1rem 2rem;
+
+    h2{
+      padding-bottom: 2rem;
+    }
+
+    p{
+      margin: 1rem 0;
+    }
+  }
+}
+.admin-container {
+  display: flex;
+  width: 100%;
+  @media screen and (max-width: 600px) {
+    display: block;
+  }
+}
+

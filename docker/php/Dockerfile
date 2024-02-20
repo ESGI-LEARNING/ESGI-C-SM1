@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
+    libmagickwand-dev \
     locales \
     zip \
     jpegoptim optipng pngquant gifsicle \
@@ -26,7 +27,14 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install extensions
+RUN pecl install imagick \
+ && docker-php-ext-enable imagick
+
+# Install extensions
 RUN docker-php-ext-install pdo pdo_mysql
+
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install yarn
 RUN npm install -g -y yarn

@@ -1,0 +1,16 @@
+parameters:
+  level: 6
+  parallel:
+    maximumNumberOfProcesses: 1
+  paths:
+    - src
+  excludePaths:
+    - ./docker
+    - ./node_modules
+    - ./public
+    - ./storage
+    - ./storage-db
+    - ./vendor
+    - ./src/Migrations
+  checkMissingIterableValueType: false
+  checkGenericClassInNonGenericObjectType: false

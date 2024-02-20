@@ -3,3 +3,11 @@
 
 .env
 storage-db
+node_modules
+public/build/
+
+/vendor/
+.php-cs-fixer.cache
+
+/public/media/
+/public/cache/

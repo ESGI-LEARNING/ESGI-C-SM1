@@ -1,0 +1,142 @@
+Table esgi_user {
+  id         int [pk, increment]
+  username   varchar(40)  [not null]
+  email      varchar(320) [not null]
+  password   varchar(255) [not null]
+  avatar     varchar(255)
+  verify     tinyint(1)   [default: 0]
+  is_deleted tinyint(1)   [default: 0]
+  created_at datetime     [default: `CURRENT_TIMESTAMP`]
+  updated_at datetime     [default: `CURRENT_TIMESTAMP`]
+}
+
+Table esgi_information_photograph {
+  id          int [pk, increment]
+  user_id     int [not null]
+  firstname   varchar(40) [not null]
+  lastname    varchar(40) [not null]
+  description text        [not null]
+  city        varchar(58)
+  country     varchar(58)
+  is_deleted  tinyint(1)  [default: 0]
+  created_at  datetime    [default: `CURRENT_TIMESTAMP`]
+  updated_at  datetime    [default: `CURRENT_TIMESTAMP`]
+}
+
+Ref: esgi_information_photograph.user_id > esgi_user.id
+
+Table esgi_role {
+  id         int [pk, increment]
+  name       varchar(40) [not null]
+  created_at datetime    [default: `CURRENT_TIMESTAMP`]
+  updated_at datetime    [default: `CURRENT_TIMESTAMP`]
+}
+
+Table esgi_user_role {
+  id      int [pk, increment]
+  user_id int [not null]
+  role_id int [not null]
+}
+
+Ref: esgi_user_role.user_id <> esgi_user.id
+Ref: esgi_user_role.role_id <> esgi_role.id
+
+Table esgi_reset_password {
+  id         int [pk, increment]
+  user_id    int [not null]
+  token      varchar(255) [not null]
+  expired_at datetime     [default: `CURRENT_TIMESTAMP`]
+  created_at datetime     [default: `CURRENT_TIMESTAMP`]
+}
+
+Ref: esgi_reset_password.user_id > esgi_user.id
+
+Table esgi_comment {
+  id          int [pk, increment]
+  content     text [not null]
+  is_reported tinyint(1) [default: 0]
+  user_id     int [not null]
+  comment_id  int [not null]
+  picture_id int [not null]
+  is_deleted  tinyint(1) [default: 0]
+  created_at  datetime   [default: `CURRENT_TIMESTAMP`]
+  updated_at  datetime   [default: `CURRENT_TIMESTAMP`]
+}
+
+Ref: esgi_comment.user_id > esgi_user.id
+Ref: esgi_comment.comment_id > esgi_comment.id
+Ref: esgi_comment.picture_id > esgi_picture.id
+
+Table esgi_category {
+  id         int [pk, increment]
+  name       varchar(40) [not null]
+  slug       varchar(40) [not null]
+  is_deleted tinyint(1)  [default: 0]
+  created_at datetime    [default: `CURRENT_TIMESTAMP`]
+  updated_at datetime    [default: `CURRENT_TIMESTAMP`]
+}
+
+Table esgi_material {
+  id          int [pk, increment]
+  name        varchar(40) [not null]
+  slug        varchar(50) [not null]
+  description text       [not null]
+  link        varchar(255)
+  image       varchar(255)
+  user_id     int [not null]
+  is_deleted  tinyint(1) [default: 0]
+  created_at  datetime   [default: `CURRENT_TIMESTAMP`]
+  updated_at  datetime   [default: `CURRENT_TIMESTAMP`]
+}
+
+Ref: esgi_material.user_id > esgi_user.id
+
+Table esgi_picture {
+  id          int [pk, increment]
+  name        varchar(40) [not null]
+  slug        varchar(50) [not null]
+  description text       [not null]
+  image       varchar(255)
+  user_id     int [not null]
+  is_deleted  tinyint(1) [default: 0]
+  created_at  datetime   [default: `CURRENT_TIMESTAMP`]
+  updated_at  datetime   [default: `CURRENT_TIMESTAMP`]
+}
+
+Ref: esgi_picture.user_id > esgi_user.id
+
+Table esgi_picture_category {
+  id          int [pk, increment]
+  picture_id  int [not null]
+  category_id int [not null]
+}
+
+Ref: esgi_picture_category.picture_id <> esgi_picture.id
+Ref: esgi_picture_category.category_id <> esgi_category.id
+
+Table esgi_picture_material {
+  id          int [pk, increment]
+  picture_id  int [not null]
+  material_id int [not null]
+}
+
+Ref: esgi_picture_material.picture_id <> esgi_picture.id
+Ref: esgi_picture_material.material_id <> esgi_material.id
+
+Table esgi_log {
+  id         int [pk, increment]
+  user_id    int [not null]
+  action     varchar(40) [not null]
+  subject    varchar(40) [not null]
+  created_at datetime    [default: `CURRENT_TIMESTAMP`]
+}
+
+Table esgi_images {
+  id         int [pk, increment]
+  image      varchar(255) [not null]
+  picture_id int [not null]
+  created_at datetime   [default: `CURRENT_TIMESTAMP`]
+  updated_at datetime   [default: `CURRENT_TIMESTAMP`]
+}
+
+Ref: esgi_images.picture_id > esgi_picture.id

@@ -1,0 +1,11 @@
+.table-view-container {
+  max-width: 120rem;
+  margin: 2rem auto;
+
+  .table-view-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
