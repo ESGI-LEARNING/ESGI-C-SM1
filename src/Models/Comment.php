@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Core\DB\Model;
+use Core\DB\Relation\HasMany;
 use Core\DB\Relation\HasOne;
 use Core\DB\Relation\BelongToMany;
 

@@ -11,6 +11,7 @@ use App\Controllers\ArticleController;
 use App\Controllers\Auth\ForgotPasswordController;
 use App\Controllers\Auth\SecurityController;
 use App\Controllers\Auth\VerifyEmailController;
+use App\Controllers\CommentController;
 use App\Controllers\ErrorController;
 use App\Controllers\GalleryController;
 use App\Controllers\ImageController;
@@ -20,7 +21,7 @@ use App\Controllers\ProfileController;
 use Core\Config\ConfigLoader;
 use Core\Router\Router;
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 $config = new ConfigLoader();
 $config->load();
@@ -49,7 +50,7 @@ $router->middleware(['installed'])->group(function (Router $router) {
     $router->get('/about', [MainController::class, 'aboutUs']);
     $router->get('/gallery', [GalleryController::class, 'gallery']);
     $router->get('/template', [MainController::class, 'template']);
-    $router->get('/article/{name}', [ArticleController::class, 'article']);
+    $router->get('/article/{slug}', [ArticleController::class, 'index']);
 
     $router->get('/login', [SecurityController::class, 'login']);
     $router->post('/login', [SecurityController::class, 'login']);
@@ -64,13 +65,12 @@ $router->middleware(['installed'])->group(function (Router $router) {
     $router->middleware(['auth'])->group(function (Router $router) {
         $router->get('/logout', [SecurityController::class, 'logout']);
         $router->get('/profile', [ProfileController::class, 'index']);
-        
-        $router->controller(ArticleController::class)->prefix('/articles')->group(function (Router $router) {
-            $router->get('/create', 'create');
-            $router->post('/create/{id}', 'addComment');
+
+        $router->controller(ArticleController::class)->prefix('/article/{slug}')->group(function (Router $router) {
+            $router->post('/create-comment', 'createComment');
+            $router->post('/edit-comment/{id}', 'editComment');
             $router->post('/report-comment/{id}', 'reportComment');
             $router->post('/delete-comment/{id}', 'deleteComment');
-            $router->post('/edit-comment/{id}', 'editComment');
         });
 
         $router->controller(ProfileController::class)->prefix('/profile')->group(function (Router $router) {
