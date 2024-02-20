@@ -7,6 +7,7 @@ use App\Models\Picture;
 use App\Models\User;
 use Core\Auth\Auth;
 use App\Mails\CommentMail;
+use Core\Enum\Role;
 
 class CommentService
 {
@@ -56,7 +57,7 @@ class CommentService
             $adminUsers = User::query()
             ->join('user_role', 'user.id', '=', 'user_role.user_id')
             ->join('role', 'user_role.role_id', '=', 'role.id')
-            ->where('role.name', '=', 'ROLE_ADMIN')
+            ->where('role.name', '=', Role::ROLE_ADMIN)
             ->get();
 
             $userReported = User::find($comment->user_id);
