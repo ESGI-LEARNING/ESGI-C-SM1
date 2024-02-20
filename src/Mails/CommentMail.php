@@ -3,6 +3,9 @@
 namespace App\Mails;
 
 use Core\Mailer\Mailer;
+use App\Models\Comment;
+use App\Models\User;
+use Core\Enum\Role;
 
 class CommentMail
 {
@@ -40,5 +43,12 @@ class CommentMail
             'comment/report-comment-to-user-reporter',
             $data
         );
+    }
+
+    public function sendReportCommentToAdmins(array $admins, array $data): void
+    {
+        foreach ($admins as $admin) {
+            $this->sendReportComment($admin->getEmail(), $data);
+        }
     }
 }
