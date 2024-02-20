@@ -60,7 +60,7 @@ class CommentService
                 ->where('role.name', '=', Role::ROLE_ADMIN)
                 ->get();
 
-            $userReported = User::find($comment->user_id);
+            $userReported = User::find($comment->user_id)->getEmail();
             $userReporter = Auth::user()->getEmail();
 
             $data = [
@@ -70,7 +70,7 @@ class CommentService
 
             $mail = new CommentMail();
 
-            $mail->sendReportCommentToUserReported($userReported->getEmail(), $data);
+            $mail->sendReportCommentToUserReported($userReported, $data);
             $mail->sendReportCommentToUserReporter($userReporter, $data);
             $mail->sendReportCommentToAdmins($adminUsers, $data);
         }
