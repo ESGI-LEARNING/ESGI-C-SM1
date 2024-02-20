@@ -56,21 +56,6 @@ CREATE TABLE esgi_reset_password
     CONSTRAINT FK_users_reset_passwords FOREIGN KEY (user_id) REFERENCES esgi_user (id) ON DELETE CASCADE
 );
 
-CREATE TABLE esgi_comment
-(
-    id          INT AUTO_INCREMENT PRIMARY KEY,
-    content     TEXT NOT NULL,
-    is_reported TINYINT(1) DEFAULT 0,
-    user_id     INT  NOT NULL,
-    comment_id  INT,
-    is_deleted  TINYINT(1) DEFAULT 0,
-    created_at  DATETIME   DEFAULT CURRENT_TIMESTAMP,
-    updated_at  DATETIME   DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT FK_users_comments FOREIGN KEY (user_id) REFERENCES esgi_user (id) ON DELETE CASCADE,
-    CONSTRAINT FK_comments FOREIGN KEY (comment_id) REFERENCES esgi_comment (id) ON DELETE CASCADE
-);
-
 CREATE TABLE esgi_category
 (
     id         INT AUTO_INCREMENT PRIMARY KEY,
@@ -112,6 +97,23 @@ CREATE TABLE esgi_picture
     CONSTRAINT FK_users_pictures FOREIGN KEY (user_id) REFERENCES esgi_user (id)
 );
 
+CREATE TABLE esgi_comment
+(
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    content     TEXT NOT NULL,
+    is_reported TINYINT(1) DEFAULT 0,
+    user_id     INT  NOT NULL,
+    comment_id  INT,
+    picture_id  INT NOT NULL,
+    is_deleted  TINYINT(1) DEFAULT 0,
+    created_at  DATETIME   DEFAULT CURRENT_TIMESTAMP,
+    updated_at  DATETIME   DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT FK_users_comments FOREIGN KEY (user_id) REFERENCES esgi_user (id) ON DELETE CASCADE,
+    CONSTRAINT FK_comments FOREIGN KEY (comment_id) REFERENCES esgi_comment (id) ON DELETE CASCADE,
+    CONSTRAINT FK_picture FOREIGN KEY (comment_id) REFERENCES esgi_picture (id) ON DELETE CASCADE,
+);
+
 CREATE TABLE esgi_picture_category
 (
     id          INT AUTO_INCREMENT PRIMARY KEY,
@@ -130,16 +132,6 @@ CREATE TABLE esgi_picture_material
 
     CONSTRAINT FK_pictures_pictures_materials FOREIGN KEY (picture_id) REFERENCES esgi_picture (id) ON DELETE CASCADE,
     CONSTRAINT FK_materials_pictures_materials FOREIGN KEY (material_id) REFERENCES esgi_material (id) ON DELETE CASCADE
-);
-
-CREATE TABLE esgi_picture_comment
-(
-    id         INT AUTO_INCREMENT PRIMARY KEY,
-    picture_id INT NOT NULL,
-    comment_id INT NOT NULL,
-
-    CONSTRAINT FK_pictures_pictures_comments FOREIGN KEY (picture_id) REFERENCES esgi_picture (id) ON DELETE CASCADE,
-    CONSTRAINT FK_comments_pictures_comments FOREIGN KEY (comment_id) REFERENCES esgi_comment (id) ON DELETE CASCADE
 );
 
 CREATE TABLE esgi_setting
@@ -163,7 +155,7 @@ CREATE TABLE esgi_log
 );
 
 
-CREATE TABLE esgi_images
+CREATE TABLE esgi_image
 (
     id         INT AUTO_INCREMENT PRIMARY KEY,
     image      VARCHAR(255) NOT NULL,
