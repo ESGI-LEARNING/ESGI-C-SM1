@@ -79,7 +79,6 @@ class AdminArticleController extends AbstractController
             $this->redirect('/admin/articles');
         }
 
-
         return $this->render('admin/articles/edit', 'back', [
             'form'    => $form->getConfig(),
             'article' => $article,

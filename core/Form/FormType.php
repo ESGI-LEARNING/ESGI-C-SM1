@@ -2,7 +2,6 @@
 
 namespace Core\Form;
 
-use App\Enum\FormTypeEnum;
 use Core\Router\Request;
 use Core\Session\CsrfTokenService;
 
@@ -17,7 +16,7 @@ class FormType
 
     public function __construct(object $data = null)
     {
-        $this->data = $data;
+        $this->data             = $data;
         $this->csrfTokenService = new CsrfTokenService();
         $this->setConfig();
         $this->request = new Request();
@@ -83,9 +82,10 @@ class FormType
 
             // images edit
             if (str_contains($this->request->getUrl(), '/edit')) {
-                if (isset($input['type']) && $input['type'] == 'file' ) {
+                if (isset($input['type']) && $input['type'] == 'file') {
                     if (empty($data[str_replace('[]', '', $key)]['name'][0]) && empty($this->data->images)) {
                         $this->config['inputs'][$key]['errors'] = [];
+
                         return true;
                     }
                 }
@@ -105,6 +105,6 @@ class FormType
             return null;
         }
 
-        return array_map(fn($v) => $v->getId(), $data);
+        return array_map(fn ($v) => $v->getId(), $data);
     }
 }

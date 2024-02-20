@@ -47,6 +47,7 @@ class HelperView
         $page = $page::query()->where(
             'slug', '=', (new Request())->getUrl())
             ->get();
+
         return $page[0] ?? null;
     }
 }

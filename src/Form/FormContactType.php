@@ -13,7 +13,7 @@ class FormContactType extends FormType
             'config' => [
                 'method' => 'POST',
                 'action' => '',
-                'submit' => "Envoyer",
+                'submit' => 'Envoyer',
                 'class'  => 'form',
             ],
             'inputs' => [
@@ -33,7 +33,7 @@ class FormContactType extends FormType
                 ],
                 'content' => [
                     'type'        => 'content',
-                    'input'       =>  FormTypeEnum::INPUT_TEXTAREA,
+                    'input'       => FormTypeEnum::INPUT_TEXTAREA,
                     'rows'        => 10,
                     'class'       => 'input-form',
                     'placeholder' => 'Votre message',
@@ -47,8 +47,8 @@ class FormContactType extends FormType
     public function rules(): array
     {
         return [
-            'username' => ['required', 'min:3'],
-            'email'    => ['email', 'required'],
+            'username'   => ['required', 'min:3'],
+            'email'      => ['email', 'required'],
             'content'    => ['require', 'min:10'],
         ];
     }

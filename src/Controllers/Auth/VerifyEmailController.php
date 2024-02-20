@@ -17,7 +17,7 @@ class VerifyEmailController extends AbstractController
         }
 
         if ($user) {
-            $url = config('app.url') . '/verify-email/' . $user->getEmail();
+            $url = config('app.url').'/verify-email/'.$user->getEmail();
 
             if (hash_equals(hash('sha512', $url), $token)) {
                 $user->setVerify(1);

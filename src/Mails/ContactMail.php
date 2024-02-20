@@ -3,7 +3,6 @@
 namespace App\Mails;
 
 use App\Models\User;
-use Core\Auth\Auth;
 use Core\Enum\Role;
 use Core\Mailer\Mailer;
 
@@ -11,9 +10,8 @@ class ContactMail
 {
     public function send(array $data): void
     {
-        $mail = new Mailer();
+        $mail  = new Mailer();
         $users = $this->getAdminsUsers();
-
 
         foreach ($users as $user) {
             $mail->send(

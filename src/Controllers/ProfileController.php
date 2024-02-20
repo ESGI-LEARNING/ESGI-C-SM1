@@ -6,7 +6,6 @@ use App\Form\Auth\ResetPasswordType;
 use App\Form\Profil\ProfileAuthorEditType;
 use App\Form\Profil\ProfileEditType;
 use App\Models\InformationPhotograph;
-use App\Models\Page;
 use App\Models\User;
 use App\Service\UploadFile;
 use Core\Auth\Auth;
@@ -20,8 +19,7 @@ class ProfileController extends AbstractController
     {
         $user              = Auth::user();
         $author            = InformationPhotograph::query()->getOneBy(['user_id' => Auth::id()]);
-        if($author === null)
-        {
+        if ($author === null) {
             $author = new InformationPhotograph();
         }
         $formProfile       = new ProfileEditType($user);
@@ -39,12 +37,10 @@ class ProfileController extends AbstractController
     {
         $user              = Auth::user();
         $author            = InformationPhotograph::query()->getOneBy(['user_id' => Auth::id()]);
-        if($author === false)
-        {
-            $author = new InformationPhotograph();
+        if ($author === false) {
+            $author            = new InformationPhotograph();
             $formAuthor        = new ProfileAuthorEditType();
-        }
-        else{
+        } else {
             $formAuthor        = new ProfileAuthorEditType($author);
         }
         $formResetPassword = new ResetPasswordType();
@@ -87,10 +83,9 @@ class ProfileController extends AbstractController
 
     public function editAuthor(): void
     {
-        $form   = new ProfileAuthorEditType();
+        $form              = new ProfileAuthorEditType();
         $author            = InformationPhotograph::query()->getOneBy(['user_id' => Auth::id()]);
-        if($author === false)
-        {
+        if ($author === false) {
             $author = new InformationPhotograph();
         }
         $form->handleRequest();
@@ -126,6 +121,7 @@ class ProfileController extends AbstractController
         $request = new Request();
         if ($request->file('avatar') !== null) {
             $path = UploadFile::uploadImageProfile($request->file('avatar'), Auth::id());
+
             return json_encode(['path' => $path]);
         }
 
