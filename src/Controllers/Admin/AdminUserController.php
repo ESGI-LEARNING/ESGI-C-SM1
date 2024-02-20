@@ -14,7 +14,7 @@ class AdminUserController extends AbstractController
     {
         $users = User::query()
                     ->with(['roles'])
-                    ->findAll();
+                    ->paginate(10, intval($this->request()->get('page')));
 
         return $this->render('admin/users/index', 'back', [
             'users' => $users,
