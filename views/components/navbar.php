@@ -16,7 +16,8 @@
         }
 ?>
 	</ul>
-	<div class="burger">
-		<span class="burger-icon">&#9776;</span>
-	</div>
+
 </nav>
+<div class="burger">
+	<span class="burger-icon">&#9776;</span>
+</div>

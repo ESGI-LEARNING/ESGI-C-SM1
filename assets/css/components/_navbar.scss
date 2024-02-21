@@ -1,5 +1,6 @@
 header {
   width: 100%;
+  position: relative;
   h1 {
     @media screen and (max-width: 75rem) {
       a {
@@ -71,19 +72,20 @@ header {
 
     }
 
-    .burger {
-      display: none;
 
-      @media screen and (max-width: 75rem) {
-        display: block;
-        position: absolute;
-        top: 50%;
-        font-size: 2rem;
-        right: 1rem;
-        cursor: pointer;
-        Z-index: 3;
-        transform: translateY(-50%);
-      }
+  }
+  .burger {
+    display: none;
+
+    @media screen and (max-width: 75rem) {
+      display: block;
+      position: absolute;
+      top: 50%;
+      font-size: 2rem;
+      right: 3%;
+      cursor: pointer;
+      Z-index: 3;
+      transform: translateY(-50%);
     }
   }
 }
