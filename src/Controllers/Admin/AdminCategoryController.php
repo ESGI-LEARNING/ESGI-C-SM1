@@ -26,7 +26,10 @@ class AdminCategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $category->setName($form->get('name'));
             $category->setSlug(slug($form->get('name')));
+            $category->setCreatedAt();
+            $category->setUpdatedAt();
             $category->save();
+
             $this->addFlash('success', 'La category à bien été créé');
             $this->redirect('/admin/categories');
         }
@@ -45,7 +48,7 @@ class AdminCategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $category->setName($form->get('name'));
             $category->setSlug(slug($form->get('name')));
-            $category->setUpdatedAt(date('Y-m-d H:i:s'));
+            $category->setUpdatedAt();
             $category->save();
 
             $this->addFlash('success', 'L\'utilisateur a bien été modifié');
@@ -65,6 +68,7 @@ class AdminCategoryController extends AbstractController
         if ($category) {
             if ($this->verifyCsrfToken()) {
                 $category->setIsdeleted(1);
+                $category->setUpdatedAt();
                 $category->save();
 
                 $this->addFlash('success', 'la catégory à bien été supprimer');

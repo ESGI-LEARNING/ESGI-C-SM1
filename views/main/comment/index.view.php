@@ -38,7 +38,7 @@
                                 action="/article/<?= $article->getSlug(); ?>/report-comment/<?= $comment->getId(); ?>"
                                 onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
                                 <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
-                                <button class="button button-green button-sm" type="submit"><?= icon('flag'); ?></button>
+                                <button class="button <?= $comment->getIsReported() ? 'button-red' : 'button-green'; ?> button-sm" type="submit"><?= icon('flag'); ?></button>
                             </form>
                         <?php endif; ?>
                         <?php if (\Core\Auth\Auth::id() === $comment->getUserId()): ?>

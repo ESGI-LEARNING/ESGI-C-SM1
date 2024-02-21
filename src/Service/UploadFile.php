@@ -16,6 +16,8 @@ class UploadFile
             $i = new Image();
             $i->setImage($path);
             $i->setPictureId($article_id);
+            $i->setCreatedAt();
+            $i->setUpdatedAt();
             $i->save();
         }
     }
@@ -27,6 +29,7 @@ class UploadFile
             $user = new User();
             $user->setId($userId);
             $user->setAvatar($path);
+            $user->setUpdatedAt();
             $user->save();
         }
     }

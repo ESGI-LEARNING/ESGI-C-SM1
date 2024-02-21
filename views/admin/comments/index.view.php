@@ -21,8 +21,8 @@
                         <td><?= $comment->getId(); ?></td>
                         <td><?= $comment->getContent(); ?></td>
                         <td>
-                            <p class="<?= $comment->isReported() ? 'pill pill-danger' : 'pill pill-success'; ?>">
-                                <?= $comment->isReported() ? 'Oui' : 'Non'; ?>
+                            <p class="<?= $comment->getIsReported() ? 'pill pill-danger' : 'pill pill-success'; ?>">
+                                <?= $comment->getIsReported() ? 'Oui' : 'Non'; ?>
                             </p>
                         </td>
                         <td><?= $comment->user->getUsername(); ?></td>
@@ -33,7 +33,7 @@
                                 <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
                                 <button class="button button-red button-sm" type="submit"><?= icon('trash'); ?></button>
                             </form>
-                            <?php if ($comment->isReported()) { ?>
+                            <?php if ($comment->getIsReported()) { ?>
                                 <form method="POST" action="/admin/comments/keep/<?= $comment->getId(); ?>" onsubmit="return confirm('Êtes-vous sûr(e) de garder ce commentaire ?')">
                                     <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
                                     <button class="button button-red button-sm" type="submit"><?= icon('flag'); ?></button>

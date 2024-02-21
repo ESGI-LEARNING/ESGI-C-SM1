@@ -21,6 +21,7 @@ class VerifyEmailController extends AbstractController
 
             if (hash_equals(hash('sha512', $url), $token)) {
                 $user->setVerify(1);
+                $user->setUpdatedAt();
                 $user->save();
 
                 $this->addFlash('success', 'Votre email a bien été vérifié');

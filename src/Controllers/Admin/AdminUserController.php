@@ -31,6 +31,8 @@ class AdminUserController extends AbstractController
             $user->setUsername($form->get('username'));
             $user->setEmail($form->get('email'));
             $user->setPassword($form->get('password'));
+            $user->setCreatedAt();
+            $user->setUpdatedAt();
             $user->save();
 
             $user->roles()->sync($form->get('roles'));
@@ -56,7 +58,7 @@ class AdminUserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setUsername($form->get('username'));
             $user->setEmail($form->get('email'));
-            $user->setUpdatedAt(date('Y-m-d H:i:s'));
+            $user->setUpdatedAt();
             $user->save();
 
             $user->roles()->sync($form->get('roles'));
@@ -78,6 +80,7 @@ class AdminUserController extends AbstractController
         if ($user) {
             if ($this->verifyCsrfToken()) {
                 $user->setIsDeleted(1);
+                $user->setUpdatedAt();
                 $user->save();
 
                 $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
