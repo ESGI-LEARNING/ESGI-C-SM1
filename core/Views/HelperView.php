@@ -13,15 +13,14 @@ class HelperView
     public function hasRole(string $roleCheck): ?bool
     {
         $role = User::query()
-            ->select(['user.id', 'user.email', 'role.name'])
+            ->select(['user.*'])
             ->join('user_role', 'user.id', '=', 'user_role.user_id')
             ->join('role', 'role.id', '=', 'user_role.role_id')
             ->where('role.name', '=', $roleCheck)
             ->andWhere('user.id', '=', Auth::id())
             ->get();
-        $role = $role[0]->name ?? null;
 
-        return Auth::check() && $roleCheck === $role;
+        return Auth::check() && !empty($role);
     }
 
     public function flash(): array
