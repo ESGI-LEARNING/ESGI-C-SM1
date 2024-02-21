@@ -58,6 +58,8 @@ class CommentService
             $comment->setIsReported(1);
             $comment->save();
 
+            $reported = User::find($comment->getUserId());
+
             $data = [
                 'comment_id' => $comment->getId(),
                 'content' => $comment->getContent(),
@@ -65,8 +67,8 @@ class CommentService
 
             $mail = new CommentMail();
 
-            $mail->sendReportCommentToUserReported(User::find($comment->getUserId())->getEmail(), $data);
-            $mail->sendReportCommentToUserReporter( Auth::user()->getEmail(), $data);
+            $mail->sendReportCommentToUserReported($reported->getEmail(), $data[] = ['username' => $reported->getUsername()]);
+            $mail->sendReportCommentToUserReporter(Auth::user()->getEmail(), $data[] = ['username' =>  Auth::user()->getUsername()]);
             $mail->sendReportCommentToAdmins($data);
         }
     }
