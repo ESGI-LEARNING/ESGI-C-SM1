@@ -32,6 +32,7 @@ class AdminCommentController extends AbstractController
         if ($comment) {
             if ($this->verifyCsrfToken()) {
                 $comment->setIsDeleted(1);
+                $comment->setUpdatedAt();
                 $comment->save();
 
                 $this->addFlash('success', 'Le commentaire a bien été supprimé');
@@ -47,6 +48,7 @@ class AdminCommentController extends AbstractController
         if ($comment) {
             if ($this->verifyCsrfToken()) {
                 $comment->setIsReported(1);
+                $comment->setUpdatedAt();
                 $comment->save();
 
                 $adminUsers = User::query()
@@ -81,6 +83,7 @@ class AdminCommentController extends AbstractController
         if ($comment) {
             if ($this->verifyCsrfToken()) {
                 $comment->setIsReported(0);
+                $comment->setUpdatedAt();
                 $comment->save();
 
                 $this->addFlash('success', 'Le commentaire a été gardé.');

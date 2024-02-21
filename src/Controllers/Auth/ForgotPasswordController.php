@@ -51,6 +51,7 @@ class ForgotPasswordController extends AbstractController
             $user = new User();
             $user = $user->find($resetPassword->getUserId());
             $user->setPassword($form->get('password'));
+            $user->setUpdatedAt();
             $user->save();
 
             $resetPassword->delete();

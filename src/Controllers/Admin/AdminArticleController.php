@@ -35,6 +35,7 @@ class AdminArticleController extends AbstractController
             $article->setSlug(slug($form->get('name')));
             $article->setDescription($form->get('description'));
             $article->setUserId(Auth::id());
+            $article->setCreatedAt();
             $article->save();
 
             UploadFile::uploadImageArticles($form->file('images'), $article->getId());
@@ -65,7 +66,7 @@ class AdminArticleController extends AbstractController
             $article->setSlug(slug($form->get('name')));
             $article->setDescription($form->get('description'));
             $article->setUserId(Auth::id());
-            $article->setUpdatedAt(date('Y-m-d H:i:s'));
+            $article->setUpdatedAt();
             $article->save();
 
             if (!empty($form->file('images')['name'][0])) {

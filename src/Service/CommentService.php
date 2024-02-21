@@ -28,6 +28,8 @@ class CommentService
         $comment->setContent($content);
         $comment->setPictureId($picture->getId());
         $comment->setUserId($userId);
+        $comment->setCreatedAt();
+        $comment->setUpdatedAt();
         $comment->save();
     }
 
@@ -37,7 +39,7 @@ class CommentService
 
         if ($comment) {
             $comment->setContent($content);
-            $comment->setUpdatedAt(date('Y-m-d H:i:s'));
+            $comment->setUpdatedAt();
             $comment->save();
         }
     }
@@ -63,7 +65,7 @@ class CommentService
 
             $mail = new CommentMail();
 
-            $mail->sendReportCommentToUserReported(User::find($comment->user_id)->getEmail(), $data);
+            $mail->sendReportCommentToUserReported(User::find($comment->getUserId())->getEmail(), $data);
             $mail->sendReportCommentToUserReporter( Auth::user()->getEmail(), $data);
             $mail->sendReportCommentToAdmins($data);
         }

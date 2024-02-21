@@ -51,6 +51,8 @@ class SecurityController extends AbstractController
             $user->setUsername($form->get('username'));
             $user->setEmail($form->get('email'));
             $user->setPassword($form->get('password'));
+            $user->setCreatedAt();
+            $user->setUpdatedAt();
             $user->save();
 
             // Set role user for default user
