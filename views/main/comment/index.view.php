@@ -7,16 +7,16 @@
         <input type="submit" value="Envoyer">
     </fieldset>
 </form>
-<?php else: ?>
-    <p class="commentsConnected">Vous devez être connecté pour pouvoir commenter cet article.</p>
 <?php endif; ?>
-<div class="comments">
-    <h3>Commentaires</h3>
+
+<div class="comments mt">
+    <h3><?= count($comments) ?> Commentaires:</h3>
+
     <?php foreach ($comments as $comment): ?>
-        <div class="comment">
+        <div class="comment mt-2">
             <div class="column">
                 <p><?= $comment->getContent(); ?></p>
-                <p>Posté par <?= $comment->getUser()->getUsername(); ?> le <?= $comment->getCreatedAt(); ?></p>
+                <p>Posté par <?= $comment->user->getUsername(); ?> le <?= $comment->getCreatedAt(); ?></p>
 
                 <div class="d-none" id="edit-comment-<?= $comment->getId(); ?>">
                     <form class="form" action="/article/<?= $article->getSlug(); ?>/edit-comment/<?= $comment->getId(); ?>" method="post">
