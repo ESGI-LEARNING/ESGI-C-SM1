@@ -76,9 +76,12 @@ abstract class Model
     {
         return $this->queryBuilder->delete($this->entity->getId());
     }
-    public function softDelete(): \PDOStatement|false
+
+    public function softDelete(): void
     {
-        return $this->queryBuilder->softDelete($this->entity->getId());
+        $this->entity->setIsDeleted(1);
+        $this->entity->setUpdatedAt();
+        $this->entity->save();
     }
 
     public function hardDelete(): \PDOStatement|false
