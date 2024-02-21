@@ -36,6 +36,8 @@ class AdminPageCreateType extends FormType
                 'content' => [
                     'label'       => 'Contenu',
                     'type'        => 'textarea',
+                    'id'          => 'mytextarea',
+                    'value'       => '',
                     'placeholder' => 'Contenu de la page',
                     'input'       => FormTypeEnum::INPUT_TEXTAREA,
                     'rows'        => '6',
