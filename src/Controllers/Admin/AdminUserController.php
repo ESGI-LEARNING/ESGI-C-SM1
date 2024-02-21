@@ -79,6 +79,11 @@ class AdminUserController extends AbstractController
 
         if ($user) {
             if ($this->verifyCsrfToken()) {
+                if ($user->getIsDeleted() === 1) {
+                    $user->hardDelete();
+                }
+                
+                $user->setUsername("guest");
                 $user->setIsDeleted(1);
                 $user->setUpdatedAt();
                 $user->save();

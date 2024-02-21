@@ -89,12 +89,23 @@ class AdminArticleController extends AbstractController
 
     public function delete(int $id): void
     {
-        $article = Picture::find($id);
+        $article = Picture::query()
+                    ->with(['images'])
+                    ->getOneBy(['id' => $id]);
 
         if ($article) {
             if ($this->verifyCsrfToken()) {
-                $article->setIsDeleted(1);
-                $article->save();
+
+                if ($article->getIsDeleted() === 1) {
+                    foreach ($article->images as $image) {
+                        Storage::delete($image->getImage());
+                        $image->delete();
+                    }
+
+                    $article->hardDelete();
+                }
+
+                $article->softDelete();
 
                 $this->addFlash('success', 'L\'article a bien été supprimé');
                 $this->redirect('/admin/articles');

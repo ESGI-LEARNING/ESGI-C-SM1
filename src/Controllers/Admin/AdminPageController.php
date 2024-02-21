@@ -81,12 +81,14 @@ class AdminPageController extends AbstractController
 
     public function delete(int $id): void
     {
-        $user = Page::find($id);
+        $page = Page::find($id);
 
-        if ($user) {
-            $user->setIsDeleted(1);
-            $user->setUpdatedAt();
-            $user->save();
+        if ($page) {
+            if ($page->getIsDeleted() === 1) {
+                $page->hardDelete();
+            }
+
+            $page->softDelete();
 
             $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
             $this->redirect('/admin/pages');

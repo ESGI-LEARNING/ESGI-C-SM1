@@ -112,12 +112,16 @@ class ProfileController extends AbstractController
         $user = Auth::user();
 
         if (Auth::id()) {
-            $user->softDelete();
+            $user->setUsername('guest');
+            $user->setIsDeleted(1);
+            $user->setUpdatedAt();
+            $user->save();
+
             $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
-            $this->redirect('/logout');
+            $this->redirect('/');
         }
 
-        $this->redirect('/logout');
+        $this->redirect('/profile');
     }
 
     public function hardDelete(): void
@@ -149,6 +153,7 @@ class ProfileController extends AbstractController
         $form->handleRequest();
         $user = new User();
         $user = $user::query()->getOneBy(['id' => Auth::id()]);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($form->get('password'));
             $user->setUpdatedAt();
