@@ -25,9 +25,17 @@ class UploadFile
     public static function uploadImageProfile(array $files, string $userId): void
     {
         $paths = Storage::upload($files, '/media');
+
+        //on supprime l'ancienne image
+
+
         foreach ($paths as $path) {
-            $user = new User();
-            $user->setId($userId);
+            $user = User::query()->getOneBy(['id' => $userId]);
+
+            if ($user->getAvatar() !== null) {
+                Storage::delete($user->getAvatar());
+            }
+
             $user->setAvatar($path);
             $user->setUpdatedAt();
             $user->save();
