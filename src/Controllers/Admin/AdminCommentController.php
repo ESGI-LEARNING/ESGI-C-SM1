@@ -16,8 +16,8 @@ class AdminCommentController extends AbstractController
     public function index(): View
     {
         $comments = Comment::query()
-            ->where('is_deleted', '=', false)
             ->with(['user'])
+            ->where('is_deleted', '=', false)
             ->paginate(10, (int) $this->request()->get('page'));
 
         return $this->render('admin/comments/index', 'back', [
