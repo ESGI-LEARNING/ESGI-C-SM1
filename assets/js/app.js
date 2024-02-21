@@ -5,3 +5,4 @@ import './dashboard.js';
 import './avatar-file.js';
 import './tinyMCE.js'
 import './components/navbar.js';
+import './components/carousel.js';
