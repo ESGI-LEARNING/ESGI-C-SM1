@@ -23,6 +23,7 @@
       @media screen and (max-width: 600px) {
         display: block;
         width: 100%;
+        max-width: 100%;
       }
 
 
@@ -37,6 +38,7 @@
 
         @media screen and (max-width: 600px) {
           display: block;
+
         }
 
         li {
@@ -49,6 +51,7 @@
           transition: all .2s ease-in-out;
           @media screen and (max-width: 600px) {
             display: block;
+
           }
 
           &:hover {
@@ -73,6 +76,10 @@
             font-size: 1.6rem;
             font-weight: bold;
             text-decoration: none;
+            @media screen and (max-width: 600px) {
+              justify-content: center;
+
+            }
           }
         }
       }
