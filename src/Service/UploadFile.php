@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Models\Image;
 use App\Models\User;
+use Core\Auth\Auth;
 use Core\FileStorage\Storage;
 
 class UploadFile
@@ -25,10 +26,6 @@ class UploadFile
     public static function uploadImageProfile(array $files, string $userId): void
     {
         $paths = Storage::upload($files, '/media');
-
-        //on supprime l'ancienne image
-
-
         foreach ($paths as $path) {
             $user = User::query()->getOneBy(['id' => $userId]);
 
