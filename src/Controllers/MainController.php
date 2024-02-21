@@ -50,4 +50,8 @@ class MainController extends AbstractController
     {
         return $this->render('main/article', 'front');
     }
+    public function legalNotice(): View
+    {
+        return $this->render('main/legalNotice', 'front');
+    }
 }
