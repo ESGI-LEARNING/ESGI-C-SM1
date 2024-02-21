@@ -13,6 +13,7 @@ use App\Controllers\Auth\SecurityController;
 use App\Controllers\Auth\VerifyEmailController;
 use App\Controllers\ErrorController;
 use App\Controllers\GalleryController;
+use App\Controllers\ImageController;
 use App\Controllers\Install\InstallController;
 use App\Controllers\MainController;
 use App\Controllers\ProfileController;
@@ -49,6 +50,7 @@ $router->middleware(['installed'])->group(function (Router $router) {
     $router->get('/gallery', [GalleryController::class, 'gallery']);
     $router->get('/template', [MainController::class, 'template']);
     $router->get('/article/{slug}', [ArticleController::class, 'index']);
+    $router->get('/images/{path}', [ImageController::class, 'index']);
 
     $router->get('/login', [SecurityController::class, 'login']);
     $router->post('/login', [SecurityController::class, 'login']);
