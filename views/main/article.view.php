@@ -1,7 +1,7 @@
 <div class="card-photo">
-    <?php foreach ($article->images as $image): ?>
+    <?php foreach ($article->images as $image) { ?>
         <img src="<?= $image->image(400, 300); ?>" alt="<?= $article->getName(); ?>">
-    <?php endforeach; ?>
+    <?php } ?>
 
     <div class="card-photo-info">
         <h2 class="card-photo-title"><?= $article->getName(); ?></h2>

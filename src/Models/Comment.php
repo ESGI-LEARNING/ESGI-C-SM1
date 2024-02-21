@@ -3,10 +3,7 @@
 namespace App\Models;
 
 use Core\DB\Model;
-use Core\DB\Relation\HasMany;
 use Core\DB\Relation\HasOne;
-use Core\DB\Relation\BelongToMany;
-
 
 class Comment extends Model
 {
@@ -85,7 +82,7 @@ class Comment extends Model
 
     public function setCreatedAt(): void
     {
-        $this->created_at = date('Y-m-d H:i:s');;
+        $this->created_at = date('Y-m-d H:i:s');
     }
 
     public function getUpdatedAt(): string

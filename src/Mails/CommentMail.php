@@ -2,10 +2,9 @@
 
 namespace App\Mails;
 
-use Core\Mailer\Mailer;
-use App\Models\Comment;
 use App\Models\User;
 use Core\Enum\Role;
+use Core\Mailer\Mailer;
 
 class CommentMail
 {
@@ -48,7 +47,7 @@ class CommentMail
     public function sendReportCommentToAdmins(array $data): void
     {
         foreach ($this->getAdmins() as $admin) {
-            $this->sendReportComment($admin->getEmail(),  $data);
+            $this->sendReportComment($admin->getEmail(), $data);
         }
     }
 

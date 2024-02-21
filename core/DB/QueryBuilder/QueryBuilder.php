@@ -40,6 +40,7 @@ class QueryBuilder extends DB
     public function with(array $relations): QueryBuilder
     {
         $this->with = $relations;
+
         return $this;
     }
 
@@ -219,7 +220,7 @@ class QueryBuilder extends DB
         if (!empty($result) && !empty($this->with)) {
             foreach ($this->with as $relation) {
                 if (method_exists($this->model, $relation)) {
-                    // mettre ne place la recursivite entre les relations 
+                    // mettre ne place la recursivite entre les relations
                     $result = (new Relation($result, $relation))->getDatas();
                 }
             }

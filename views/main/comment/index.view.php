@@ -1,4 +1,4 @@
-<?php if (\Core\Auth\Auth::check()): ?>
+<?php if (\Core\Auth\Auth::check()) { ?>
 <form class="form" action="/article/<?= $article->getSlug(); ?>/create-comment" method="post">
     <fieldset>
         <label for="comment">Votre commentaire :</label><br>
@@ -7,12 +7,12 @@
         <input type="submit" value="Envoyer">
     </fieldset>
 </form>
-<?php endif; ?>
+<?php } ?>
 
 <div class="comments mt">
-    <h3><?= count($comments) ?> Commentaires:</h3>
+    <h3><?= count($comments); ?> Commentaires:</h3>
 
-    <?php foreach ($comments as $comment): ?>
+    <?php foreach ($comments as $comment) { ?>
         <div class="comment mt-2">
             <div class="column">
                 <p><?= $comment->getContent(); ?></p>
@@ -30,18 +30,18 @@
                     </form>
                 </div>
             </div>
-            <?php if (\Core\Auth\Auth::check() !== false) : ?>
+            <?php if (\Core\Auth\Auth::check() !== false) { ?>
                 <div class="column">
                     <div class="formActions gap-2">
-                        <?php if (\Core\Auth\Auth::id() !== $comment->getUserId()): ?>
+                        <?php if (\Core\Auth\Auth::id() !== $comment->getUserId()) { ?>
                             <form class="__report-form" method="POST"
                                 action="/article/<?= $article->getSlug(); ?>/report-comment/<?= $comment->getId(); ?>"
                                 onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
                                 <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
                                 <button class="button <?= $comment->getIsReported() ? 'button-red' : 'button-green'; ?> button-sm" type="submit"><?= icon('flag'); ?></button>
                             </form>
-                        <?php endif; ?>
-                        <?php if (\Core\Auth\Auth::id() === $comment->getUserId()): ?>
+                        <?php } ?>
+                        <?php if (\Core\Auth\Auth::id() === $comment->getUserId()) { ?>
                             <button class="button button-blue button-sm" onClick="toggleCommentInput(<?= $comment->getId(); ?>)" id="button-edit-comment-<?= $comment->getId(); ?>" type="button"><?= icon('square-pen'); ?></button>
 
                             <form class="__delete-form" method="POST"
@@ -50,12 +50,12 @@
                                 <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
                                 <button class="button button-red button-sm" type="submit"><?= icon('trash'); ?></button>
                             </form>
-                        <?php endif; ?>
+                        <?php } ?>
                     </div>
                 </div>
-            <?php endif; ?>
+            <?php } ?>
         </div>
-    <?php endforeach; ?>
+    <?php } ?>
 </div>
 
 

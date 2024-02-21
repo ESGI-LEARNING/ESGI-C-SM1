@@ -3,14 +3,10 @@
 namespace App\Controllers;
 
 use App\Models\Picture;
-use App\Models\Comment;
-use App\Models\User;
 use App\Service\CommentService;
+use Core\Auth\Auth;
 use Core\Controller\AbstractController;
 use Core\Views\View;
-use Core\Auth\Auth;
-use App\Mails\CommentMail;
-use App\Form\Commentaire\CommentEditType;
 
 class ArticleController extends AbstractController
 {
@@ -23,14 +19,14 @@ class ArticleController extends AbstractController
         $comments = CommentService::comment($article->getId());
 
         return $this->render('main/article', 'front', [
-            'article' => $article,
+            'article'  => $article,
             'comments' => $comments,
         ]);
     }
 
     public function createComment(string $slug): void
     {
-        if ($this->verifyCsrfToken()){
+        if ($this->verifyCsrfToken()) {
             CommentService::create($slug, $this->request()->getBody()['comment'], Auth::id());
             $this->addFlash('success', 'Le commentaire a bien été ajouté.');
             $this->redirect('/article/'.$slug);
@@ -39,7 +35,7 @@ class ArticleController extends AbstractController
 
     public function editComment(string $slug, int $id): void
     {
-        if ($this->verifyCsrfToken()){
+        if ($this->verifyCsrfToken()) {
             CommentService::edit($id, $this->request()->getBody()['comment']);
             $this->addFlash('success', 'Le commentaire a bien été modifier.');
             $this->redirect('/article/'.$slug);

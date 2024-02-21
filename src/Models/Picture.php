@@ -23,7 +23,7 @@ class Picture extends Model
 
     protected string $created_at;
 
-    protected ?string $image; 
+    protected ?string $image;
 
     protected string $updated_at;
 
@@ -101,7 +101,7 @@ class Picture extends Model
 
     public function setCreatedAt(): void
     {
-        $this->created_at = date('Y-m-d H:i:s');;
+        $this->created_at = date('Y-m-d H:i:s');
     }
 
     public function getUpdatedAt(): string
@@ -111,7 +111,7 @@ class Picture extends Model
 
     public function setUpdatedAt(): void
     {
-        $this->updated_at = date('Y-m-d H:i:s');;
+        $this->updated_at = date('Y-m-d H:i:s');
     }
 
     public function images(): HasMany
