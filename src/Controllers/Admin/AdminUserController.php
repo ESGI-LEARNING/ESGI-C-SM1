@@ -6,6 +6,7 @@ use App\Form\Admin\User\AdminUserCreateType;
 use App\Form\Admin\User\AdminUserEditType;
 use App\Models\User;
 use Core\Controller\AbstractController;
+use Core\FileStorage\Storage;
 use Core\Views\View;
 
 class AdminUserController extends AbstractController
@@ -80,9 +81,13 @@ class AdminUserController extends AbstractController
         if ($user) {
             if ($this->verifyCsrfToken()) {
                 if ($user->getIsDeleted() === 1) {
+                    if ($user->getAvatar() !== null) {
+                        Storage::delete($user->getAvatar());
+                    }
+
                     $user->hardDelete();
                 }
-                
+
                 $user->setUsername("guest");
                 $user->setIsDeleted(1);
                 $user->setUpdatedAt();
