@@ -50,7 +50,7 @@ class RegisterType extends FormType
     {
         return [
             'username' => ['required', 'min:3'],
-            'email'    => ['email', 'required'],
+            'email'    => ['email', 'required', 'unique:user.email'],
             'password' => ['required', 'min:8', 'confirm'],
         ];
     }
