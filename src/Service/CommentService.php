@@ -14,6 +14,7 @@ class CommentService
     public static function comment(int $id): array
     {
         return Comment::query()
+            ->with(['user'])
             ->where('picture_id', '=', $id)
             ->orderBy('created_at', 'DESC')
             ->get();

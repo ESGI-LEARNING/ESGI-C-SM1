@@ -20,9 +20,11 @@ class ArticleController extends AbstractController
             ->with(['images', 'user'])
             ->getOneBy(['slug' => $slug]);
 
+        $comments = CommentService::comment($article->getId());
+
         return $this->render('main/article', 'front', [
             'article' => $article,
-            'comments' => CommentService::comment($article->getId()),
+            'comments' => $comments,
         ]);
     }
 
