@@ -202,6 +202,17 @@ class QueryBuilder extends DB
         ]);
     }
 
+    public function hardDelete(int $id): false|\PDOStatement
+    {
+        $sql = 'DELETE FROM `'.$this->table.'` WHERE id = :id';
+
+        $this->addLogs('hard delete');
+
+        return $this->execute($sql, [
+            'id' => $id,
+        ]);
+    }
+
     public function getOneBy(array $data)
     {
         $sql = 'SELECT * FROM `'.$this->table.'` WHERE ';

@@ -44,6 +44,7 @@ $router->middleware(['install'])->group(function (Router $router) {
 
 $router->middleware(['installed'])->group(function (Router $router) {
     $router->get('/', [MainController::class, 'home']);
+    $router->get('/mention-legale', [MainController::class, 'legalNotice']);
     $router->get('/contact', [MainController::class, 'contact']);
     $router->post('/contact', [MainController::class, 'contact']);
     $router->get('/about', [MainController::class, 'aboutUs']);
@@ -78,7 +79,8 @@ $router->middleware(['installed'])->group(function (Router $router) {
             $router->post('/', 'edit');
             $router->get('/author', 'author');
             $router->post('/author', 'editAuthor');
-            $router->post('/delete', 'delete');
+            $router->post('/delete', 'softDelete');
+            $router->post('/hard-delete', 'hardDelete');
             $router->post('/avatar', 'updateAvatar');
             $router->get('/reset-password', 'password');
             $router->post('/reset-password', 'resetPassword');

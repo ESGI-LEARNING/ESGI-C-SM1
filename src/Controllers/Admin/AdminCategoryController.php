@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Form\Admin\Category\AdminCategoryType;
 use App\Models\Category;
 use Core\Controller\AbstractController;
+use Core\FileStorage\Storage;
 use Core\Views\View;
 
 class AdminCategoryController extends AbstractController
@@ -67,9 +68,11 @@ class AdminCategoryController extends AbstractController
 
         if ($category) {
             if ($this->verifyCsrfToken()) {
-                $category->setIsdeleted(1);
-                $category->setUpdatedAt();
-                $category->save();
+                if ($category->getIsDeleted() === 1) {
+                    $category->hardDelete();
+                }
+
+                $category->softDelete();
 
                 $this->addFlash('success', 'la catégory à bien été supprimer');
                 $this->redirect('/admin/categories');

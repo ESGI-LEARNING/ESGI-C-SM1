@@ -50,6 +50,10 @@ class Validator
                 $args = explode('.', $ruleArgs[0]);
                 $this->exist($field, $args[0], $args[1]);
                 break;
+            case 'unique':
+                $args = explode('.', $ruleArgs[0]);
+                $this->unique($field, $args[0], $args[1]);
+                break;
             case 'file':
                 $this->file($field);
                 break;
@@ -121,6 +125,24 @@ class Validator
 
         if (!$result) {
             $this->errors[$field][] = 'L\''.$field.' n\'existe pas';
+        }
+    }
+
+    public function unique(string $field, string $table, string $column): void
+    {
+        $db    = new DB();
+        $table = config('database.prefix').'_'.$table;
+
+        $sql = "SELECT * FROM $table WHERE $column = :$column";
+
+        $query = $db->getPdo()->prepare($sql);
+        $query->bindValue(":$column", $this->data[$field]);
+        $query->execute();
+
+        $result = $query->fetch();
+
+        if ($result) {
+            $this->errors[$field][] = 'L\''.$field.' existe déjà';
         }
     }
 

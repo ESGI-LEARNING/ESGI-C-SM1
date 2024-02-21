@@ -27,9 +27,7 @@ class AdminCommentController extends AbstractController
 
         if ($comment) {
             if ($this->verifyCsrfToken()) {
-                $comment->setIsDeleted(1);
-                $comment->setUpdatedAt();
-                $comment->save();
+                $comment->delete();
 
                 $this->addFlash('success', 'Le commentaire a bien été supprimé');
                 $this->redirect('/admin/comments');

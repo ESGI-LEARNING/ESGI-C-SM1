@@ -77,6 +77,18 @@ abstract class Model
         return $this->queryBuilder->delete($this->entity->getId());
     }
 
+    public function softDelete(): void
+    {
+        $this->entity->setIsDeleted(1);
+        $this->entity->setUpdatedAt();
+        $this->entity->save();
+    }
+
+    public function hardDelete(): \PDOStatement|false
+    {
+        return $this->queryBuilder->hardDelete($this->entity->getId());
+    }
+
     private function getDataObject(): array
     {
         return array_diff_key(get_object_vars($this), get_class_vars(get_class()));

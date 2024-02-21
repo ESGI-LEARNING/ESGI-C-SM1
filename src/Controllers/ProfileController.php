@@ -107,17 +107,32 @@ class ProfileController extends AbstractController
         }
     }
 
-    public function delete(): void
+    public function softDelete(): void
     {
         $user = Auth::user();
 
         if (Auth::id()) {
-            $user->delete();
+            $user->setUsername('guest');
+            $user->setIsDeleted(1);
+            $user->setUpdatedAt();
+            $user->save();
+
             $this->addFlash('success', 'L\'utilisateur a bien été supprimé');
-            $this->redirect('/logout');
+            $this->redirect('/');
         }
 
-        $this->redirect('/logout');
+        $this->redirect('/profile');
+    }
+
+    public function hardDelete(): void
+    {
+        $user = Auth::user();
+
+        if (Auth::id()) {
+            $user->hardDelete();
+            $this->addFlash('success', 'L\'utilisateur a bien été supprimé définitivement');
+            $this->redirect('/logout');
+        }
     }
 
     public function updateAvatar(): string
@@ -138,6 +153,7 @@ class ProfileController extends AbstractController
         $form->handleRequest();
         $user = new User();
         $user = $user::query()->getOneBy(['id' => Auth::id()]);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($form->get('password'));
             $user->setUpdatedAt();
