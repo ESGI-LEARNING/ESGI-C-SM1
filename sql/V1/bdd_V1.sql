@@ -83,22 +83,6 @@ CREATE TABLE esgi_category
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE esgi_material
-(
-    id          INT AUTO_INCREMENT PRIMARY KEY,
-    name        VARCHAR(40) NOT NULL,
-    slug        VARCHAR(50) NOT NULL,
-    description TEXT        NOT NULL,
-    link        VARCHAR(255),
-    image       VARCHAR(255),
-    user_id     INT         NOT NULL,
-    is_deleted  TINYINT(1) DEFAULT 0,
-    created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT FK_users_materials FOREIGN KEY (user_id) REFERENCES esgi_user (id)
-);
-
 CREATE TABLE esgi_picture
 (
     id          INT AUTO_INCREMENT PRIMARY KEY,
@@ -139,25 +123,6 @@ CREATE TABLE esgi_picture_category
 
     CONSTRAINT FK_pictures_pictures_categories FOREIGN KEY (picture_id) REFERENCES esgi_picture (id) ON DELETE CASCADE,
     CONSTRAINT FK_categories_pictures_categories FOREIGN KEY (category_id) REFERENCES esgi_category (id) ON DELETE CASCADE
-);
-
-CREATE TABLE esgi_picture_material
-(
-    id          INT AUTO_INCREMENT PRIMARY KEY,
-    picture_id  INT NOT NULL,
-    material_id INT NOT NULL,
-
-    CONSTRAINT FK_pictures_pictures_materials FOREIGN KEY (picture_id) REFERENCES esgi_picture (id) ON DELETE CASCADE,
-    CONSTRAINT FK_materials_pictures_materials FOREIGN KEY (material_id) REFERENCES esgi_material (id) ON DELETE CASCADE
-);
-
-CREATE TABLE esgi_setting
-(
-    id         INT AUTO_INCREMENT PRIMARY KEY,
-    name       VARCHAR(40) NOT NULL,
-    value      VARCHAR(40) NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE esgi_page
@@ -211,5 +176,5 @@ INSERT INTO
 VALUES
     ('Accueil','Accueil', 'accueil', '/', 'Contenu de la page d\'accueil'),
     ('Contact','Contact', 'contact', '/contact', 'Contenu de la page de contact'),
-    ('À propos','a-propos' , 'a-propos', '/about-us', 'Contenu de la page à propos'),
+    ('À propos','a-propos' , 'a-propos', '/about', 'Contenu de la page à propos'),
     ('Galerie','galerie', 'galerie', '/gallery', 'Contenu de la galerie'),
