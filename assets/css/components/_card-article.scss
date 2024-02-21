@@ -1,0 +1,105 @@
+.card-article {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  max-width: 120rem;
+  background-color: var(--gray);
+  box-shadow: .25rem .25rem 0 var(--dark-gray);
+  transition: 0.25s;
+  margin: 1rem auto;
+  div{
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
+
+    }
+  }
+
+  img {
+    border-radius: .25rem;
+    max-height: 40rem;
+    width: 100%;
+    object-fit: contain;
+    @media screen and (max-width: 600px) {
+      width: 100%;
+      max-height: initial;
+    }
+  }
+
+  .card-photo-info {
+    padding: 1rem;
+
+    .card-photo-author {
+      font-weight: bold;
+      font-size: 1.6rem;
+      margin: 0;
+      color: var(--primary-dark);
+    }
+
+    .card-photo-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--black);
+      margin-bottom: 1rem;
+
+    }
+  }
+}
+
+.card-carousel{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  max-width: 60rem;
+  background-color: var(--gray);
+  box-shadow: .25rem .25rem 0 var(--dark-gray);
+  margin: 1rem auto;
+
+  .carousel-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+
+    .carousel {
+      display: flex;
+      transition: transform 0.5s ease;
+
+      .carousel-item {
+        flex: 0 0 auto;
+
+        img {
+          width: 60rem;
+          height: 40rem;
+        }
+      }
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.5);
+      border: none;
+      cursor: pointer;
+      font-size: 2.4rem;
+      z-index: 2;
+
+      &.prev {
+        left: 0;
+      }
+
+      &.next {
+        right: 0;
+      }
+    }
+  }
+}

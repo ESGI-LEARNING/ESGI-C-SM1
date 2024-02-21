@@ -25,6 +25,7 @@ class ResetPasswordType extends FormType
                     'type'        => 'password',
                     'class'       => 'input-form',
                     'confirm'     => 'Nouveau mot de passe',
+                    'placeholder' => 'confirmer le mot de passe',
                 ],
             ],
         ];
