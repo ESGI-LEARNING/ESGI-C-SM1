@@ -65,7 +65,7 @@ class AdminPageController extends AbstractController
         ]);
     }
 
-    public function hidden($id): void
+    public function hidden(int $id): void
     {
         $page = Page::find($id);
 
@@ -77,7 +77,6 @@ class AdminPageController extends AbstractController
             $this->addFlash('success', 'La page a bien été modifiée');
             $this->redirect('/admin/pages');
         }
-
     }
 
     public function delete(int $id): void

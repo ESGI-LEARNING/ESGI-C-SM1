@@ -2,12 +2,11 @@
 
 namespace App\Service;
 
+use App\Mails\CommentMail;
 use App\Models\Comment;
 use App\Models\Picture;
 use App\Models\User;
 use Core\Auth\Auth;
-use App\Mails\CommentMail;
-use Core\Enum\Role;
 
 class CommentService
 {
@@ -62,7 +61,7 @@ class CommentService
 
             $data = [
                 'comment_id' => $comment->getId(),
-                'content' => $comment->getContent(),
+                'content'    => $comment->getContent(),
             ];
 
             $mail = new CommentMail();
