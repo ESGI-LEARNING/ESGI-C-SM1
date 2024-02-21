@@ -6,10 +6,6 @@
                 <p><?= $nbComments; ?></p>
             </li>
             <li class="dashboard-card">
-                <h3>Nombre de pages</h3>
-                <p>0</p>
-            </li>
-            <li class="dashboard-card">
                 <h3>Nombre d'utilisateurs</h3>
                 <p><?= $nbUsers; ?></p>
             </li>

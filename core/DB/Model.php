@@ -44,7 +44,6 @@ abstract class Model
     public static function count(array $conditions = []): int
     {
         return (new static())->queryBuilder->count($conditions);
-        return (new static())->queryBuilder->count($conditions);
     }
     
 
