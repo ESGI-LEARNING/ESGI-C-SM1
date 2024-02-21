@@ -41,10 +41,11 @@ abstract class Model
         return (new static())->queryBuilder->query();
     }
 
-    public static function count(): int
+    public static function count(array $conditions = []): int
     {
-        return (new static())->queryBuilder->count();
+        return (new static())->queryBuilder->count($conditions);
     }
+    
 
     public static function find(int $id): static|null
     {

@@ -160,14 +160,31 @@ class QueryBuilder extends DB
         return $result;
     }
 
-    public function count(): int
+    public function count(array $conditions = []): int
     {
-        $sql   = 'SELECT COUNT(*) FROM '.$this->table;
-        $query = $this->execute($sql);
-
+        $where = [];
+    
+        $sql = 'SELECT COUNT(*) FROM '.$this->table;
+    
+        if (!empty($conditions)) {
+            $sql .= ' WHERE';
+    
+            foreach ($conditions as $column => $value) {
+                $p = str_replace('.', '_', $column);
+    
+                $sql .= ' '.$column.' = :'.$p.' AND';
+                $where[$p] = $value;
+            }
+    
+            $sql = rtrim($sql, 'AND');
+        }
+    
+        $query = $this->pdo->prepare($sql);
+        $query->execute($where);
+    
         return $query->fetchColumn();
     }
-
+    
     public function findAll(): array
     {
         if (method_exists($this->entity, 'getIsDeleted')) {

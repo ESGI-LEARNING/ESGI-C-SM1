@@ -7,16 +7,17 @@
 <section>
 	<h2>Dernières photos publiées</h2>
 	<hr>
-	<div class="gallery-container">
-        <?php for ($i = 0; $i < 4; ++$i) { ?>
-			<figure class="card-photo">
-				<img src="https://images.unsplash.com/photo-1702700630321-4e3a9deb8750?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-				     alt="">
-				<figcaption class="card-photo-info">
-					<p class="card-photo-author">Author</p>
-					<p class="card-photo-title">Photo Title</p>
-				</figcaption>
-			</figure>
+	<div class="gallery gallery-container">
+        <?php foreach ($lastImages as $lastImage) { ?>
+			<article class="card-photo">
+				<a href="/article/<?= $lastImage->slug; ?>" class="gallery-item">
+					<img src="<?= $lastImage->images[0]->image(200, 400); ?>" alt="<?= $lastImage->images[0]->getImage(); ?>">
+				</a>
+				<section class="card-photo-content">
+					<h3><?= $lastImage->name; ?></h3>
+					<p><?= $lastImage->description; ?></p>
+				</section>
+			</article>
         <?php } ?>
 	</div>
 </section>
