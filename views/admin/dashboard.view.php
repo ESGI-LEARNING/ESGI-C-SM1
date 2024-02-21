@@ -1,4 +1,3 @@
-<div class="admin-container">
     <section class="dashboard-container">
         <h2>Tableau de bord</h2>
         <ul class="dashboard-list">
@@ -18,17 +17,21 @@
                 <h3>Nombre d'images</h3>
                 <p><?= $nbImages; ?></p>
             </li>
-            <li class="dashboard-card">
-                <h3>Statistiques des commentaires</h3>
-                <canvas id="commentDonut"></canvas>
-            </li>
-            <li class="dashboard-card">
-                <h3>Statistiques des utilisateurs</h3>
-                <canvas id="userDonut" ></canvas>
-            </li>
         </ul>
     </section>
-</div>
+    <section>
+        <div class="flex gap-2">
+            <div class="dashboard-card-stats">
+                <h3>Statistiques des commentaires</h3>
+                    <canvas id="commentDonut"></canvas>
+            </div>
+            <div class="dashboard-card-stats">
+                    <h3>Statistiques des utilisateurs</h3>
+                <canvas id="userDonut"></canvas>
+            </div>
+        </div>
+    </section>
+
 <script>
     const [nbUsers, nbComments, nbImages, nbDeletedUsers, nbReportedComments, nbDeletedComments] = [<?= $nbUsers ?>, <?= $nbComments ?>, <?= $nbImages ?>, <?= $nbDeletedUsers ?>, <?= $nbReportedComments ?>, <?= $nbDeletedComments ?>];
 </script>
