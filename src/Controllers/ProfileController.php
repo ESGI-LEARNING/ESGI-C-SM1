@@ -19,6 +19,7 @@ class ProfileController extends AbstractController
     {
         $user              = Auth::user();
         $author            = InformationPhotograph::query()->getOneBy(['user_id' => Auth::id()]);
+
         if ($author === null) {
             $author = new InformationPhotograph();
         }
@@ -37,12 +38,14 @@ class ProfileController extends AbstractController
     {
         $user              = Auth::user();
         $author            = InformationPhotograph::query()->getOneBy(['user_id' => Auth::id()]);
+
         if ($author === false) {
             $author            = new InformationPhotograph();
             $formAuthor        = new ProfileAuthorEditType();
         } else {
             $formAuthor        = new ProfileAuthorEditType($author);
         }
+
         $formResetPassword = new ResetPasswordType();
 
         return $this->render('profile/index', 'profile', [
@@ -73,7 +76,7 @@ class ProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setUsername($form->get('username'));
             $user->setEmail($form->get('email'));
-            $user->setUpdatedAt(date('Y-m-d H:i:s'));
+            $user->setUpdatedAt();
             $user->save();
 
             $this->addFlash('success', 'L\'utilisateur a bien été modifié');
@@ -96,6 +99,7 @@ class ProfileController extends AbstractController
             $author->setDescription($form->get('description'));
             $author->setCity($form->get('city'));
             $author->setCountry($form->get('country'));
+            $author->setUpdatedAt();
             $author->save();
 
             $this->addFlash('success', 'Le profil photographe a bien été modifié');
@@ -136,6 +140,7 @@ class ProfileController extends AbstractController
         $user = $user::query()->getOneBy(['id' => Auth::id()]);
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($form->get('password'));
+            $user->setUpdatedAt();
             $user->save();
 
             $this->addFlash('success', 'Votre mot de passe a bien été modifié');

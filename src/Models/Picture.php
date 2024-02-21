@@ -32,9 +32,6 @@ class Picture extends Model
     public function __construct()
     {
         parent::__construct($this);
-
-        $this->setCreatedAt(date('Y-m-d H:i:s'));
-        $this->setUpdatedAt(date('Y-m-d H:i:s'));
     }
 
     public function getId(): ?int
@@ -102,9 +99,9 @@ class Picture extends Model
         return $this->created_at;
     }
 
-    public function setCreatedAt(string $created_at): void
+    public function setCreatedAt(): void
     {
-        $this->created_at = $created_at;
+        $this->created_at = date('Y-m-d H:i:s');;
     }
 
     public function getUpdatedAt(): string
@@ -112,9 +109,9 @@ class Picture extends Model
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(string $updated_at): void
+    public function setUpdatedAt(): void
     {
-        $this->updated_at = $updated_at;
+        $this->updated_at = date('Y-m-d H:i:s');;
     }
 
     public function images(): HasMany

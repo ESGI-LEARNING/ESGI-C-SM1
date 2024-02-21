@@ -19,8 +19,6 @@ class ResetPassword extends Model
     public function __construct()
     {
         parent::__construct($this);
-
-        $this->created_at = date('Y-m-d H:i:s');
     }
 
     public function getId(): ?int
@@ -58,9 +56,9 @@ class ResetPassword extends Model
         return $this->created_at;
     }
 
-    public function setCreatedAt(string $created_at): void
+    public function setCreatedAt(): void
     {
-        $this->created_at = $created_at;
+        $this->created_at = date('Y-m-d H:i:s');;
     }
 
     public function getExpiredAt(): string

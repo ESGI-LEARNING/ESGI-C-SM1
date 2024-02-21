@@ -8,7 +8,6 @@
 			<li><a href="/admin/articles/"><?= icon('newspaper'); ?>Articles</a></li>
 			<li><a href="/admin/categories/"><?= icon('library'); ?>Catégories</a></li>
 			<li><a href="/admin/comments/"><?= icon('message-square-text'); ?>Commentaires</a></li>
-			<li><a href="#"><?= icon('settings'); ?>Paramètres</a></li>
 			<li><a href="/"><?= icon('log-out'); ?>Quitter</a></li>
 		</ul>
 	</nav>

@@ -50,5 +50,4 @@ class MainController extends AbstractController
     {
         return $this->render('main/article', 'front');
     }
-
 }

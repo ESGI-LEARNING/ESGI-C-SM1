@@ -16,9 +16,6 @@ class Role extends Model
     public function __construct()
     {
         parent::__construct($this);
-
-        $this->setCreatedAt(date('Y-m-d H:i:s'));
-        $this->setUpdatedAt(date('Y-m-d H:i:s'));
     }
 
     public function getUpdatedAt(): string
@@ -36,9 +33,9 @@ class Role extends Model
         return $this->created_at;
     }
 
-    public function setCreatedAt(string $created_at): void
+    public function setCreatedAt(): void
     {
-        $this->created_at = $created_at;
+        $this->created_at = date('Y-m-d H:i:s');;
     }
 
     public function getId(): ?int
