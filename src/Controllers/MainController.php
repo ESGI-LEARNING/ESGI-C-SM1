@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Form\FormContactType;
 use App\Mails\ContactMail;
+use App\Models\Picture;
 use Core\Controller\AbstractController;
 use Core\Views\View;
 
@@ -11,7 +12,11 @@ class MainController extends AbstractController
 {
     public function home(): View
     {
-        return $this->render('main/home', 'front');
+        $lastImages = Picture::query()->with(['images'])->limit(0,3)->get();
+
+        return $this->render('main/home', 'front', [
+            'lastImages' => $lastImages,
+        ]);
     }
 
     public function aboutUs(): View
