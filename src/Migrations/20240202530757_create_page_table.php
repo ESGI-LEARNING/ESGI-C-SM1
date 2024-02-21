@@ -33,7 +33,7 @@ class CreatePageTable extends BaseMigration
             VALUES
                 ('Accueil', 'Accueil', 'accueil', '/', 'Contenu de la page d\'accueil'),
                 ('Contact', 'Contact', 'contact', '/contact', 'Contenu de la page de contact'),
-                ('À propos', 'a-propos', 'a-propos', '/about-us', 'Contenu de la page à propos'),
+                ('À propos', 'a-propos', 'a-propos', '/about', 'Contenu de la page à propos'),
                 ('Galerie', 'galerie', 'galerie', '/gallery', 'Contenu de la galerie');
         ";
         $this->execute($sql);
