@@ -28,7 +28,7 @@ class ArticleController extends AbstractController
 
     public function createComment(string $slug): void
     {
-        if ($this->verifyCsrfToken() && $this->request()->getBody()['comment'] > 10){
+        if ($this->verifyCsrfToken()){
             CommentService::create($slug, $this->request()->getBody()['comment'], Auth::id());
             $this->addFlash('success', 'Le commentaire a bien été ajouté.');
             $this->redirect('/article/'.$slug);
@@ -37,7 +37,7 @@ class ArticleController extends AbstractController
 
     public function editComment(string $slug, int $id): void
     {
-        if ($this->verifyCsrfToken() && $this->request()->getBody()['comment'] > 10){
+        if ($this->verifyCsrfToken()){
             CommentService::edit($id, $this->request()->getBody()['comment']);
             $this->addFlash('success', 'Le commentaire a bien été modifier.');
             $this->redirect('/article/'.$slug);

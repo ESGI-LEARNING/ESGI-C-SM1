@@ -36,6 +36,7 @@ class CommentService
 
         if ($comment) {
             $comment->setContent($content);
+            $comment->setUpdatedAt(date('Y-m-d H:i:s'));
             $comment->save();
         }
     }
@@ -54,15 +55,6 @@ class CommentService
             $comment->setIsReported(1);
             $comment->save();
 
-            $adminUsers = User::query()
-                ->join('user_role', 'user.id', '=', 'user_role.user_id')
-                ->join('role', 'user_role.role_id', '=', 'role.id')
-                ->where('role.name', '=', Role::ROLE_ADMIN)
-                ->get();
-
-            $userReported = User::find($comment->user_id)->getEmail();
-            $userReporter = Auth::user()->getEmail();
-
             $data = [
                 'comment_id' => $comment->getId(),
                 'content' => $comment->getContent(),
@@ -70,9 +62,9 @@ class CommentService
 
             $mail = new CommentMail();
 
-            $mail->sendReportCommentToUserReported($userReported, $data);
-            $mail->sendReportCommentToUserReporter($userReporter, $data);
-            $mail->sendReportCommentToAdmins($adminUsers, $data);
+            $mail->sendReportCommentToUserReported(User::find($comment->user_id)->getEmail(), $data);
+            $mail->sendReportCommentToUserReporter( Auth::user()->getEmail(), $data);
+            $mail->sendReportCommentToAdmins($data);
         }
     }
 }
