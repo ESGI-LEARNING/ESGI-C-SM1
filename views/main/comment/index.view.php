@@ -1,3 +1,4 @@
+<?php if (\Core\Auth\Auth::check()): ?>
 <form class="form" action="/article/<?= $article->getSlug(); ?>/create-comment" method="post">
     <fieldset>
         <label for="comment">Votre commentaire :</label><br>
@@ -6,7 +7,9 @@
         <input type="submit" value="Envoyer">
     </fieldset>
 </form>
-
+<?php else: ?>
+    <p class="commentsConnected">Vous devez être connecté pour pouvoir commenter cet article.</p>
+<?php endif; ?>
 <div class="comments">
     <h3>Commentaires</h3>
     <?php foreach ($comments as $comment): ?>
@@ -27,31 +30,34 @@
                     </form>
                 </div>
             </div>
-            <div class="column">
-                <div class="formActions gap-2">
-                    <?php if (\Core\Auth\Auth::id() !== $comment->getUserId()): ?>
-                        <form class="__report-form" method="POST"
-                              action="/article/<?= $article->getSlug(); ?>/report-comment/<?= $comment->getId(); ?>"
-                              onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
-                            <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
-                            <button class="button button-green button-sm" type="submit"><?= icon('flag'); ?></button>
-                        </form>
-                    <?php endif; ?>
-                    <?php if (\Core\Auth\Auth::id() === $comment->getUserId()): ?>
-                        <button class="button button-blue button-sm" onClick="toggleCommentInput(<?= $comment->getId(); ?>)" id="button-edit-comment-<?= $comment->getId(); ?>" type="button"><?= icon('square-pen'); ?></button>
+            <?php if (\Core\Auth\Auth::check() !== false) : ?>
+                <div class="column">
+                    <div class="formActions gap-2">
+                        <?php if (\Core\Auth\Auth::id() !== $comment->getUserId()): ?>
+                            <form class="__report-form" method="POST"
+                                action="/article/<?= $article->getSlug(); ?>/report-comment/<?= $comment->getId(); ?>"
+                                onsubmit="return confirm('Êtes-vous sûr(e) de signaler ce commentaire ?')">
+                                <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
+                                <button class="button button-green button-sm" type="submit"><?= icon('flag'); ?></button>
+                            </form>
+                        <?php endif; ?>
+                        <?php if (\Core\Auth\Auth::id() === $comment->getUserId()): ?>
+                            <button class="button button-blue button-sm" onClick="toggleCommentInput(<?= $comment->getId(); ?>)" id="button-edit-comment-<?= $comment->getId(); ?>" type="button"><?= icon('square-pen'); ?></button>
 
-                        <form class="__delete-form" method="POST"
-                              action="/article/<?= $article->getSlug(); ?>/delete-comment/<?= $comment->getId(); ?>"
-                              onsubmit="return confirm('Êtes-vous sûr(e) de supprimer ce commentaire ?')">
-                            <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
-                            <button class="button button-red button-sm" type="submit"><?= icon('trash'); ?></button>
-                        </form>
-                    <?php endif; ?>
+                            <form class="__delete-form" method="POST"
+                                action="/article/<?= $article->getSlug(); ?>/delete-comment/<?= $comment->getId(); ?>"
+                                onsubmit="return confirm('Êtes-vous sûr(e) de supprimer ce commentaire ?')">
+                                <input type="hidden" name="csrf_token" value="<?= $this->csrfToken; ?>">
+                                <button class="button button-red button-sm" type="submit"><?= icon('trash'); ?></button>
+                            </form>
+                        <?php endif; ?>
+                    </div>
                 </div>
-            </div>
+            <?php endif; ?>
         </div>
     <?php endforeach; ?>
 </div>
+
 
 <script>
     function toggleCommentInput(id) {
