@@ -26,12 +26,6 @@ class User extends Model
 
     protected string $updated_at;
 
-     protected ?int $user_id = null;
-
-     protected ?int $role_id = null;
-     
-     protected ?string $name = null;
-
     public function __construct()
     {
         parent::__construct($this);
@@ -57,7 +51,7 @@ class User extends Model
 
     public function setUsername(string $username): void
     {
-        $this->username =  ucwords(strtolower(trim($username)));
+        $this->username = ucwords(strtolower(trim($username)));
     }
 
     public function getEmail(): ?string
@@ -80,11 +74,6 @@ class User extends Model
         $this->password = password_hash($password, PASSWORD_ARGON2ID);
     }
 
-    public function avatar(): string
-    {
-        return GlideService::getLinkImage($this->avatar, 150, 150);
-    }
-
     public function getAvatar(): string
     {
         return $this->avatar();
@@ -93,6 +82,11 @@ class User extends Model
     public function setAvatar(?string $avatar): void
     {
         $this->avatar = $avatar;
+    }
+
+    public function avatar(): string
+    {
+        return GlideService::getLinkImage($this->avatar, 150, 150);
     }
 
     public function getCreatedAt(): string
