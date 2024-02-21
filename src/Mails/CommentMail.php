@@ -48,15 +48,16 @@ class CommentMail
     public function sendReportCommentToAdmins(array $data): void
     {
         foreach ($this->getAdmins() as $admin) {
-            $this->sendReportComment($admin->getEmail(), $data);
+            $this->sendReportComment($admin->getEmail(),  $data);
         }
     }
 
     private function getAdmins(): array
     {
         return User::query()
+            ->select(['user.email'])
             ->join('user_role', 'user.id', '=', 'user_role.user_id')
-            ->join('role', 'user_role.role_id', '=', 'role.id')
+            ->join('role', 'role.id', '=', 'user_role.role_id')
             ->where('role.name', '=', Role::ROLE_ADMIN)
             ->get();
     }
