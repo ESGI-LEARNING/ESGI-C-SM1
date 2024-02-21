@@ -11,17 +11,15 @@ use App\Controllers\ArticleController;
 use App\Controllers\Auth\ForgotPasswordController;
 use App\Controllers\Auth\SecurityController;
 use App\Controllers\Auth\VerifyEmailController;
-use App\Controllers\CommentController;
 use App\Controllers\ErrorController;
 use App\Controllers\GalleryController;
-use App\Controllers\ImageController;
 use App\Controllers\Install\InstallController;
 use App\Controllers\MainController;
 use App\Controllers\ProfileController;
 use Core\Config\ConfigLoader;
 use Core\Router\Router;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 $config = new ConfigLoader();
 $config->load();

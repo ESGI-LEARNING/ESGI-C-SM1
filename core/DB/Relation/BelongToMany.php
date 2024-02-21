@@ -20,14 +20,14 @@ class BelongToMany
 
     public function attach(int $id): void
     {
-        $tableName = config('database.prefix') . '_' . $this->pivot;
+        $tableName = config('database.prefix').'_'.$this->pivot;
 
         $sql = "INSERT INTO `{$tableName}` (`{$this->foreignKey}`, `{$this->otherKey}`) VALUES (:foreign_key, :other_id)";
 
         $query = $this->pdo->prepare($sql);
         $query->execute([
             'foreign_key' => $this->idCurrentModel,
-            'other_id' => $id,
+            'other_id'    => $id,
         ]);
     }
 

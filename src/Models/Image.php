@@ -60,7 +60,7 @@ class Image extends Model
 
     public function setCreatedAt(): void
     {
-        $this->created_at = date('Y-m-d H:i:s');;
+        $this->created_at = date('Y-m-d H:i:s');
     }
 
     public function getUpdatedAt(): string
