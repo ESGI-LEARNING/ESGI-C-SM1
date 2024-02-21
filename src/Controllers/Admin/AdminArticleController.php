@@ -36,6 +36,7 @@ class AdminArticleController extends AbstractController
             $article->setDescription($form->get('description'));
             $article->setUserId(Auth::id());
             $article->setCreatedAt();
+            $article->setUpdatedAt();
             $article->save();
 
             UploadFile::uploadImageArticles($form->file('images'), $article->getId());
