@@ -1,19 +1,14 @@
-<form>
-	<fieldset class="filter">
-		<label for="filter">Filter by category</label>
-		<select id="filter" class="half">
-			<option value="all">All</option>
-			<option value="nature">Nature</option>
-			<option value="animals">Animals</option>
-			<option value="people">People</option>
-			<option value="buildings">Buildings</option>
-			<option value="objects">Objects</option>
-		</select>
-		<input type="submit" value="Filter">
-	</fieldset>
-</form>
-<?= $this->component('gallery', $config = $images); ?>
+<h2>Galerie</h2>
+<div class="gallery gallery-container">
+    <?php foreach ($pictures as $picture): ?>
+		<article>
+			<a href="/article/<?= $picture->slug; ?>" class="gallery-item">
+				<img src="<?= $picture->images[0]->image(300, 400) ?>" alt="<?= $picture->images[0]->getImage() ?>">
+			</a>
+		</article>
+    <?php endforeach; ?>
+</div>
 
 <div class="pagination">
-        <?= $this->component('pagination', $images->links()); ?>
+        <?= $this->component('pagination', $pictures->links()); ?>
 </div>

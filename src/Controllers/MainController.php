@@ -51,8 +51,4 @@ class MainController extends AbstractController
         return $this->render('main/article', 'front');
     }
 
-    public function gallery(): View
-    {
-        return $this->render('main/gallery', 'front');
-    }
 }
