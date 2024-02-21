@@ -2,7 +2,7 @@ import Chart from 'chart.js/auto';
 
 const ctxComment = document.getElementById('commentDonut').getContext('2d');
 const commentDonutChart = new Chart(ctxComment, {
-    type: 'pie',
+    type: 'line',
     data: {
         labels: ['Commentaires', 'Commentaires signalés', 'Commentaires supprimés'],
         datasets: [{
@@ -26,7 +26,7 @@ const commentDonutChart = new Chart(ctxComment, {
 
 const ctxUser = document.getElementById('userDonut').getContext('2d');
 const userDonutChart = new Chart(ctxUser, {
-    type: 'doughnut',
+    type: 'line',
     data: {
         labels: ['Utilisateurs actifs', 'Utilisateurs supprimés'],
         datasets: [{
