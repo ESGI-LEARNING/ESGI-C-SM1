@@ -15,12 +15,13 @@
 
 # 📑 Description du projet
 
+lien de la production: [https://esgi.theomeunier.fr/](https://esgi.theomeunier.fr/)
+
 ## 📝 Contexte
 
 Ce projet permettra au photogrape de gérer son site vitrine. Il pourra ajouter des photos, des catégories, des pages, etc..
 Il sera proposé une gallerie de photo avec un filtre par catégorie. Pour permettre de faire découvrir des photos au visiteur.
-Chaque photo pourra être commenté par les visiteurs. Le photographe pourra modérer les commentaires.Sur la photo il y
-aura aussi sont matériels utilisé.
+Chaque photo pourra être commenté par les visiteurs. Le photographe pourra modérer les commentaires.
 
 ## Description fonctionnelle
 
@@ -53,10 +54,14 @@ Décrire la procédure d'installation du projets.
 
 ````bash
 docker-compose up --build -d
-docker-compose exec php yarn install
-docker-compose exec php yarn build
 docker-compose exec php composer install
+docker-compose exec php yarn install
+docker-compose exec php yarn build si APP_ENV=prod // ou 
+docker-compose exec php yarn dev si APP_ENV=dev
 ````
+
+Créer un fichier `.env` à la racine du projet avec les variables suivantes:
+Si vous êtes en développement, vous pouvez utiliser le fichier `.env.example` pour vous aider.
 
 ## 📃 Modèle conceptuel de données
 
