@@ -47,7 +47,7 @@ class Comment extends Model
 
     public function setContent(?string $content): void
     {
-        $this->content = $content;
+        $this->content = strip_tags($content);
     }
 
     public function getIsReported(): int

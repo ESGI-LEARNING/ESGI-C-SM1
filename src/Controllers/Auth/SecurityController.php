@@ -21,13 +21,18 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = User::findBy(['email' => $form->get('email')]);
 
-            if ($user && password_verify($form->get('password'), $user->getPassword())) {
-                $authenticator = new Authenticator();
-                $authenticator->login($user);
-                $this->addFlash('success', 'Vous êtes bien connecté');
-                $this->redirect('/');
+            if ($user->getIdVerify() === 1) {
+                if ($user && password_verify($form->get('password'), $user->getPassword())) {
+                    $authenticator = new Authenticator();
+                    $authenticator->login($user);
+                    $this->addFlash('success', 'Vous êtes bien connecté');
+                    $this->redirect('/');
+                } else {
+                    $this->addFlash('error', 'Identifiants ou mot de passe incorrects');
+                    $this->redirect('/login');
+                }
             } else {
-                $this->addFlash('error', 'Identifiants ou mot de passe incorrects');
+                $this->addFlash('error', 'Votre compte n\'a pas été vérifié, veuillez vérifier votre boite mail');
                 $this->redirect('/login');
             }
         }
@@ -48,7 +53,7 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = new User();
-            $user->setUsername($form->get('username'));
+            $user->setUsername(strip_tags($form->get('username')));
             $user->setEmail($form->get('email'));
             $user->setPassword($form->get('password'));
             $user->setCreatedAt();
